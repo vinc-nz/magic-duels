@@ -98,6 +98,8 @@ public class Main extends BaseGame {
 		camera.setCharacters(focused, other);
 		
 		buildLighting();
+		
+		fight.start(); //avvia il combattimento
 	}
 
 	@Override
@@ -142,6 +144,9 @@ public class Main extends BaseGame {
 	protected void update(float interpolation) {
 		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit"))
 			finished=true;
+		
+		if (finished)
+			fight.end();
 		
 		timer.update();
 		
@@ -247,7 +252,7 @@ public class Main extends BaseGame {
 		CharacterController human = new CharacterController(Fight.ID_P1, fight);
 		KeyboardInput input = new KeyboardInput(human);
 		Main game= new Main(fight,input);
-		new IAStub(new CharacterController(Fight.ID_P2, fight)).start();
+		new IAStub(new CharacterController(Fight.ID_P2, fight),fight).start();
 		game.setConfigShowMode(ConfigShowMode.AlwaysShow);
 		game.start();
 	}

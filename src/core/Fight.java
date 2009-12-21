@@ -23,6 +23,8 @@ public class Fight {
 	Queue<SpellInstance> spellsInGame;  //coda delle magia in gioco
 	Queue<Damage> damages;  //coda dei danni subiti
 	
+	public boolean running;
+	
 	
 	public Fight(PlayingCharacter p1,PlayingCharacter p2,MovementInterface movement) {
 		this.playerOne = p1;
@@ -37,6 +39,8 @@ public class Fight {
 			
 		spellsInGame = new ConcurrentLinkedQueue<SpellInstance>();
 		damages = new ConcurrentLinkedQueue<Damage>();
+		
+		running = false;
 	}
 			
 	// identifica il mago associato al giocatore in base all'id
@@ -59,11 +63,10 @@ public class Fight {
 
 	// lancia la magia in base all'id del giocatore e al nome della stessa
 	public void castSpell(short id, String spellName) {
-		// TODO controllare che lo scontro non sia finito
 		PlayingCharacter spellCaster = getPlayer(id);
 		PlayingCharacter target = null;
 		
-		if(spellCaster.canCast(spellName)) //IF
+		if(running && spellCaster.canCast(spellName)) //IF
 		{
 			SpellInstance spellThread = spellCaster.castSpell(spellName);
 				
@@ -87,24 +90,19 @@ public class Fight {
 		int damage = enemy.gotSpell(attack.attackPoints);
 		damages.add(new Damage(enemy, attack.getSpellName(), damage));
 		if (enemy.isDead())
-			winner = getEnemy(enemy);
+			running = false;
 	}
 	
 	//muove un mago in base all'id del giocatore e ad un identificativo del movimento
 	public void moveCharacter(short id, short where) {
-		// TODO controllare che lo scontro non sia finito
-		PlayingCharacter moving = getPlayer(id);
-		PlayingCharacter other = getEnemy(moving);
-		
-		
-		
-		movement.move(moving, where, other);
+		if (running) {
+			PlayingCharacter moving = getPlayer(id);
+			PlayingCharacter other = getEnemy(moving);
+			
+			movement.move(moving, where, other);
+		}
 	}
 	
-	//se lo scontro è finito, ovvero se uno dei due maghi ha vinto
-	public boolean hasFinished() {
-		return winner!=null;
-	}
 		
 	public  SpellInstance pollSpell() {
 		return spellsInGame.poll();
@@ -133,4 +131,13 @@ public class Fight {
 			lastTime = time;
 		}
 	}
+	
+	public void start() {
+		running = true; 
+	}
+	
+	public void end() {
+		running = false;
+	}
+	
 }
