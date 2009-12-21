@@ -46,6 +46,7 @@ public class GraphicCharacter extends GraphicObject {
 
 	public GraphicCharacter(ModelManager manager, PlayingCharacter coreCharacter) {
 		super(coreCharacter.getName(), manager);
+		this.applyCullState();
 		this.coreCharacter = coreCharacter;
 		this.moving=false;
 		
