@@ -142,7 +142,8 @@ public class Main extends BaseGame {
 	// aggiornamento
 	@Override
 	protected void update(float interpolation) {
-		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit"))
+		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit")
+				|| !fight.running)
 			finished=true;
 		
 		if (finished)

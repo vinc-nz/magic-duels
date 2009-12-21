@@ -23,7 +23,7 @@ public class IAStub extends Thread {
 		super.run();
 		try {
 			while (!fight.running)
-				wait(UPTIME);
+				sleep(UPTIME);
 			this.act();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

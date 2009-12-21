@@ -28,7 +28,6 @@ public abstract class GraphicObject extends Node {
 		model.setModelBound(new BoundingBox());
 		model.updateModelBound();
 		this.attachChild(model);
-		this.applyCullState();
 		this.applyZBufferState();
 	}
 	
