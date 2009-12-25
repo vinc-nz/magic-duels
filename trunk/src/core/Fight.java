@@ -26,11 +26,11 @@ public class Fight {
 	public boolean running;
 	
 	
-	public Fight(PlayingCharacter p1,PlayingCharacter p2,MovementInterface movement) {
+	public Fight(PlayingCharacter p1,PlayingCharacter p2) {
 		this.playerOne = p1;
 		this.playerTwo = p2;
 		this.winner = null;
-		this.movement = movement;
+		this.movement = new ThirdPersonMovement();
 			
 		this.playerOne.setPosition(-100, 0); // setta la posizione iniziale del mago 1
 		this.playerTwo.setPosition(100, 0);  // setta la posizione iniziale del mago 2

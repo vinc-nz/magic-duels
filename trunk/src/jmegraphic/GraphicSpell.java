@@ -6,6 +6,7 @@ package jmegraphic;
 import java.lang.Thread.State;
 
 import com.jme.math.Vector3f;
+import com.jme.renderer.Renderer;
 import com.jme.scene.shape.Sphere;
 import com.jme.scene.state.ZBufferState;
 import com.jme.system.DisplaySystem;
@@ -23,9 +24,6 @@ public class GraphicSpell extends GraphicObject {
 		this.coreSpell = coreSpell;
 		this.height = 20; //da settare in proporzione
 		this.visible = false;  //all'inizio non viene disegnata
-		
-		ZBufferState depth = DisplaySystem.getDisplaySystem().getRenderer().createZBufferState();
-		this.setRenderState(depth);
 		
 		if (coreSpell instanceof SpellAttack) {
 			SpellAttack attack = (SpellAttack)coreSpell;
