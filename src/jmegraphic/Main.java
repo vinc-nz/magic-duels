@@ -97,7 +97,6 @@ public class Main extends BaseGame {
 		//camera in terza persona
 		camera.setCharacters(focused, other);
 		
-		buildLighting();
 		
 		fight.start(); //avvia il combattimento
 	}
@@ -223,21 +222,6 @@ public class Main extends BaseGame {
 		//obj.setRenderState(depthBuffer);
 	}
 
-	private void buildLighting() {
-		/** Set up a basic, default light. */
-	    DirectionalLight light = new DirectionalLight();
-	    light.setDiffuse(new ColorRGBA(1.0f, 1.0f, 1.0f, 1.0f));
-	    light.setAmbient(new ColorRGBA(0.5f, 0.5f, 0.5f, 1.0f));
-	    light.setDirection(new Vector3f(1,-1,1));
-	    light.setEnabled(true);
-		
- 
-	      /** Attach the light to a lightState and the lightState to rootNode. */
-	    LightState lightState = display.getRenderer().createLightState();
-	    lightState.setEnabled(true);
-	    lightState.attach(light);
-	    scene.setRenderState(lightState);
-	}
 
 	/**
 	 * @param args
@@ -249,7 +233,7 @@ public class Main extends BaseGame {
 		p1.addSpell(fireball);
 		PlayingCharacter p2 = new PlayingCharacter("dwarf_white", 100, 50, 5, 5, 2);
 		p2.addSpell(fireball);
-		Fight fight= new Fight(p1, p2, new ThirdPersonMovement());
+		Fight fight= new Fight(p1, p2);
 		CharacterController human = new CharacterController(Fight.ID_P1, fight);
 		KeyboardInput input = new KeyboardInput(human);
 		Main game= new Main(fight,input);

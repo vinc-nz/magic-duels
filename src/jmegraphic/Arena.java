@@ -45,20 +45,11 @@ public class Arena extends GraphicObject {
 		this.setupFloor();
 		this.applyBlendState();
 		this.applyZBufferState();
-		this.setRenderQueueMode(Renderer.QUEUE_TRANSPARENT);
 	}
 
 	private void setupWalls() {
 		Quad wallModel = new Quad("wall model", bound*2, bound/2);
-//		BlendState bs = DisplaySystem.getDisplaySystem().getRenderer().createBlendState();
-//		bs.setBlendEnabled(true);
-//		bs.setSourceFunction(BlendState.SourceFunction.SourceAlpha);
-//        bs.setDestinationFunction(BlendState.DestinationFunction.One);
-//        bs.setTestEnabled(true);
-//        bs.setTestFunction(BlendState.TestFunction.GreaterThan);
-//        bs.setEnabled(true);
-//		wallModel.setRenderState(bs);
-//		wallModel.setRenderQueueMode(Renderer.QUEUE_TRANSPARENT);
+		wallModel.setRenderQueueMode(Renderer.QUEUE_TRANSPARENT);
 		Texture t = TextureManager.loadTexture(
 							this.getClass().getClassLoader().getResource("data/textures/wall.jpg"),
 							Texture.MinificationFilter.Trilinear,
