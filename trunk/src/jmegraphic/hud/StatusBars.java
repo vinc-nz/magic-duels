@@ -1,6 +1,7 @@
-package jmegraphic;
+package jmegraphic.hud;
 
 
+import jmegraphic.GraphicObject;
 import utils.ProgressBar;
 
 import com.jme.renderer.Renderer;
@@ -12,8 +13,7 @@ import core.PlayingCharacter;
 /*
  * BARRE DI STATO (vita e mana)
  */
-public class StatusBars extends GraphicObject {
-	DisplaySystem display;
+public class StatusBars extends HudObject {
 	ProgressBar lifeBar;
 	ProgressBar manaBar;
 	PlayingCharacter coreCharacter;
@@ -21,7 +21,6 @@ public class StatusBars extends GraphicObject {
 	
 	public StatusBars(PlayingCharacter coreCharacter, boolean lifeVisible, boolean manaVisible) {
 		super("bars");
-		display = DisplaySystem.getDisplaySystem();
 		this.coreCharacter = coreCharacter;
 		
 		manaBar = new ProgressBar(display,"data/images/bluebar.png");
@@ -30,8 +29,10 @@ public class StatusBars extends GraphicObject {
 		setupLifeBar();
 		setupManaBar();
 		
+		this.width = lifeBar.getWidth()*1.3f;
+		this.height = (lifeBar.getHeight()+manaBar.getHeight()/2)*1.3f;
 		
-		this.setRenderQueueMode(Renderer.QUEUE_ORTHO);
+		
 		if (lifeVisible)
 			this.attachChild(lifeBar.getNode());
 		if (manaVisible)
@@ -46,7 +47,7 @@ public class StatusBars extends GraphicObject {
 		manaBar.setValue(manaBar.getMaximum());
 		manaBar.setScale((display.getWidth() / 200),
                 (display.getHeight() / 500));
-		manaBar.setPosition(lifeBar.getWidth(), manaBar.getHeight());
+		manaBar.setPosition(0, -manaBar.getHeight());
 	}
 	
 	protected void setupLifeBar() {
@@ -55,7 +56,6 @@ public class StatusBars extends GraphicObject {
 		lifeBar.setValue(lifeBar.getMaximum());
 		lifeBar.setScale((display.getWidth() / 150), 
 					(display.getHeight() / 300));
-		lifeBar.setPosition(lifeBar.getWidth(), lifeBar.getHeight());
 	}
 
 	@Override

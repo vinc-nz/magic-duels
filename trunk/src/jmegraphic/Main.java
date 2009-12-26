@@ -11,6 +11,11 @@ import input.KeyboardInput;
 import java.util.LinkedList;
 import java.util.List;
 
+import jmegraphic.hud.Countdown;
+import jmegraphic.hud.HudObject;
+import jmegraphic.hud.Notification;
+import jmegraphic.hud.StatusBars;
+
 import utils.ExplosionFactory;
 
 
@@ -48,6 +53,7 @@ public class Main extends BaseGame {
 	KeyboardInput input; // Input
 	Timer timer;
 	ModelManager manager;
+	Countdown countdown;
 	float lastTime;
 	
 	static final float UPTIME = 0.01f;  //intervallo di aggiornamento (in secondi)
@@ -78,18 +84,22 @@ public class Main extends BaseGame {
 		
 		this.focused = new GraphicCharacter(manager,player);
 		objects.add(focused);
-		objects.add(new StatusBars(player,true,true));
+		StatusBars focusedBars = new StatusBars(player,true,true);
+		focusedBars.setPosition(HudObject.POSITION_BOTTOM_LEFT);
+		objects.add(focusedBars);
 		
 		this.other = new GraphicCharacter(manager,enemy);
 		objects.add(other);
-		GraphicObject otherBar = new StatusBars(enemy,true,false);
-		otherBar.getLocalTranslation().x = (display.getWidth() * 2/3);
-		otherBar.getLocalTranslation().y = (display.getHeight() * 4/5);
+		StatusBars otherBar = new StatusBars(enemy,true,false);
+		otherBar.setPosition(HudObject.POSITION_UPPER_RIGHT);
 		objects.add(otherBar);
 		
 		ExplosionFactory.warmup();
 		
-		// attacca il modello al nodo
+		countdown = new Countdown(fight, 3);
+		objects.add(countdown.getNotification());
+		
+		// attacca gli ogetti in lista al nodo radice
 		for(GraphicObject i:objects) {
 			scene.attachChild(i);
 		}
@@ -97,8 +107,7 @@ public class Main extends BaseGame {
 		//camera in terza persona
 		camera.setCharacters(focused, other);
 		
-		
-		fight.start(); //avvia il combattimento
+		countdown.start();
 	}
 
 	@Override
@@ -141,14 +150,14 @@ public class Main extends BaseGame {
 	// aggiornamento
 	@Override
 	protected void update(float interpolation) {
-		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit")
-				|| !fight.running)
+		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit"))
 			finished=true;
 		
 		if (finished)
 			fight.end();
 		
 		timer.update();
+		countdown.update(timer);
 		
 		if (timer.getTimeInSeconds()-lastTime>UPTIME) {
 			interpolation=timer.getTimePerFrame();
@@ -219,7 +228,6 @@ public class Main extends BaseGame {
 		
 		GraphicObject obj = new GraphicSpell(manager, newSpell);
 		objects.add(obj); 
-		//obj.setRenderState(depthBuffer);
 	}
 
 
