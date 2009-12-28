@@ -18,21 +18,23 @@ public class Notification extends HudObject {
 	BitmapText txt;
 	float expireTime;
 
-	public Notification(String name) {
-		super(name);
+	public Notification(String text) {
+		super(text);
 		BitmapFont fnt = BitmapFontLoader.loadDefaultFont();
 
         txt = new BitmapText(fnt, false);
-        Rectangle box = new Rectangle(10, -10, display.getWidth() - 20,
-                        display.getHeight() - 20);
-        txt.setBox(box);
+//      Rectangle box = new Rectangle(10, -10, display.getWidth() - 20,
+//                        display.getHeight() - 20);
+//      txt.setBox(box);
         txt.setSize(32);
         txt.setDefaultColor(ColorRGBA.green.clone());
+        txt.setText(text);
+        txt.update();
         
-        this.width = box.width;
-        this.height = box.height;
-        this.getLocalTranslation().x = -width/2;
-        this.getLocalTranslation().y = height/2;
+        this.width = txt.getLineWidth()*BORDER_OFFSET;
+        this.height = txt.getLineHeight()*BORDER_OFFSET;
+        txt.getLocalTranslation().x = -width/2;
+        txt.getLocalTranslation().y = height/2;
         this.attachChild(txt);
         
         this.expireTime = -1;
@@ -53,6 +55,8 @@ public class Notification extends HudObject {
 	@Override
 	public void update() {
 		txt.update();
+		this.width = txt.getLineWidth()*BORDER_OFFSET;
+		txt.getLocalTranslation().x = -width/2;
 	}
 	
 	@Override

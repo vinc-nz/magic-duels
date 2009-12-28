@@ -19,6 +19,8 @@ public abstract class HudObject extends GraphicObject {
 	public static final short POSITION_BOTTOM_LEFT = 2;
 	public static final short POSITION_UP = 3;
 	public static final short POSITION_UPPER_RIGHT = 4;
+	
+	static final float BORDER_OFFSET = 1.3f;
 
 	public HudObject(String name) {
 		super(name);
