@@ -29,8 +29,8 @@ public class StatusBars extends HudObject {
 		setupLifeBar();
 		setupManaBar();
 		
-		this.width = lifeBar.getWidth()*1.3f;
-		this.height = (lifeBar.getHeight()+manaBar.getHeight()/2)*1.3f;
+		this.width = lifeBar.getWidth()*BORDER_OFFSET;
+		this.height = (lifeBar.getHeight()+manaBar.getHeight()/2)*BORDER_OFFSET;
 		
 		
 		if (lifeVisible)

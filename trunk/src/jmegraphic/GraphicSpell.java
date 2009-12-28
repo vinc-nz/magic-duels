@@ -5,12 +5,17 @@ package jmegraphic;
  */
 import java.lang.Thread.State;
 
+import jmegraphic.hud.HudObject;
+import jmegraphic.hud.Notification;
+
 import com.jme.math.Vector3f;
+import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
 import com.jme.scene.shape.Sphere;
 import com.jme.scene.state.ZBufferState;
 import com.jme.system.DisplaySystem;
 
+import core.ManaAdvice;
 import core.SpellAttack;
 import core.SpellInstance;
 
@@ -31,6 +36,13 @@ public class GraphicSpell extends GraphicObject {
 			position.y = height;
 			this.setLocalTranslation(position);
 			this.lookAt(GraphicObject.mapCoords(attack.getTrajectory()));
+		}
+		else if (coreSpell instanceof ManaAdvice) {
+			this.setRenderQueueMode(Renderer.QUEUE_ORTHO);
+			Notification warning = new Notification("NO MANA!");
+			warning.setColour(ColorRGBA.red);
+			warning.setPosition(HudObject.POSITION_BOTTOM);
+			this.attachChild(warning);
 		}
 	}
 	
