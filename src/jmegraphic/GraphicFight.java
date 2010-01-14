@@ -40,11 +40,10 @@ import core.Spell;
 import core.SpellInstance;
 import core.ThirdPersonMovement;
 
-public class Main extends BaseGame {
+public class GraphicFight extends BaseGame {
 	Fight fight; // parita
 	CustomCamera camera; // camera
 	Node scene; // nodo radice
-	ZBufferState depthBuffer;
 	
 	LinkedList<GraphicObject> objects; // lista degli oggetti da disegnare
 	GraphicCharacter focused; //il mago inquadrato dalla telecamera
@@ -58,7 +57,13 @@ public class Main extends BaseGame {
 	
 	static final float UPTIME = 0.01f;  //intervallo di aggiornamento (in secondi)
 	
-	public Main(Fight fight, KeyboardInput input) {
+	public GraphicFight() {
+		this.lastTime=0;
+		objects = new LinkedList<GraphicObject>();
+		manager = new ModelManager();
+	}
+	
+	public GraphicFight(Fight fight, KeyboardInput input) {
 		this.fight=fight;
 		this.input=input;
 		this.lastTime=0;
@@ -215,7 +220,6 @@ public class Main extends BaseGame {
 		explosion.setSpeed(10);
 		explosion.setLocalScale(0.5f);
 		explosion.forceRespawn();
-		explosion.setRenderState(depthBuffer);
 		target.attachChild(explosion);
 		
 	}
@@ -229,24 +233,43 @@ public class Main extends BaseGame {
 		GraphicObject obj = new GraphicSpell(manager, newSpell);
 		objects.add(obj); 
 	}
+	
+	
+	//per i settaggi video
+	public void videoSettings() {
+		this.setConfigShowMode(ConfigShowMode.AlwaysShow);
+		this.getAttributes();
+		this.setConfigShowMode(ConfigShowMode.ShowIfNoConfig);
+		//lscritta : 800 = x : lsfondo
+		
+	}
 
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		//STUB
+	//inizializza una partita in single player
+	public void initSingleGame() {
+		//creo personaggi e magie
 		Spell fireball = new Spell("fireball", 5, 5, false, 0, 10);
 		PlayingCharacter p1 = new PlayingCharacter("dwarf_red", 100, 50, 5, 5, 2);
 		p1.addSpell(fireball);
 		PlayingCharacter p2 = new PlayingCharacter("dwarf_white", 100, 50, 5, 5, 2);
 		p2.addSpell(fireball);
+		
+		//creo partita logica
 		Fight fight= new Fight(p1, p2);
 		CharacterController human = new CharacterController(Fight.ID_P1, fight);
-		KeyboardInput input = new KeyboardInput(human);
-		Main game= new Main(fight,input);
-		new IAStub(new CharacterController(Fight.ID_P2, fight),fight).start();
-		game.setConfigShowMode(ConfigShowMode.AlwaysShow);
-		game.start();
+		CharacterController ia = new CharacterController(Fight.ID_P2, fight);
+		new IAStub(ia,fight).start(); //avvio il thread dell'ia
+		
+		//inizializzo la classe this
+		this.fight = fight;
+		this.input = new KeyboardInput(human);
+		this.start();
 	}
+	
+	public static void main(String[] args) {
+		GraphicFight game = new GraphicFight();
+		game.initSingleGame();
+	}
+	
+	
 }

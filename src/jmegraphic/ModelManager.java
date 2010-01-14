@@ -45,19 +45,14 @@ import com.jmex.effects.particles.SimpleParticleInfluenceFactory;
  */
 public class ModelManager {
 	DisplaySystem display;
-	HashMap<String, Node> loaded; //modelli caricati
 	
 	public ModelManager() {
 		display = DisplaySystem.getDisplaySystem();
-		loaded = new HashMap<String, Node>();
 	}
 	
 	public Node get(String name) { //restituisce un modello in base al nome
 		Method m = null;
-		boolean toLoad = false;
-		Node model = loaded.get(name);  
-		if (model == null) { //se non è già stato caricato
-			toLoad = true;
+		Node model = null;
 			try {
 				m = this.getClass().getMethod(name);
 			} catch (SecurityException e) {
@@ -79,9 +74,6 @@ public class ModelManager {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		if (toLoad)
-			loaded.put(name, model);
 		return model;
 	}
 	
