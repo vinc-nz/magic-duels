@@ -8,8 +8,12 @@ import ia.IAStub;
 import input.CharacterController;
 import input.KeyboardInput;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import net.ClientGame;
+import net.ServerGame;
 
 import jmegraphic.hud.Countdown;
 import jmegraphic.hud.HudObject;
@@ -263,6 +267,62 @@ public class GraphicFight extends BaseGame {
 		//inizializzo la classe this
 		this.fight = fight;
 		this.input = new KeyboardInput(human);
+		this.start();
+	}
+	
+	public void initServerGame(int port) {
+		ServerGame s = new ServerGame(port);
+		
+		//creo personaggi e magie
+		Spell fireball = new Spell("fireball", 5, 5, false, 0, 10);
+		PlayingCharacter p1 = new PlayingCharacter("dwarf_red", 100, 50, 5, 5, 2);
+		p1.addSpell(fireball);
+		PlayingCharacter p2 = new PlayingCharacter("dwarf_white", 100, 50, 5, 5, 2);
+		p2.addSpell(fireball);
+		
+		Fight fight = new Fight(p1, p2);
+		CharacterController local = null;
+		CharacterController remote = null;
+		try {
+			local = s.getController(Fight.ID_P1,fight);
+			remote = s.getController(Fight.ID_P2,fight);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		
+		//inizializzo la classe this
+		this.fight = fight;
+		this.input = new KeyboardInput(local);
+		this.start();
+		
+	}
+	
+	public void initClientGame(String server, int port) {
+		ClientGame c = new ClientGame(server,port);
+		
+		//creo personaggi e magie
+		Spell fireball = new Spell("fireball", 5, 5, false, 0, 10);
+		PlayingCharacter p1 = new PlayingCharacter("dwarf_red", 100, 50, 5, 5, 2);
+		p1.addSpell(fireball);
+		PlayingCharacter p2 = new PlayingCharacter("dwarf_white", 100, 50, 5, 5, 2);
+		p2.addSpell(fireball);
+		
+		Fight fight = new Fight(p1, p2);
+		CharacterController local = null;
+		CharacterController remote = null;
+		try {
+			local = c.getController(Fight.ID_P2,fight);
+			remote = c.getController(Fight.ID_P1,fight);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//inizializzo la classe this
+		this.fight = fight;
+		this.input = new KeyboardInput(local);
 		this.start();
 	}
 	
