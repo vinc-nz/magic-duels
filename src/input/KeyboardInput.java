@@ -57,5 +57,11 @@ public class KeyboardInput extends InputHandler implements InputInterface {
 			controller.performAction(evt.getTriggerName());
 		}
 	}
+
+	@Override
+	public void update(float time) {
+		super.update(time);
+		
+	}
 	
 }
