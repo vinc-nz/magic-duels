@@ -19,14 +19,18 @@ public class NetGame {
 		this.local = local;
 	}
 	
-	public CharacterController getController(short id, Fight fight) throws IOException {
-		if (id==local) {
-			return new NetForwarderController(id,fight,channel.getOutputStream());
-		}
+	public CharacterController getController(Fight fight) throws IOException {
+		return new NetForwarderController(local,fight,channel.getOutputStream());
+		
+	}
+	
+	public void buildListener(Fight fight) throws IOException {
+		short id = Fight.ID_P1;
+		if (local == id)
+			id = Fight.ID_P2;
 		CharacterController controller = new CharacterController(id, fight);
 		NetListener listener = new NetListener(controller,channel.getInputStream());
 		listener.start();
-		return controller;
 	}
 	
 	
