@@ -9,12 +9,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import jmegraphic.Game;
+
 
 public class LayoutServer extends JFrame {
 
 	JLabel port = new JLabel("Port  ", SwingConstants.LEFT);
 	JTextField portText = new JTextField();
 	JButton pulsante = new JButton("OK");
+	
+	Game game;
 	
 	public String numPort;
 	
@@ -27,11 +31,12 @@ public class LayoutServer extends JFrame {
 		gbc.weighty = wy;
 	}
 
-	public LayoutServer() { 	
+	public LayoutServer(Game game) { 	
 	
 		super("Setting Server");
 		setSize(300, 120);
 		setLocation(500, 300);
+		this.game = game;
 	
 		JPanel panel = new JPanel();
 	
@@ -61,19 +66,31 @@ public class LayoutServer extends JFrame {
 		grigliaAvanzata.setConstraints(pulsante,limite);
 		
 		panel.add(pulsante);
-		pulsante.addActionListener(new ActionListener() {	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals("OK")) {
-					numPort = portText.getText();
-			}
-		}
-	});
+		pulsante.addActionListener(new Action(game, portText));
 				
 		setContentPane(panel); // rendiamo il pannello parte del nostro frame
 		show(); // Visualizziamo il tutto!
 	}
+	
+	class Action implements ActionListener{
+		Game game;
+		JTextField portText;
+		
+		public Action(Game game, JTextField portText){
+			this.game = game;
+			this.portText = portText;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			if (e.getActionCommand().equals("OK")) {
+				game.initServerGame(Integer.parseInt(portText.getText()));
+				game.start();
+			}
+		}
+	}
 }
+
+
 
 
 

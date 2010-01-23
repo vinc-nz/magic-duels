@@ -66,14 +66,4 @@ public class Game extends GraphicFight {
 		this.setConfigShowMode(ConfigShowMode.ShowIfNoConfig);
 	}
 
-	/**
-	 * @param args
-	 */
-	/*public static void main(String[] args) {
-		Game game = new Game();
-		game.initSingleGame();
-		game.start();
-
-	}*/
-
 }

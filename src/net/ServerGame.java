@@ -17,7 +17,9 @@ public class ServerGame extends NetGame{
 		ServerSocket s;
 		try {
 			s = new ServerSocket(port);
+			System.out.println("server in ascolto");
 			this.channel = s.accept();
+			System.out.println("accettata");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
