@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import jmegraphic.Game;
+
 public class LayoutClient extends JFrame {
 
 	JLabel ipLabel = new JLabel("Ip  ", SwingConstants.LEFT);
@@ -17,6 +19,8 @@ public class LayoutClient extends JFrame {
 	
 	public String numIp;
 	public String numPort;
+	
+	Game game;
 
 
 	void impostaLimite(GridBagConstraints gbc, int gx, int gy, int gw, int gh, int wx, int wy) {
@@ -28,10 +32,12 @@ public class LayoutClient extends JFrame {
 		gbc.weighty = wy;
 	}
 
-	public LayoutClient() {
+	public LayoutClient(Game game) {
 		super("Setting Client");
 		setSize(300, 120);
 		setLocation(500, 300);
+		
+		this.game = game;
 
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -78,18 +84,31 @@ public class LayoutClient extends JFrame {
 		grigliaAvanzata.setConstraints(pulsante,limite);
 		panel.add(pulsante);
 		
-		pulsante.addActionListener(new ActionListener() {	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals("OK")) {
-					numIp = ipText.getText();
-					numPort = portText.getText();
-			}
-		}
-	});
+		pulsante.addActionListener(new Action(game, ipText, portText));
 		
 		setContentPane(panel); // rendiamo il pannello parte del nostro frame
 		show(); // Visualizziamo il tutto!
 	}
-
+	
+	class Action implements ActionListener {
+		Game game;
+		JTextField ipText;
+		JTextField portText;
+		
+		
+		public Action(Game game, JTextField ipText, JTextField portText){
+			this.game = game;
+			this.ipText = ipText;
+			this.portText = portText;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			if (e.getActionCommand().equals("OK")) {
+				game.initClientGame(ipText.getText(), Integer.parseInt(portText.getText()));
+				game.start();
+			}
+		}
+	}
 }
+
+

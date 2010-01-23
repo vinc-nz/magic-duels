@@ -106,8 +106,8 @@ public class Mouse extends MouseAdapter{
 		
 		if(test.sNewGame){
 			s.stop();
-			//game.initSingleGame();
-			//game.start();
+			game.initSingleGame();
+			game.start();
 		}
 		
 		if(test.sMultiplayer){

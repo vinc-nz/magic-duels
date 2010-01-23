@@ -55,7 +55,7 @@ public class Arena extends GraphicObject {
 							Texture.MinificationFilter.Trilinear,
 			                Texture.MagnificationFilter.Bilinear);
 		t.setWrap(WrapMode.Repeat);
-		t.setScale(Vector3f.UNIT_XYZ.divide(0.05f));
+		t.setScale(Vector3f.UNIT_XYZ.mult(20));
 		TextureState ts = DisplaySystem.getDisplaySystem().getRenderer().createTextureState();
 		ts.setTexture(t);
 		wallModel.setRenderState(ts);
