@@ -53,11 +53,13 @@ class ButtonListener implements ActionListener {
 		if (e.getActionCommand().equals("SERVER")) {
 			ls = new LayoutServer();
 			game.initServerGame(Integer.parseInt(ls.numPort));
+			game.start();
 	    }
 	    
 		if (e.getActionCommand().equals("CLIENT")) {
 			lc = new LayoutClient();
 			game.initClientGame(lc.numIp, Integer.parseInt(lc.numPort));
+			game.start();
 	    }
 	 }
 }
