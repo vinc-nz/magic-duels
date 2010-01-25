@@ -9,7 +9,6 @@ import core.Fight;
 import input.CharacterController;
 
 public class ClientGame extends NetGame {
-	Socket channel;
 	
 	public ClientGame(String address, int port) {
 		super(Fight.ID_P2);
