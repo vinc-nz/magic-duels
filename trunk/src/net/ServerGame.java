@@ -10,16 +10,13 @@ import core.Fight;
 import input.CharacterController;
 
 public class ServerGame extends NetGame{
-	Socket channel;
 	
 	public ServerGame(int port) {
 		super(Fight.ID_P1);
 		ServerSocket s;
 		try {
 			s = new ServerSocket(port);
-			System.out.println("server in ascolto");
 			this.channel = s.accept();
-			System.out.println("accettata");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
