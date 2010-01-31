@@ -1,10 +1,7 @@
 package ia;
 
-import java.util.Random;
-
-import core.Fight;
-
 import input.CharacterController;
+import core.Fight;
 
 public class IAStub extends Thread {
 	static final int UPTIME=9;

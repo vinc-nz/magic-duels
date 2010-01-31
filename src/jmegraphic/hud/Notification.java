@@ -1,14 +1,10 @@
 package jmegraphic.hud;
 
-import jmegraphic.GraphicObject;
-
 import com.jme.renderer.ColorRGBA;
-import com.jme.system.DisplaySystem;
 import com.jme.util.Timer;
 import com.jmex.angelfont.BitmapFont;
 import com.jmex.angelfont.BitmapFontLoader;
 import com.jmex.angelfont.BitmapText;
-import com.jmex.angelfont.Rectangle;
 
 
 /*

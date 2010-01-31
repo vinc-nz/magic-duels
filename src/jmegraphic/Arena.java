@@ -1,32 +1,19 @@
 package jmegraphic;
 
-import java.io.Reader;
 import java.net.URL;
 
-import utils.ModelLoader;
-
 import com.jme.image.Texture;
-import com.jme.image.Texture.ApplyMode;
-import com.jme.image.Texture.EnvironmentalMapMode;
 import com.jme.image.Texture.WrapMode;
 import com.jme.math.FastMath;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
-import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
-import com.jme.scene.Node;
 import com.jme.scene.SharedMesh;
-import com.jme.scene.shape.Box;
 import com.jme.scene.shape.Quad;
-import com.jme.scene.state.BlendState;
 import com.jme.scene.state.CullState;
-import com.jme.scene.state.MaterialState;
 import com.jme.scene.state.TextureState;
-import com.jme.scene.state.ZBufferState;
 import com.jme.scene.state.CullState.Face;
-import com.jme.scene.state.RenderState.StateType;
 import com.jme.system.DisplaySystem;
-import com.jme.util.BumpMapColorController;
 import com.jme.util.TextureManager;
 
 import core.World;
@@ -39,7 +26,7 @@ public class Arena extends GraphicObject {
 	int bound;
 	
 	public Arena() {
-		super("arena");
+		super("arena", false);
 		this.bound = World.centerDistance;
 		this.setupWalls();
 		this.setupFloor();

@@ -1,42 +1,21 @@
 package jmegraphic;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.HashMap;
-
 
 import utils.ModelLoader;
 
-import com.jme.bounding.BoundingBox;
 import com.jme.image.Texture;
-import com.jme.math.FastMath;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
-import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Node;
-import com.jme.scene.Spatial;
-import com.jme.scene.Spatial.LightCombineMode;
-import com.jme.scene.shape.Sphere;
-import com.jme.scene.state.BlendState;
-import com.jme.scene.state.CullState;
-import com.jme.scene.state.MaterialState;
 import com.jme.scene.state.TextureState;
-import com.jme.scene.state.ZBufferState;
-import com.jme.scene.state.CullState.Face;
 import com.jme.system.DisplaySystem;
 import com.jme.util.TextureManager;
-import com.jme.util.export.JMEImporter;
 import com.jme.util.export.binary.BinaryImporter;
-import com.jmex.effects.particles.ParticleFactory;
-import com.jmex.effects.particles.ParticleInfluence;
 import com.jmex.effects.particles.ParticleMesh;
-import com.jmex.effects.particles.SimpleParticleInfluenceFactory;
 
 
 

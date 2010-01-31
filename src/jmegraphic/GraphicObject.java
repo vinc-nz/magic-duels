@@ -9,7 +9,6 @@ import com.jme.bounding.BoundingBox;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.Node;
-import com.jme.scene.Spatial;
 import com.jme.scene.state.BlendState;
 import com.jme.scene.state.CullState;
 import com.jme.scene.state.ZBufferState;
@@ -18,13 +17,21 @@ import com.jme.system.DisplaySystem;
 
 public abstract class GraphicObject extends Node {
 	
-	public GraphicObject(String name) {
+	public GraphicObject(String name, boolean loadModel) {
 		super(name);
+		if (loadModel) {
+			try {
+				this.loadModel(name);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
-	public GraphicObject(String name, ModelManager manager) {
-		super(name);
-		Node model = manager.get(name); //richiede al ModelManager un modello identificato da name
+	public void loadModel(String name) throws Exception {
+		Class<?> getter = Class.forName("jmegraphic.models."+name);
+		Node model = (Node) getter.getMethod("get").invoke(getter.newInstance());
 		model.setModelBound(new BoundingBox());
 		model.updateModelBound();
 		this.attachChild(model);

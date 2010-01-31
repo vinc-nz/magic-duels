@@ -1,13 +1,9 @@
 package net;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 import core.Fight;
-
-import input.CharacterController;
 
 public class ServerGame extends NetGame{
 	

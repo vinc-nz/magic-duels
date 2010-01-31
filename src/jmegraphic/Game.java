@@ -1,13 +1,11 @@
 package jmegraphic;
 
-import java.io.IOException;
-
-import com.jme.app.AbstractGame.ConfigShowMode;
-
 import ia.IAStub;
 import input.CharacterController;
-import input.InputInterface;
 import input.KeyboardInput;
+
+import java.io.IOException;
+
 import net.ClientGame;
 import net.NetGame;
 import net.ServerGame;
@@ -20,10 +18,10 @@ public class Game extends GraphicFight {
 	NetGame net = null;
 
 	protected void initCharacters() {
-		Spell fireball = new Spell("fireball", 5, 5, false, 0, 10);
-		PlayingCharacter p1 = new PlayingCharacter("dwarf_red", 100, 50, 5, 5, 2);
+		Spell fireball = new Spell("Fireball", 5, 5, false, 0, 10);
+		PlayingCharacter p1 = new PlayingCharacter("RedDwarf", 100, 50, 5, 5, 2);
 		p1.addSpell(fireball);
-		PlayingCharacter p2 = new PlayingCharacter("dwarf_white", 100, 50, 5, 5, 2);
+		PlayingCharacter p2 = new PlayingCharacter("WhiteDwarf", 100, 50, 5, 5, 2);
 		p2.addSpell(fireball);
 		this.fight = new Fight(p1, p2);
 	}

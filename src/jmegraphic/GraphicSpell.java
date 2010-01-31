@@ -11,9 +11,6 @@ import jmegraphic.hud.Notification;
 import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
-import com.jme.scene.shape.Sphere;
-import com.jme.scene.state.ZBufferState;
-import com.jme.system.DisplaySystem;
 
 import core.ManaAdvice;
 import core.SpellAttack;
@@ -25,7 +22,7 @@ public class GraphicSpell extends GraphicObject {
 	boolean visible;	//se visibile
 	
 	public GraphicSpell(ModelManager manager, SpellInstance coreSpell) {
-		super(coreSpell.getSpellName(), manager);
+		super(coreSpell.getSpellName(), true);
 		this.coreSpell = coreSpell;
 		this.height = 20; //da settare in proporzione
 		this.visible = false;  //all'inizio non viene disegnata

@@ -4,29 +4,9 @@ package jmegraphic;
  * GRAFICA DEL MAGO
  */
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import com.jme.image.Texture;
-import com.jme.math.FastMath;
-import com.jme.math.Quaternion;
-import com.jme.math.Vector2f;
 import com.jme.math.Vector3f;
-import com.jme.scene.Controller;
-import com.jme.scene.Node;
-import com.jme.scene.Spatial;
-import com.jme.scene.shape.Box;
-import com.jme.scene.state.TextureState;
-import com.jme.system.DisplaySystem;
-import com.jme.util.TextureManager;
 import com.jme.util.Timer;
-import com.jme.util.export.binary.BinaryImporter;
 import com.jmex.model.animation.JointController;
-import com.jmex.model.converters.MilkToJme;
 
 import core.PlayingCharacter;
 import core.SpellInstance;
@@ -45,7 +25,7 @@ public class GraphicCharacter extends GraphicObject {
 	
 
 	public GraphicCharacter(ModelManager manager, PlayingCharacter coreCharacter) {
-		super(coreCharacter.getName(), manager);
+		super(coreCharacter.getName(), true);
 		this.applyCullState();
 		this.coreCharacter = coreCharacter;
 		this.moving=false;
