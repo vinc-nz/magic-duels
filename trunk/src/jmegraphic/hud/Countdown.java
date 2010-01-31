@@ -1,11 +1,5 @@
 package jmegraphic.hud;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import jmegraphic.GraphicObject;
-
-import com.jme.scene.Node;
 import com.jme.util.Timer;
 
 import core.Fight;

@@ -1,9 +1,9 @@
 package jmegraphic.hud;
 
+import jmegraphic.GraphicObject;
+
 import com.jme.renderer.Renderer;
 import com.jme.system.DisplaySystem;
-
-import jmegraphic.GraphicObject;
 
 /*
  * heads on display
@@ -23,7 +23,7 @@ public abstract class HudObject extends GraphicObject {
 	static final float BORDER_OFFSET = 1.3f;
 
 	public HudObject(String name) {
-		super(name);
+		super(name, false);
 		this.setRenderQueueMode(Renderer.QUEUE_ORTHO);
 		this.display = DisplaySystem.getDisplaySystem();
 		this.width = 0;

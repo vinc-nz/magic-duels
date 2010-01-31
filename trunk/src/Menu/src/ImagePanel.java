@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import jmegraphic.Game;

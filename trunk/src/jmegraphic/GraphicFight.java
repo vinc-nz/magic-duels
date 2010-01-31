@@ -4,46 +4,30 @@ package jmegraphic;
  * MAIN
  */
 
-import ia.IAStub;
-import input.CharacterController;
 import input.InputInterface;
 import input.KeyboardInput;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.ClientGame;
-import net.ServerGame;
-
 import jmegraphic.hud.Countdown;
 import jmegraphic.hud.HudObject;
-import jmegraphic.hud.Notification;
 import jmegraphic.hud.StatusBars;
-
 import utils.ExplosionFactory;
-
 
 import com.jme.app.BaseGame;
 import com.jme.input.KeyBindingManager;
 import com.jme.input.KeyInput;
-import com.jme.light.DirectionalLight;
-import com.jme.light.PointLight;
-import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
-import com.jme.renderer.Renderer;
 import com.jme.scene.Node;
-import com.jme.scene.state.LightState;
-import com.jme.scene.state.ZBufferState;
 import com.jme.system.DisplaySystem;
 import com.jme.util.Timer;
 import com.jmex.effects.particles.ParticleMesh;
+
 import core.Damage;
 import core.Fight;
 import core.PlayingCharacter;
-import core.Spell;
 import core.SpellInstance;
-import core.ThirdPersonMovement;
 
 public class GraphicFight extends BaseGame {
 	Fight fight; // parita

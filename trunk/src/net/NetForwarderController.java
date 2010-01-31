@@ -1,14 +1,12 @@
 package net;
 
-import java.io.BufferedOutputStream;
+import input.CharacterController;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import core.Fight;
-
-import input.CharacterController;
 
 
 /*

@@ -6,8 +6,6 @@ import java.net.UnknownHostException;
 
 import core.Fight;
 
-import input.CharacterController;
-
 public class ClientGame extends NetGame {
 	
 	public ClientGame(String address, int port) {

@@ -1,12 +1,7 @@
 package jmegraphic.hud;
 
 
-import jmegraphic.GraphicObject;
 import utils.ProgressBar;
-
-import com.jme.renderer.Renderer;
-import com.jme.system.DisplaySystem;
-
 import core.PlayingCharacter;
 
 

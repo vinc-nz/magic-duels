@@ -11,8 +11,6 @@ import com.jme.input.KeyInput;
 import com.jme.input.action.InputActionEvent;
 import com.jme.input.action.InputActionInterface;
 
-import core.Fight;
-
 public class KeyboardInput extends InputHandler implements InputInterface {
 	CharacterController controller;
 	InputActionInterface listener;
@@ -27,7 +25,7 @@ public class KeyboardInput extends InputHandler implements InputInterface {
 		//TODO per ogni azione settare un input (IMPORTANTE)
 		
 		//aggiunge azioni per il debug
-		this.addAction(listener, "spell>fireball", KeyInput.KEY_F, false);
+		this.addAction(listener, "spell>Fireball", KeyInput.KEY_F, false);
 		this.addAction(listener, "switch_pos>", KeyInput.KEY_LCONTROL, true);
 		addMovementKeys();
 	}

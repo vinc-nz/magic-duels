@@ -1,12 +1,11 @@
 package net;
 
+import input.CharacterController;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-
-import input.CharacterController;
 
 
 public class NetListener extends Thread {
