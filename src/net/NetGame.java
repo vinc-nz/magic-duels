@@ -2,6 +2,7 @@ package net;
 
 import input.CharacterController;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -9,6 +10,7 @@ import core.Fight;
 
 public class NetGame {
 	Socket channel;
+	NetListener listener;
 	short local;
 	
 	
@@ -29,10 +31,27 @@ public class NetGame {
 		if (local == id)
 			id = Fight.ID_P2;
 		CharacterController controller = new CharacterController(id, fight);
-		NetListener listener = new NetListener(controller,channel.getInputStream());
+		this.listener = new NetListener(controller,channel.getInputStream());
+	}
+
+	public void sayReady() {
+		try {
+			DataOutputStream o = new DataOutputStream(channel.getOutputStream());
+			o.writeBytes("ready\n");
+		} catch (IOException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	public void waitOther() {
+		try {
+			listener.waitReadySignal();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		listener.start();
 	}
 	
-	
-
 }
