@@ -17,6 +17,8 @@ import core.Spell;
 
 public class Game extends GraphicFight {
 	
+	NetGame net = null;
+
 	protected void initCharacters() {
 		Spell fireball = new Spell("fireball", 5, 5, false, 0, 10);
 		PlayingCharacter p1 = new PlayingCharacter("dwarf_red", 100, 50, 5, 5, 2);
@@ -27,6 +29,7 @@ public class Game extends GraphicFight {
 	}
 	
 	public void initNetGame(NetGame game) {
+		this.net = game;
 		this.initCharacters();
 		CharacterController local = null;
 		try {
@@ -64,6 +67,16 @@ public class Game extends GraphicFight {
 		this.setConfigShowMode(ConfigShowMode.AlwaysShow);
 		this.getAttributes();
 		this.setConfigShowMode(ConfigShowMode.ShowIfNoConfig);
+	}
+	
+	@Override
+	protected void initGame() {
+		super.initGame();
+		if (net != null) {
+			net.sayReady();
+			net.waitOther();
+		}
+		super.startFight();
 	}
 
 }

@@ -107,7 +107,7 @@ public class GraphicFight extends BaseGame {
 		ExplosionFactory.warmup();
 		
 		countdown = new Countdown(fight, 3);
-		objects.add(countdown.getNotification());
+		objects.add(countdown);
 		
 		// attacca gli ogetti in lista al nodo radice
 		for(GraphicObject i:objects) {
@@ -117,7 +117,6 @@ public class GraphicFight extends BaseGame {
 		//camera in terza persona
 		camera.setCharacters(focused, other);
 		
-		countdown.start();
 	}
 
 	@Override
@@ -160,14 +159,14 @@ public class GraphicFight extends BaseGame {
 	// aggiornamento
 	@Override
 	protected void update(float interpolation) {
-		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit"))
+		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit")
+				|| fight.finished)
 			finished=true;
 		
 		if (finished)
 			fight.end();
 		
 		timer.update();
-		countdown.update(timer);
 		
 		if (timer.getTimeInSeconds()-lastTime>UPTIME) {
 			interpolation=timer.getTimePerFrame();
@@ -237,6 +236,10 @@ public class GraphicFight extends BaseGame {
 		
 		GraphicObject obj = new GraphicSpell(manager, newSpell);
 		objects.add(obj); 
+	}
+
+	public void startFight() {
+		countdown.start();
 	}
 	
 }

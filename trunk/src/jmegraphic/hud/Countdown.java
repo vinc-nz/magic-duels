@@ -10,8 +10,7 @@ import com.jme.util.Timer;
 
 import core.Fight;
 
-public class Countdown {
-	Notification text;
+public class Countdown extends Notification {
 	int seconds;
 	float lastTime;
 	boolean started;
@@ -20,14 +19,13 @@ public class Countdown {
 	
 	
 	public Countdown(Fight fight, int seconds) {
-		super();
+		super("countdown");
 		this.seconds = seconds+1;
 		this.lastTime = 0;
 		this.expired = false;
 		this.fight = fight;
-		text = new Notification("countdown");
-		text.setText(Integer.toString(seconds));
-		text.setPosition(HudObject.POSITION_CENTER);
+		this.setText(Integer.toString(seconds));
+		this.setPosition(HudObject.POSITION_CENTER);
 	}
 	
 	public void start() {
@@ -36,24 +34,22 @@ public class Countdown {
 	}
 	
 	
-	public void update(Timer timer) {
-		if (started && !expired && timer.getTimeInSeconds()-lastTime>=1) {
+	public void update() {
+		float currentTime = Timer.getTimer().getTimeInSeconds();
+		if (started && !expired && currentTime-lastTime>=1) {
 			seconds--;
 			if (seconds == 0) {
-				text.setText("Fight!!");
-				text.setExpireTime(3);
+				this.setText("Fight!!");
+				this.setExpireTime(3);
 				expired=true;
 				fight.start();
 			}
 			else {
-				lastTime = timer.getTimeInSeconds();
-				text.setText(Integer.toString(seconds));
+				lastTime = currentTime;
+				this.setText(Integer.toString(seconds));
 			}
+			super.update();
 		}
-	}
-
-	public Notification getNotification() {
-		return text;
 	}
 	
 	

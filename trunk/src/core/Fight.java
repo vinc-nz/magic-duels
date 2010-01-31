@@ -24,6 +24,7 @@ public class Fight {
 	Queue<Damage> damages;  //coda dei danni subiti
 	
 	public boolean running;
+	public boolean finished;
 	
 	
 	public Fight(PlayingCharacter p1,PlayingCharacter p2) {
@@ -41,6 +42,7 @@ public class Fight {
 		damages = new ConcurrentLinkedQueue<Damage>();
 		
 		running = false;
+		finished = false;
 	}
 			
 	// identifica il mago associato al giocatore in base all'id
@@ -90,7 +92,7 @@ public class Fight {
 		int damage = enemy.gotSpell(attack.attackPoints);
 		damages.add(new Damage(enemy, attack.getSpellName(), damage));
 		if (enemy.isDead())
-			running = false;
+			this.end();
 	}
 	
 	//muove un mago in base all'id del giocatore e ad un identificativo del movimento
@@ -137,7 +139,7 @@ public class Fight {
 	}
 	
 	public void end() {
-		running = false;
+		finished = true;
 	}
 	
 }

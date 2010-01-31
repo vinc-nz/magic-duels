@@ -18,6 +18,11 @@ public class NetListener extends Thread {
 		input = new BufferedReader(new InputStreamReader(is));
 	}
 	
+	public boolean waitReadySignal() throws IOException {
+		String message = input.readLine();
+		return message.equals("ready");
+	}
+	
 	@Override
 	public void run() {
 		super.run();
