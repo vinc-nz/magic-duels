@@ -29,15 +29,38 @@ public class CharacterController {
 	
 	//riceve il trigger e svolge l'azione
 	public void performAction(String trigger) {
-		if (TriggerParser.isSwitchPosTrigger(trigger)) {
+		if (Trigger.isSwitchPosTrigger(trigger)) {
 			fight.moveInSpellCastPosition(playerID);
 		}
-		else if(TriggerParser.isMoveTrigger(trigger)) {
-			fight.moveCharacter(playerID, TriggerParser.parseMovement(trigger));
+		else if(Trigger.isMoveTrigger(trigger)) {
+			fight.moveCharacter(playerID, Trigger.parseMovement(trigger));
 		}
-		else if(TriggerParser.isSpellTrigger(trigger)) {
-			fight.castSpell(playerID, TriggerParser.getAdvice(trigger));
+		else if(Trigger.isSpellTrigger(trigger)) {
+			fight.castSpell(playerID, Trigger.getAdvice(trigger));
 		}
+	}
+	
+	
+	/**
+	 * lancia una magia
+	 * @param name nome della magia
+	 */
+	public void castSpell(String name) {
+		this.performAction(Trigger.getTriggerFromSpell(name));
+	}
+	
+	/**
+	 * sposta il character in posizione di attacco
+	 */
+	public void switch_pos() {
+		this.performAction("switch_pos>");
+	}
+	
+	/**
+	 * @param where direzione, usare parametri di Trigger
+	 */
+	public void move(String name) {
+		this.performAction("move>"+name);
 	}
 	
 	
@@ -46,9 +69,9 @@ public class CharacterController {
 		Set<String> actions = new HashSet<String>(fight.getPlayer(playerID).getSpellsName());
 		
 		for (String i:actions) {
-			i = TriggerParser.getTriggerFromSpell(i);
+			i = Trigger.getTriggerFromSpell(i);
 		}
-		TriggerParser.addMovementsTriggers(actions);
+		Trigger.addMovementsTriggers(actions);
 		
 		return actions;
 	}

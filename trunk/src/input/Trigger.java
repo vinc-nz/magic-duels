@@ -16,11 +16,11 @@ import core.MovementInterface;
  * forward è l'advice, indica che si tratta di un movimento in avanti
  */
 
-public class TriggerParser {
-	static final String MOV_ADVICE_FORWARD = "forward";
-	static final String MOV_ADVICE_BACKWARD = "backward";
-	static final String MOV_ADVICE_LEFT = "left";
-	static final String MOV_ADVICE_RIGHT = "right";
+public class Trigger {
+	public static final String MOVE_FORWARD = "forward";
+	public static final String MOVE_BACKWARD = "backward";
+	public static final String MOVE_LEFT = "left";
+	public static final String MOVE_RIGHT = "right";
 	
 	//se si tratta di un trigger di movimento
 	public static boolean isMoveTrigger(String trigger) {
@@ -53,13 +53,13 @@ public class TriggerParser {
 	public static short parseMovement(String trigger) {
 		String advice = getAdvice(trigger);
 		short where = 0;
-		if (advice.equals(MOV_ADVICE_FORWARD))
+		if (advice.equals(MOVE_FORWARD))
 			where=MovementInterface.FORWARD;
-		else if (advice.equals(MOV_ADVICE_BACKWARD))
+		else if (advice.equals(MOVE_BACKWARD))
 			where=MovementInterface.BACKWARD;
-		else if (advice.equals(MOV_ADVICE_LEFT))
+		else if (advice.equals(MOVE_LEFT))
 			where=MovementInterface.LEFT;
-		else if (advice.equals(MOV_ADVICE_RIGHT))
+		else if (advice.equals(MOVE_RIGHT))
 			where=MovementInterface.RIGHT;
 		
 		return where;
@@ -67,10 +67,10 @@ public class TriggerParser {
 
 	//aggiunge i trigger di movimento al set ricevuto
 	public static void addMovementsTriggers(Set<String> actions) {
-		String[] advices = {MOV_ADVICE_BACKWARD,
-							MOV_ADVICE_FORWARD,
-							MOV_ADVICE_LEFT,
-							MOV_ADVICE_RIGHT };
+		String[] advices = {MOVE_BACKWARD,
+							MOVE_FORWARD,
+							MOVE_LEFT,
+							MOVE_RIGHT };
 		
 		for (int i = 0; i < advices.length; i++) {
 			actions.add("move>"+advices[i]);
