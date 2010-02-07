@@ -63,7 +63,16 @@ public class Game extends GraphicFight {
 	//per i settaggi video
 	public void videoSettings() {
 		this.setConfigShowMode(ConfigShowMode.AlwaysShow);
-		this.getAttributes();
+		
+		Thread otherThread = new Thread() {
+			@Override
+			public void run() {
+				Game.this.getAttributes();
+			}
+		};
+	
+		otherThread.start();
+		
 		this.setConfigShowMode(ConfigShowMode.ShowIfNoConfig);
 	}
 	
