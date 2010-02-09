@@ -1,5 +1,6 @@
 package wiiMoteInput;
 
+import input.CharacterController;
 import wiiMoteInput.spells.FireBallSpell;
 import wiiMoteInput.spells.FiveFireBallsSpell;
 
@@ -29,28 +30,36 @@ abstract public class Spells extends Thread {
 	public static final int TIMEOUT = 1500;
 	
 	protected SpellTimer timer;
-	
+	protected boolean stop;
+
+	protected CharacterController characterController;
 	protected PlayingMote playingMote;
-		
+	protected String currentSpellName;
+	
 	protected int mediaX;
 	protected int mediaY;
 	protected int mediaZ;
-	
-	//public final static SpellStep START = null;
-	//public final static SpellStep END = null;
-
-	// SE TRUE L'ESECUZIOEN DEL THREAD VIENE BLOCCATA
-	// IL SUO CAMBIAMENTO E' GESTITO DAL THREAD TIMER
-	protected boolean stop;
-	
+		
 	protected abstract SpellStep getEndStep();
 	protected abstract boolean isSpell();
 	
+	public String toString() {
+		return this.currentSpellName;
+	}
+		
+	public Spells(String currentSpellName) {
+		this.currentSpellName = currentSpellName;
+	}
 	/*
 	 * 
 	 */
 	public void setPlayingMote(PlayingMote playingMote) {
 		this.playingMote = playingMote;
+	}
+	
+	public void setCharaterController(CharacterController characterController)
+	{
+		this.characterController = characterController;
 	}
 	
 	/*
@@ -88,6 +97,11 @@ abstract public class Spells extends Thread {
 		
 		return null;
 		
+	}
+	
+	protected void castSpell()
+	{
+		characterController.castSpell(this.toString());
 	}
 	
 	/*

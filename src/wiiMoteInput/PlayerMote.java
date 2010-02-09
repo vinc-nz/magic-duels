@@ -7,7 +7,7 @@ import main.java.motej.Mote;
  * with all its functions
  */
 public class PlayerMote {
-
+	
 	protected Mote mote;
 	protected PlayingMote playingMote;
 	

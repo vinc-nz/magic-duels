@@ -1,5 +1,7 @@
 package wiiMoteInput;
 
+import input.CharacterController;
+import core.PlayingCharacter;
 import main.java.motej.request.ReportModeRequest;
 
 /*
@@ -8,6 +10,8 @@ import main.java.motej.request.ReportModeRequest;
  */
 public class PlayingMote extends Thread
 {
+	
+	protected CharacterController characterController;
 	
 	protected PlayerMote playerMote;	
 	protected PlayerMoteAccellerometerListener accellerometerListener;
@@ -24,7 +28,8 @@ public class PlayingMote extends Thread
 	/*
 	 * 
 	 */
-	public PlayingMote(PlayerMote playerMote) {
+	public PlayingMote(CharacterController characterController, PlayerMote playerMote) {
+		this.characterController = characterController;
 		this.playerMote = playerMote;
 	}
 
@@ -135,7 +140,9 @@ public class PlayingMote extends Thread
 	
 	/*
 	 * The function checks if the current position is associated 
-	 * to a spell. If true it starts the spell.
+	 * to a spell. If true it starts a spell thread that will ensure
+	 * that the movement done is a spell, if so the object will
+	 * call the CharacterController's funciton to advise the spell has benn cast.
 	 * Note that function is called by button listener object 
 	 */
 	public void check()

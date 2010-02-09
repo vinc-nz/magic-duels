@@ -1,6 +1,5 @@
 package wiiMoteInput.spells;
 
-import main.java.motej.request.ReportModeRequest;
 import wiiMoteInput.SpellStep;
 import wiiMoteInput.SpellTimer;
 import wiiMoteInput.Spells;
@@ -8,6 +7,10 @@ import wiiMoteInput.Spells;
 public class FiveFireBallsSpell extends Spells {
 
 	public final static SpellStep END = new SpellStep(130, 130, 165, CLOSE, CLOSE, CLOSE, AMB, AMB, AMB);
+	
+	public FiveFireBallsSpell() {
+		super("FiveFireBalls");
+	}
 
 	public void run()
 	{
