@@ -4,7 +4,6 @@ package input;
  * INPUT MAGIA
  */
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +13,6 @@ import core.Fight;
  * CONTROLLO DEL CHARACTER
  * in base a trigger ricevuti (da input,rete o ia) si occupa di controllare un PlayingCharacter
  */
-
-
 public class CharacterController {
 	short playerID; // id player
 	Fight fight; // partita

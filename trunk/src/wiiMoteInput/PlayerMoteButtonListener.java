@@ -1,13 +1,17 @@
 package wiiMoteInput;
 
+import input.CharacterController;
 import main.java.motej.event.CoreButtonEvent;
 import main.java.motej.event.CoreButtonListener;
 
 public class PlayerMoteButtonListener implements CoreButtonListener {
 	
-	public PlayingMote playingMote;
+	protected CharacterController characterController;
 	
-	public void setPlayingMote(PlayingMote playingMote) {
+	protected PlayingMote playingMote;
+	
+	public void setPlayingMote(CharacterController characterController, PlayingMote playingMote) {
+		this.characterController = characterController;
 		this.playingMote = playingMote;
 	}
 
@@ -16,10 +20,11 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 		
 		if (evento.isButtonAPressed())
 		{
-			if(!playingMote.isChecking)
+			this.characterController.switch_pos();
+			if(!this.playingMote.isChecking)
 			{
 				System.out.println("AVVIO L THREA PER IL CHECK!");
-				playingMote.check();
+				this.playingMote.check();
 			}
 		}
 

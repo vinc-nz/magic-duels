@@ -1,17 +1,17 @@
 package wiiMoteInput.spells;
 
-import main.java.motej.request.ReportModeRequest;
-import wiiMoteInput.PlayerMote;
 import wiiMoteInput.SpellStep;
 import wiiMoteInput.SpellTimer;
 import wiiMoteInput.Spells;
 
 public class FireBallSpell extends Spells {
-	
-	//public final static SpellStep START = new SpellStep(125, 125, 100, Spell.ACCURATE, Spell.ACCURATE, Spell.ACCURATE);
-	
+		
 	public final static SpellStep END = new SpellStep(150, 150, 150, Spells.CLOSE, Spells.CLOSE, Spells.IRRILEVANT, Spells.AMB, Spells.AMB, Spells.DX);
 
+	public FireBallSpell() {
+		super("FireBall");
+	}
+	
 	public void run()
 	{
 		System.out.println("ENTRO NELLA RUN DELLA MAGIA FIRE BALLS");
@@ -69,13 +69,6 @@ public class FireBallSpell extends Spells {
 	protected SpellStep getEndStep() {
 		return FireBallSpell.END;
 	}
-
-	/*
-	@Override
-	protected SpellStep getStartStep() {
-		return this.START;
-	}
-	*/
 	
 	@Override
 	protected boolean isSpell() {
@@ -85,6 +78,7 @@ public class FireBallSpell extends Spells {
 		if(about(super.mediaZ, 170, IRRILEVANT, DX))
 		{
 			System.out.println("E' LA MAGIA !!!");
+			super.castSpell();
 			return true;
 		}
 		
