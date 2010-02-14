@@ -1,6 +1,6 @@
 package wiiMoteInput;
 
-import main.java.motej.Mote;
+import motej.Mote;
 
 /*
  * The class manages the Wii Mote Controller 

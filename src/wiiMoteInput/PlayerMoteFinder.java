@@ -1,8 +1,8 @@
 package wiiMoteInput;
 
-import main.java.motej.Mote;
-import main.java.motej.MoteFinder;
-import main.java.motej.MoteFinderListener;
+import motej.Mote;
+import motej.MoteFinder;
+import motej.MoteFinderListener;
 
 public class PlayerMoteFinder implements MoteFinderListener {
 

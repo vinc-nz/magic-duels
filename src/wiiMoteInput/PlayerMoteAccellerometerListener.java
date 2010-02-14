@@ -1,8 +1,8 @@
 package wiiMoteInput;
 
-import main.java.motej.Mote;
-import main.java.motej.event.AccelerometerEvent;
-import main.java.motej.event.AccelerometerListener;
+import motej.Mote;
+import motej.event.AccelerometerEvent;
+import motej.event.AccelerometerListener;
 
 public class PlayerMoteAccellerometerListener implements AccelerometerListener<Mote> {
 	
