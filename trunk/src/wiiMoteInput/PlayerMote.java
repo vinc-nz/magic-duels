@@ -1,5 +1,6 @@
 package wiiMoteInput;
 
+import input.CharacterController;
 import motej.Mote;
 
 /*
@@ -13,16 +14,14 @@ public class PlayerMote {
 	
 	protected int batteryLevel;
 
-	/*
-	 * The function is used to connect and syncronize
-	 * a Wii Mote Controller.
-	 * return true if connected,
-	 * false otherwise
+	/**
+	 * The function is used to connect a WiiMote Controller.
+	 * @return true if connected, false otherwise
 	 */
 	public boolean findMote()
 	{
 		PlayerMoteFinder simpleMoteFinder = new PlayerMoteFinder();
-		this.mote = simpleMoteFinder.findMote();
+		simpleMoteFinder.findMote();
 		
 		if (this.mote != null) return true;
 		
@@ -31,7 +30,7 @@ public class PlayerMote {
 	
 	/*
 	 * The function returns the connected
-	 * Wii Mote Controller, null if no contreller 
+	 * WiiMote Controller, null if no controller 
 	 * is connected
 	 */
 	public Mote getMote()
@@ -61,4 +60,26 @@ public class PlayerMote {
 	{
 		this.batteryLevel = batteryLevel;
 	}
+
+	/**
+	 * The function creates a PlayingMote that must be associated
+	 * to a CharacterController
+	 * @param characterController
+	 */
+	public void createPlayingMote(CharacterController characterController){
+		this.playingMote = new PlayingMote(characterController, this);
+	}
+	
+	public void removePlayingMote()
+	{
+		this.playingMote = null;
+	}
+
+	public static void main(String[] args) {
+		
+		PlayerMote playerMote = new PlayerMote();
+		playerMote.findMote();
+		
+	}
+	
 }

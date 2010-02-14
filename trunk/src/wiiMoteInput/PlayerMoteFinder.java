@@ -4,12 +4,25 @@ import motej.Mote;
 import motej.MoteFinder;
 import motej.MoteFinderListener;
 
-public class PlayerMoteFinder implements MoteFinderListener {
+public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 
-	private MoteFinder finder;
-	private Object lock = new Object();
-	private Mote mote;
+	protected MoteFinder finder;
+	protected Object lock = new Object();
+	protected Mote mote;
+	
+	protected boolean disconnectMote;
 
+	public PlayerMoteFinder()
+	{
+		this.disconnectMote = false;
+	}
+	
+	public void disconnectMote()
+	{
+		this.disconnectMote = true;
+		super.notifyAll();
+	}
+	
 	public void moteFound(Mote mote) {
 		this.mote = mote;
 		synchronized(lock) {
@@ -17,7 +30,14 @@ public class PlayerMoteFinder implements MoteFinderListener {
 		}
 	}
 	
-	public Mote findMote() {
+	public void findMote() {
+				
+			this.start();
+
+	}
+	
+	@Override
+	public void run() {
 		if (finder == null) {
 			finder = MoteFinder.getMoteFinder();
 			finder.addMoteFinderListener(this);
@@ -28,8 +48,17 @@ public class PlayerMoteFinder implements MoteFinderListener {
 				lock.wait();
 			}
 		} catch (InterruptedException ex) {
-		}
-		return mote;
+		};
+	
+		while(!this.disconnectMote)
+			try {
+				super.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	
+		mote.disconnect();
+		this.mote = null;
 	}
-
+	
 }

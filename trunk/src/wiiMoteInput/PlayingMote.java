@@ -1,13 +1,14 @@
 package wiiMoteInput;
 
 import input.CharacterController;
+import input.InputInterface;
 import motej.request.ReportModeRequest;
 
 /*
  * The class manages all the operation that are necessary 
  * as the game is started and until it is finished.
  */
-public class PlayingMote extends Thread
+public class PlayingMote extends Thread implements InputInterface
 {
 	
 	protected CharacterController characterController;
@@ -148,7 +149,6 @@ public class PlayingMote extends Thread
 	{
 		
 		this.isChecking = true;
-		// MANCA LA VARIABILE ISCHECKING -----------------------------------///////	
 		
 		System.out.println("ENTRO NELLA FUNZIONE CHECK DI CHECKSTARTPOSITION!");
 		
@@ -172,6 +172,15 @@ public class PlayingMote extends Thread
 		}
 		
 		this.isChecking = false;
+	}
+
+	@Override
+	public short getPlayerID() {
+		return this.characterController.getPlayerID();
+	}
+
+	@Override
+	public void update(float time) {		
 	}
 	
 }
