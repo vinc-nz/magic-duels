@@ -90,7 +90,7 @@ public class Mouse extends MouseAdapter{
 				if(test.volume == false){
 					test.volume = true;
 					e.getComponent().repaint();		
-					s.stop();
+					//s.stop();
 				}
 				else{
 					test.volume = false;
@@ -100,7 +100,7 @@ public class Mouse extends MouseAdapter{
 			}
 		
 		if(test.sNewGame){
-			s.stop();
+			//s.stop();
 			game.initSingleGame();
 			game.start();
 		}
