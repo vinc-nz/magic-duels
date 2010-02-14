@@ -23,7 +23,13 @@ public class CharacterController {
 		this.fight = fight;
 	}
 	
-	
+	/**
+	 * @return the PlayerID
+	 */
+	public short getPlayerID() {
+		return playerID;
+	}
+
 	//riceve il trigger e svolge l'azione
 	public void performAction(String trigger) {
 		if (Trigger.isSwitchPosTrigger(trigger)) {
