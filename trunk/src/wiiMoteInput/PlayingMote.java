@@ -1,8 +1,7 @@
 package wiiMoteInput;
 
 import input.CharacterController;
-import core.PlayingCharacter;
-import main.java.motej.request.ReportModeRequest;
+import motej.request.ReportModeRequest;
 
 /*
  * The class manages all the operation that are necessary 
@@ -168,7 +167,7 @@ public class PlayingMote extends Thread
 			
 		} else {		
 	
-			System.out.println("NON è la posizione iniziale!");
+			System.out.println("NON ï¿½ la posizione iniziale!");
 		
 		}
 		

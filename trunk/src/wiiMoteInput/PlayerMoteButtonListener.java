@@ -1,8 +1,8 @@
 package wiiMoteInput;
 
 import input.CharacterController;
-import main.java.motej.event.CoreButtonEvent;
-import main.java.motej.event.CoreButtonListener;
+import motej.event.CoreButtonEvent;
+import motej.event.CoreButtonListener;
 
 public class PlayerMoteButtonListener implements CoreButtonListener {
 	

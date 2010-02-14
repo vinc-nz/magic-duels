@@ -1,6 +1,7 @@
 package wiiMoteInput;
 
-import main.java.motej.StatusInformationReport;
+import motej.StatusInformationReport;
+import motej.event.StatusInformationListener;
 
 public class PlayerMoteInformmationListener implements StatusInformationListener {
 
