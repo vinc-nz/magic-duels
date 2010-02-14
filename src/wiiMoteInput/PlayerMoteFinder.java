@@ -17,6 +17,10 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 		this.disconnectMote = false;
 	}
 	
+	public Mote getMote() {
+		return mote;
+	}
+
 	public void disconnectMote()
 	{
 		this.disconnectMote = true;
@@ -29,15 +33,9 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 			lock.notifyAll();
 		}
 	}
-	
+
 	public void findMote() {
 				
-			this.start();
-
-	}
-	
-	@Override
-	public void run() {
 		if (finder == null) {
 			finder = MoteFinder.getMoteFinder();
 			finder.addMoteFinderListener(this);
@@ -48,17 +46,44 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 				lock.wait();
 			}
 		} catch (InterruptedException ex) {
+			System.out.println(ex.getMessage());
 		};
-	
+		
 		while(!this.disconnectMote)
 			try {
-				super.wait();
+				sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	
+	}
+	
+	@Override
+	public void run() {
+	
+		if (finder == null) {
+			finder = MoteFinder.getMoteFinder();
+			finder.addMoteFinderListener(this);
+		}
+		finder.startDiscovery();
+		try {
+			synchronized(lock) {
+				lock.wait();
+			}
+		} catch (InterruptedException ex) {
+			System.out.println(ex.getMessage());
+		};
+		
+		while(!this.disconnectMote)
+			try {
+				sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 	
 		mote.disconnect();
 		this.mote = null;
+	
 	}
 	
 }

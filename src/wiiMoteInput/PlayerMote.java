@@ -1,5 +1,8 @@
 package wiiMoteInput;
 
+import com.intel.bluetooth.BlueCoveImpl;
+import com.intel.bluetooth.BluetoothStack;
+
 import input.CharacterController;
 import motej.Mote;
 
@@ -10,6 +13,7 @@ import motej.Mote;
 public class PlayerMote {
 	
 	protected Mote mote;
+	protected PlayerMoteFinder playerMoteFinder;
 	protected PlayingMote playingMote;
 	
 	protected int batteryLevel;
@@ -20,8 +24,34 @@ public class PlayerMote {
 	 */
 	public boolean findMote()
 	{
-		PlayerMoteFinder simpleMoteFinder = new PlayerMoteFinder();
-		simpleMoteFinder.findMote();
+
+		BlueCoveImpl.setConfigProperty("bluecove.stack", "widcomm");
+		
+		this.playerMoteFinder = new PlayerMoteFinder();
+		this.playerMoteFinder.start();
+		
+		while(this.playerMoteFinder.getMote() == null)
+			try {
+				Thread.sleep(101);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		
+		this.mote = this.playerMoteFinder.getMote();
+		
+		if (mote != null) {
+			
+			while (mote.getStatusInformationReport() == null) {
+				System.out.println("waiting for status information report");
+				try {
+					Thread.sleep(10l);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println(mote.getStatusInformationReport());	
+			
+		}
 		
 		if (this.mote != null) return true;
 		
@@ -47,8 +77,7 @@ public class PlayerMote {
 	{
 		if(this.mote != null)
 		{
-			this.mote.disconnect();
-			this.mote = null;
+			this.playerMoteFinder.disconnectMote();
 		}
 	}
 	
@@ -79,6 +108,10 @@ public class PlayerMote {
 		
 		PlayerMote playerMote = new PlayerMote();
 		playerMote.findMote();
+		
+		playerMote.getMote().rumble(1000);
+		
+		PlayingMote playingMote = new PlayingMote(characterController, playerMote);
 		
 	}
 	
