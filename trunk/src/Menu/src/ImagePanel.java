@@ -24,9 +24,9 @@ class ImagePanel extends JPanel implements Runnable{
 		  			Image credits, Image exit, Image selectNewGame,
 		  			Image selecMultiplayer, Image selectOptions,
 		  			Image selectCredits, Image selectExit, Image volume_on,
-		  			Image volume_off, Game game, Sound s){
+		  			Image volume_off, Game game){
 	this.game = game;
-	this.s = s;
+	//this.s = s;
 	
 	this.fantasy = fantasy;
     this.newGame = newGame;
@@ -58,7 +58,7 @@ class ImagePanel extends JPanel implements Runnable{
     this.addMouseListener(new Mouse(position, fantasy, newGame, multiplayer, credits, options, exit, s, game, this));
     this.addMouseMotionListener(new Mouse(position, fantasy, newGame, multiplayer, credits, options, exit, s, game, this));
   
-    s.loop();
+    //s.loop();
     
     setPreferredSize(size);
     setMinimumSize(size);
@@ -68,9 +68,9 @@ class ImagePanel extends JPanel implements Runnable{
   }
 
   public void paintComponent(Graphics g) {
-    
+	  
 	  g.drawImage(fantasy, 0, 0, this.getWidth(), this.getHeight(), null);
-    
+    	  
 	  if(sNewGame)
 		  g.drawImage(selectNewGame, konst2(200), konst(100), imageGetWidth(), imageGetHeight(), null);
 	  else{
@@ -118,8 +118,9 @@ class ImagePanel extends JPanel implements Runnable{
 		while(true){
 			try{
 				Thread.sleep(50);
+				this.repaint();
 			}catch(Exception e){}		
-			this.repaint();
+				System.out.println("Errore");
 		}
 	}
   
