@@ -6,6 +6,8 @@ import input.KeyboardInput;
 
 import java.io.IOException;
 
+import wiiMoteInput.PlayerMote;
+
 import net.ClientGame;
 import net.NetGame;
 import net.ServerGame;
@@ -16,8 +18,14 @@ import core.Spell;
 public class Game extends GraphicFight {
 	
 	NetGame net = null;
+	PlayerMote playerMote;
 
 	
+	public Game(PlayerMote playerMote) {
+		super();
+		this.playerMote = playerMote;
+	}
+
 	protected void initCharacters() {
 		Spell fireball = new Spell("Fireball", 5, 5, false, 0, 10);
 		PlayingCharacter p1 = new PlayingCharacter("RedDwarf", 100, 50, 5, 5, 2);
@@ -58,7 +66,9 @@ public class Game extends GraphicFight {
 	}
 
 	protected void initInput(CharacterController playerController) {
-		this.input = new KeyboardInput(playerController);
+		//this.input = new KeyboardInput(playerController);
+		this.playerMote.createPlayingMote(playerController);
+		this.input = this.playerMote.getPlayingMote();
 	}
 	
 	//per i settaggi video
@@ -85,6 +95,12 @@ public class Game extends GraphicFight {
 			net.waitOther();
 		}
 		super.startFight();
+	}
+	
+	@Override
+	protected void cleanup() {
+		super.cleanup();
+		this.playerMote.removePlayingMote();
 	}
 
 }
