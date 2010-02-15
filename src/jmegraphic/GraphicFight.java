@@ -62,8 +62,7 @@ public class GraphicFight extends BaseGame {
 
 	@Override
 	protected void cleanup() {
-		// TODO Auto-generated method stub
-
+		fight.end();
 	}
 
 	@Override
@@ -146,9 +145,6 @@ public class GraphicFight extends BaseGame {
 		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit")
 				|| fight.finished)
 			finished=true;
-		
-		if (finished)
-			fight.end();
 		
 		timer.update();
 		
