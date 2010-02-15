@@ -104,6 +104,10 @@ public class PlayerMote {
 		this.playingMote = null;
 	}
 
+	public PlayingMote getPlayingMote() {
+		return this.playingMote;
+	}
+	
 	public static void main(String[] args) {
 		
 		PlayerMote playerMote = new PlayerMote();
@@ -111,7 +115,7 @@ public class PlayerMote {
 		
 		playerMote.getMote().rumble(1000);
 		
-		PlayingMote playingMote = new PlayingMote(characterController, playerMote);
+		//PlayingMote playingMote = new PlayingMote(characterController, playerMote);
 		
 	}
 	
