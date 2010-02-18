@@ -40,7 +40,19 @@ public class PlayingMote extends Thread implements InputInterface
 	public void createButtonListener()
 	{
 		if(this.buttonsListener != null)
-			this.buttonsListener = new PlayerMoteButtonListener();
+		{
+			this.buttonsListener = new PlayerMoteButtonListener(this, this.characterController);
+			this.playerMote.getMote().addCoreButtonListener(this.buttonsListener);
+		}
+	}
+	
+	public void removeButtonListener()
+	{
+		if(this.buttonsListener != null)
+		{
+			this.playerMote.getMote().removeCoreButtonListener(this.buttonsListener);
+			this.buttonsListener = null;
+		}
 	}
 	
 	/*
@@ -50,7 +62,10 @@ public class PlayingMote extends Thread implements InputInterface
 	public void createAccellerometerListener()
 	{
 		if(this.accellerometerListener != null)
+		{
 			this.accellerometerListener = new PlayerMoteAccellerometerListener(this);
+			this.playerMote.getMote().addAccelerometerListener(this.accellerometerListener);
+		}
 	}
 	
 	/*
@@ -59,7 +74,12 @@ public class PlayingMote extends Thread implements InputInterface
 	 */
 	public void removeAccellerometerListener()
 	{
-		this.accellerometerListener = null;
+		if(this.accellerometerListener != null)
+		{
+			this.closeAccellerometerListener();
+			this.playerMote.getMote().removeAccelerometerListener(this.accellerometerListener);
+			this.accellerometerListener = null;
+		}
 	}
 	
 	/*
@@ -76,7 +96,8 @@ public class PlayingMote extends Thread implements InputInterface
 	 */
 	public void openAccellerometerListener()
 	{
-		this.playerMote.getMote().setReportMode(ReportModeRequest.DATA_REPORT_0x31);
+		if(this.accellerometerListener != null)	
+			this.playerMote.getMote().setReportMode(ReportModeRequest.DATA_REPORT_0x31);
 	}
 	
 	/*
@@ -84,7 +105,8 @@ public class PlayingMote extends Thread implements InputInterface
 	 */
 	public void closeAccellerometerListener()
 	{
-		this.playerMote.getMote().setReportMode(ReportModeRequest.DATA_REPORT_0x30);
+		if(this.accellerometerListener != null)
+			this.playerMote.getMote().setReportMode(ReportModeRequest.DATA_REPORT_0x30);
 	}
 		
 	/*
