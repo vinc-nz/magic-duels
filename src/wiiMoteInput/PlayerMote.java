@@ -101,6 +101,8 @@ public class PlayerMote {
 	
 	public void removePlayingMote()
 	{
+		this.playingMote.removeAccellerometerListener();
+		this.playingMote.removeButtonListener();
 		this.playingMote = null;
 	}
 

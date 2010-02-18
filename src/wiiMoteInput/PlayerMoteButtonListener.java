@@ -10,9 +10,10 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 	
 	protected PlayingMote playingMote;
 	
-	public void setPlayingMote(CharacterController characterController, PlayingMote playingMote) {
+	public PlayerMoteButtonListener(PlayingMote playingMote, CharacterController characterController)
+	{
 		this.characterController = characterController;
-		this.playingMote = playingMote;
+		this.playingMote = playingMote;		
 	}
 
 	@Override
