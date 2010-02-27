@@ -78,14 +78,14 @@ public class Options extends JPanel {
 		grid.setOpaque(true);
 		grid.setPreferredSize(new Dimension(screenSize.width*6/8, screenSize.height/4));
 		//add a label to panel
-		TitledBorder titleBorder = new TitledBorder("OPTIONS GAME");
+		TitledBorder titleBorder = new TitledBorder("GAME OPTIONS");
 		grid.setBorder(titleBorder);
 		dividePanel.add(grid, BorderLayout.NORTH);
 		
 		GridBagConstraints lim = new GridBagConstraints();
 		
 		//Create a label that show text
-		JLabel resolutionLabel = new JLabel("Screen Resolution Game");
+		JLabel resolutionLabel = new JLabel("Resolution");
 		lim.gridx = 0;
 		lim.gridy = 0;
 		lim.weightx = 0.5;
