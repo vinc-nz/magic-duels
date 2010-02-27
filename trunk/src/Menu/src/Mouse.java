@@ -15,24 +15,27 @@ public class Mouse extends MouseAdapter{
 	Image options;
 	Image exit;
 	int position[];
-	ImagePanel test;
-	Sound s;
+	MainPanel mainPanel;
 	Game game;
 	MenuMultiplayer menuMultiplayer;
+	MainMenu mainMenu;
+	Options optionsPanel;
 	
 	public Mouse(int initialPosition[], Image fantasy, Image newGame, Image multiplayer, Image credits, Image options,
-			     Image exit, Sound s, Game game, ImagePanel test){
+			     Image exit, Game game, MainMenu mainMenu, MainPanel mainPanel ){
 		
 		this.game = game;
-		this.s = s;
+		this.mainMenu = mainMenu;
 		this.fantasy = fantasy;
 		this.newGame = newGame;
 		this.multiplayer = multiplayer;
 		this.credits = credits;
 		this.options = options;
 		this.exit = exit;
-		this.test = test;
 		this.position = initialPosition;
+		
+		this.mainPanel = mainPanel;
+		
 	}
 	
 	public void mouseMoved(MouseEvent e){
@@ -40,77 +43,87 @@ public class Mouse extends MouseAdapter{
 		
 		if(e.getX() >= position[0] && e.getX() <= position[0]*2 
 			&& e.getY() >= position[1] && e.getY() <= position[1]+position[1]){
-			test.sNewGame = true;
+			mainPanel.sNewGame = true; 
+			mainPanel.repaint();
 		}
-		else
-			test.sNewGame=false;
-		
+		else {
+			if( mainPanel.sNewGame == true ) {
+				mainPanel.sNewGame=false;
+				mainPanel.repaint(); 
+			}
+		}
 		if(e.getX() >= position[2] && e.getX() <= position[2]*2 
 		     && e.getY() >= position[3] && e.getY() <= position[3]+position[1]){
-				test.sMultiplayer = true;
+				mainPanel.sMultiplayer = true;
+				mainPanel.repaint();
 			}
 			else
-				test.sMultiplayer=false;
-		
+				if( mainPanel.sMultiplayer == true ){
+					mainPanel.sMultiplayer=false;
+					mainPanel.repaint();
+				}
+			
 		if(e.getX() >= position[4] && e.getX() <= position[4]*2 
 			     && e.getY() >= position[5] && e.getY() <= position[5]+position[1]){
-				test.sOptions = true;
+				mainPanel.sOptions = true;
+				mainPanel.repaint();
 			}
 			else
-				test.sOptions = false;
+				if( mainPanel.sOptions == true ){
+					mainPanel.sOptions = false;
+					mainPanel.repaint();
+				}
+				
 		
 		if(e.getX() >= position[6] && e.getX() <= position[6]*2 
 			     && e.getY() >= position[7] && e.getY() <= position[7]+position[1]){
-				test.sCredits = true;
+				mainPanel.sCredits = true;
+				mainPanel.repaint();
 			}
 			else
-				test.sCredits = false;
+				if( mainPanel.sCredits == true ){
+					mainPanel.sCredits = false;
+					mainPanel.repaint();
+				}
+				
 		
 		if(e.getX() >= position[8] && e.getX() <= position[8]*2 
 			     && e.getY() >= position[9] && e.getY() <= position[9]+position[1]){
-				test.sExit = true;
+				mainPanel.sExit = true;
+				mainPanel.repaint();
 			}
 			else
-				test.sExit = false;
-		
-		
-		e.getComponent().repaint();		
+				if( mainPanel.sExit == true ){
+					mainPanel.sExit = false;
+					mainPanel.repaint();
+				}
+						
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		super.mouseClicked(e);
 		
-		if(test.sExit){
-			System.exit(0);
+		if(mainPanel.sExit){
+			mainMenu.close();
 		}
 		
-		if(e.getX() >= position[10] && e.getX() <= position[10]*2 
-			     && e.getY() >= position[11] && e.getY() <= position[11]+position[1]){
-				if(test.volume == false){
-					test.volume = true;
-					e.getComponent().repaint();		
-					//s.stop();
-				}
-				else{
-					test.volume = false;
-					e.getComponent().repaint();		
-					s.start();
-				}
-			}
-		
-		if(test.sNewGame){
-			//s.stop();
+		if(mainPanel.sNewGame){
 			game.initSingleGame();
 			game.start();
+			mainMenu.setVisible(false);
 		}
 		
-		if(test.sMultiplayer){
-			menuMultiplayer = new MenuMultiplayer(game);
+		if(mainPanel.sMultiplayer){
+			mainMenu.switchTo(new MenuMultiplayer(game, mainMenu, mainPanel));
 		}
 		
-		if(test.sOptions){
-			game.videoSettings();
+		if(mainPanel.sOptions){
+			mainMenu.switchTo( new Options(mainMenu, mainPanel));
+		}
+		
+		if(mainPanel.sCredits){
+			mainMenu.switchTo( new Credits(mainMenu, mainPanel));
 		}
 	}
 }
