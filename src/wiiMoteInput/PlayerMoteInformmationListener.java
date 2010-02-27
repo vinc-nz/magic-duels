@@ -21,10 +21,5 @@ public class PlayerMoteInformmationListener implements StatusInformationListener
 		
 	}
 
-	@Override
-	public void statusInformationReceived(main.java.motej.event.StatusInformationReport report) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
