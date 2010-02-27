@@ -15,6 +15,8 @@ import jmegraphic.hud.HudObject;
 import jmegraphic.hud.StatusBars;
 import utils.ExplosionFactory;
 
+import Menu.src.MainMenu;
+
 import com.jme.app.BaseGame;
 import com.jme.input.KeyBindingManager;
 import com.jme.input.KeyInput;
@@ -46,10 +48,13 @@ public class GraphicFight extends BaseGame {
 	
 	static final float UPTIME = 0.01f;  //intervallo di aggiornamento (in secondi)
 	
-	public GraphicFight() {
+	MainMenu mainMenu;
+	
+	public GraphicFight(MainMenu mainMenu) {
 		this.lastTime=0;
 		objects = new LinkedList<GraphicObject>();
 		manager = new ModelManager();
+		this.mainMenu = mainMenu;
 	}
 	
 	public GraphicFight(Fight fight, KeyboardInput input) {
@@ -105,13 +110,15 @@ public class GraphicFight extends BaseGame {
 	@Override
 	protected void initSystem() {
 		// creazione display
-		int width=settings.getWidth(),height=settings.getHeight();
+		int width=mainMenu.WIDTH;
+		int height=mainMenu.HEIGHT;
+		System.out.println(width+"   "+height);
 		try {
 			display=DisplaySystem.getDisplaySystem();
 			display.createWindow(width, height, 
 								settings.getDepth(), 
 								settings.getFrequency(), 
-								settings.isFullscreen());
+								mainMenu.fullscreen);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);

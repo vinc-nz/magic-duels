@@ -6,6 +6,8 @@ import input.KeyboardInput;
 
 import java.io.IOException;
 
+import Menu.src.MainMenu;
+
 import wiiMoteInput.PlayerMote;
 
 import net.ClientGame;
@@ -21,8 +23,8 @@ public class Game extends GraphicFight {
 	PlayerMote playerMote;
 
 	
-	public Game(PlayerMote playerMote) {
-		super();
+	public Game(PlayerMote playerMote, MainMenu mainMenu) {
+		super(mainMenu);
 		this.playerMote = playerMote;
 	}
 

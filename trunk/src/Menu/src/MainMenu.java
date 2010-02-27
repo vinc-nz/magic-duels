@@ -26,7 +26,7 @@ public class MainMenu extends JFrame {
 	
 	public int WIDTH = 1280;
 	public int HEIGHT = 800;
-	boolean fullscreen = true;
+	public boolean fullscreen = true;
 	
 	public static void main(String[] args) {
 		new MainMenu();
@@ -68,7 +68,7 @@ public class MainMenu extends JFrame {
 				new ImageIcon("src/Menu/data/selectOptions.png").getImage(),
 				new ImageIcon("src/Menu/data/selectCredits.png").getImage(),
 				new ImageIcon("src/Menu/data/selectExit.png").getImage(),
-				new Game(playMote), this);
+				new Game(playMote,this), this);
 	    
 		switchTo( panel );
 		size = Toolkit.getDefaultToolkit().getScreenSize();
