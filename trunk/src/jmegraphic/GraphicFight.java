@@ -112,7 +112,7 @@ public class GraphicFight extends BaseGame {
 		// creazione display
 		int width=mainMenu.WIDTH;
 		int height=mainMenu.HEIGHT;
-		System.out.println(width+"   "+height);
+		
 		try {
 			display=DisplaySystem.getDisplaySystem();
 			display.createWindow(width, height, 
