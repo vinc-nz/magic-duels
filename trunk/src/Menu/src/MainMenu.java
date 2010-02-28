@@ -58,16 +58,16 @@ public class MainMenu extends JFrame {
 		
 		MainPanel panel = new MainPanel(
 				new ImageIcon("src/Menu/data/mainMenu2.jpg").getImage(),
-				new ImageIcon("src/Menu/data/newGame.png").getImage(),
-				new ImageIcon("src/Menu/data/multiplayer.png").getImage(),
-				new ImageIcon("src/Menu/data/options.png").getImage(),
-				new ImageIcon("src/Menu/data/credits.png").getImage(),
-				new ImageIcon("src/Menu/data/exit.png").getImage(),
-				new ImageIcon("src/Menu/data/selectNewGame.png").getImage(),
-				new ImageIcon("src/Menu/data/selectMultiplayer.png").getImage(),
-				new ImageIcon("src/Menu/data/selectOptions.png").getImage(),
-				new ImageIcon("src/Menu/data/selectCredits.png").getImage(),
-				new ImageIcon("src/Menu/data/selectExit.png").getImage(),
+				new ImageIcon("src/Menu/data/imageNewGame.png").getImage(),
+				new ImageIcon("src/Menu/data/imageMultiplayer.png").getImage(),
+				new ImageIcon("src/Menu/data/imageOptions.png").getImage(),
+				new ImageIcon("src/Menu/data/imageCredits.png").getImage(),
+				new ImageIcon("src/Menu/data/imageExit.png").getImage(),
+				new ImageIcon("src/Menu/data/imageNewGameS.png").getImage(),
+				new ImageIcon("src/Menu/data/imageMultiplayerS.png").getImage(),
+				new ImageIcon("src/Menu/data/imageOptionsS.png").getImage(),
+				new ImageIcon("src/Menu/data/imageCreditsS.png").getImage(),
+				new ImageIcon("src/Menu/data/imageExitS.png").getImage(),
 				new Game(playMote,this), this);
 	    
 		switchTo( panel );
