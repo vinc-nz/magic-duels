@@ -69,6 +69,7 @@ public class Game extends GraphicFight {
 
 	protected void initInput(CharacterController playerController) {
 		//this.input = new KeyboardInput(playerController);
+		//this.playerMote.findMote();
 		this.playerMote.createPlayingMote(playerController);
 		this.input = this.playerMote.getPlayingMote();
 	}
@@ -103,6 +104,7 @@ public class Game extends GraphicFight {
 	protected void cleanup() {
 		super.cleanup();
 		this.playerMote.removePlayingMote();
+
 	}
 
 }
