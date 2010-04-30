@@ -31,7 +31,7 @@ public class Fight {
 		this.playerOne = p1;
 		this.playerTwo = p2;
 		this.winner = null;
-		this.movement = new ThirdPersonMovement();
+		this.movement = new EnemyDependedMovement();
 			
 		this.playerOne.setPosition(-100, 0); // setta la posizione iniziale del mago 1
 		this.playerTwo.setPosition(100, 0);  // setta la posizione iniziale del mago 2
