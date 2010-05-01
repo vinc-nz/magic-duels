@@ -24,29 +24,28 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 			this.characterController.switch_pos();
 			if(!this.playingMote.isChecking)
 			{
-				System.out.println("AVVIO L THREA PER IL CHECK!");
+				System.out.println("AVVIO IL THREAD PER IL CHECK!");
 				this.playingMote.check();
 			}
-			if(evento.isDPadDownPressed())
-			{
-				this.characterController.move("backward");
-			}
-			if(evento.isDPadUpPressed())
-			{
-				this.characterController.move("forward");
-			}
-			if(evento.isDPadLeftPressed())
-			{
-				this.characterController.move("left");
-			}
-			if(evento.isDPadRightPressed())
-			{
-				this.characterController.move("right");
-			}
-			
-		
 		}
-
+		
+		if(evento.isDPadDownPressed())
+		{
+			this.characterController.move("backward");
+		}
+		if(evento.isDPadUpPressed())
+		{
+			this.characterController.move("forward");
+		}
+		if(evento.isDPadLeftPressed())
+		{
+			this.characterController.move("left");
+		}
+		if(evento.isDPadRightPressed())
+		{
+			this.characterController.move("right");
+		}
+		
 	}
 
 }

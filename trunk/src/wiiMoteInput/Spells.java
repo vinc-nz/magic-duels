@@ -44,6 +44,7 @@ abstract public class Spells extends Thread {
 	protected abstract boolean isSpell();
 	
 	public String toString() {
+		System.out.println("TO STRING: " + currentSpellName);
 		return this.currentSpellName;
 	}
 		
@@ -82,6 +83,9 @@ abstract public class Spells extends Thread {
 	 */
 	public static Spells StartingSpell(int X, int Y, int Z)
 	{
+
+		System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
+		
 		if(FIREBALL_START.isAtStep(X, Y, Z)){
 			System.out.println("FIREBALLS");
 			System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
@@ -101,7 +105,7 @@ abstract public class Spells extends Thread {
 	
 	protected void castSpell()
 	{
-		characterController.castSpell(this.toString());
+		characterController.castSpell("Fireball");
 	}
 	
 	/*

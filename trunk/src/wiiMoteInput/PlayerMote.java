@@ -1,10 +1,9 @@
 package wiiMoteInput;
 
-import com.intel.bluetooth.BlueCoveImpl;
-import com.intel.bluetooth.BluetoothStack;
-
 import input.CharacterController;
 import motej.Mote;
+
+import com.intel.bluetooth.BlueCoveImpl;
 
 /*
  * The class manages the Wii Mote Controller 
@@ -109,7 +108,7 @@ public class PlayerMote {
 	public PlayingMote getPlayingMote() {
 		return this.playingMote;
 	}
-	
+/*
 	public static void main(String[] args) {
 		
 		PlayerMote playerMote = new PlayerMote();
@@ -117,8 +116,11 @@ public class PlayerMote {
 		
 		playerMote.getMote().rumble(1000);
 		
+		playerMote.getMote().addCoreButtonListener(new PlayerMoteButtonListener());
+		
+		
 		//PlayingMote playingMote = new PlayingMote(characterController, playerMote);
 		
 	}
-	
+*/	
 }

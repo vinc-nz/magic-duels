@@ -29,6 +29,7 @@ public class SpellTimer extends Thread {
 		// IN CASO BISOGNA FERMARE IL THREAD DELLA MAGIA
 		//System.out.println("SPELL TIME OUT");
 		this.spell.stop = true;
+		this.spell.playingMote.isChecking = false;
 	}
 	
 }

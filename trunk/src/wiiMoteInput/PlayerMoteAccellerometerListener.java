@@ -15,10 +15,10 @@ public class PlayerMoteAccellerometerListener implements AccelerometerListener<M
 	public void accelerometerChanged(AccelerometerEvent<Mote> event) {
 		
 		this.playingMote.setCurrentXvalue(event.getX());
-		this.playingMote.setCurrentXvalue(event.getY());
-		this.playingMote.setCurrentXvalue(event.getZ());
+		this.playingMote.setCurrentYvalue(event.getY());
+		this.playingMote.setCurrentZvalue(event.getZ());
 		
-		//System.out.println(evento.getX() + " : " + evento.getY() + " : " + evento.getZ());
+		//System.out.println(event.getX() + " : " + event.getY() + " : " + event.getZ());
 		
 	}
 	

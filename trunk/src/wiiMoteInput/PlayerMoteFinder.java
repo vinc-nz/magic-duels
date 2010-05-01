@@ -40,7 +40,9 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 			finder = MoteFinder.getMoteFinder();
 			finder.addMoteFinderListener(this);
 		}
+		
 		finder.startDiscovery();
+		
 		try {
 			synchronized(lock) {
 				lock.wait();
@@ -74,13 +76,15 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 			System.out.println(ex.getMessage());
 		};
 		
+		
+		System.out.println("INIZIO WHILE: IF NOT DISCONNECT..");
 		while(!this.disconnectMote)
 			try {
 				sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-	
+			System.out.println("FINE WHILE: MOTE DISCONNECTED..");	
 		mote.disconnect();
 		this.mote = null;
 	
