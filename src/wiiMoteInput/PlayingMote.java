@@ -25,12 +25,16 @@ public class PlayingMote extends Thread implements InputInterface
 
 	public boolean isChecking;
 	
-	/*
-	 * 
-	 */
+	
 	public PlayingMote(CharacterController characterController, PlayerMote playerMote) {
+		
 		this.characterController = characterController;
 		this.playerMote = playerMote;
+
+		this.createButtonListener();
+		this.createAccellerometerListener();
+		this.openAccellerometerListener();
+		
 	}
 
 	/*
@@ -39,11 +43,13 @@ public class PlayingMote extends Thread implements InputInterface
 	 */
 	public void createButtonListener()
 	{
-		if(this.buttonsListener != null)
-		{
+		//if(this.buttonsListener != null)
+		//{
+			System.out.println("CREO BUTTON LISTENER");
 			this.buttonsListener = new PlayerMoteButtonListener(this, this.characterController);
 			this.playerMote.getMote().addCoreButtonListener(this.buttonsListener);
-		}
+			System.out.println("BUTTON LISTENER CREATO");
+		//}
 	}
 	
 	public void removeButtonListener()
@@ -61,11 +67,14 @@ public class PlayingMote extends Thread implements InputInterface
 	 */
 	public void createAccellerometerListener()
 	{
-		if(this.accellerometerListener != null)
-		{
+		System.out.println("CREO ACCELLEROMETER LISTENER");
+		//if(this.accellerometerListener != null)
+		//{
 			this.accellerometerListener = new PlayerMoteAccellerometerListener(this);
 			this.playerMote.getMote().addAccelerometerListener(this.accellerometerListener);
-		}
+			System.out.println("ACCELLEROMETER LISTENER CREATO");			
+		//}
+
 	}
 	
 	/*
@@ -74,12 +83,12 @@ public class PlayingMote extends Thread implements InputInterface
 	 */
 	public void removeAccellerometerListener()
 	{
-		if(this.accellerometerListener != null)
-		{
+		//if(this.accellerometerListener != null)
+		//{
 			this.closeAccellerometerListener();
 			this.playerMote.getMote().removeAccelerometerListener(this.accellerometerListener);
 			this.accellerometerListener = null;
-		}
+		//}
 	}
 	
 	/*
@@ -92,12 +101,16 @@ public class PlayingMote extends Thread implements InputInterface
 	/*
 	 * The function starts the accellerometer listening
 	 * (it's raccomanded to keep it close if not necessary,
-	 * so to increase batteries duration)
+	 * so to increase battery duration)
 	 */
 	public void openAccellerometerListener()
 	{
-		if(this.accellerometerListener != null)	
+		System.out.println("APRO ACCELLEROMETRO");
+		if(this.accellerometerListener != null)
+		{
 			this.playerMote.getMote().setReportMode(ReportModeRequest.DATA_REPORT_0x31);
+			System.out.println("ACCELLEROMETRO APERTO");
+		}
 	}
 	
 	/*
@@ -185,15 +198,17 @@ public class PlayingMote extends Thread implements InputInterface
 			System.out.println("DO LO START ALLA MAGIA!");
 
 			currentSpell.setPlayingMote(this);
+			currentSpell.setCharaterController(characterController);
 			currentSpell.start();
 			
 		} else {		
 	
-			System.out.println("NON � la posizione iniziale!");
+			System.out.println("NON e' la posizione iniziale!");
+
+			this.isChecking = false;
 		
 		}
 		
-		this.isChecking = false;
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class FireBallSpell extends Spells {
 	public final static SpellStep END = new SpellStep(150, 150, 150, Spells.CLOSE, Spells.CLOSE, Spells.IRRILEVANT, Spells.AMB, Spells.AMB, Spells.DX);
 
 	public FireBallSpell() {
-		super("FireBall");
+		super("Fireball");
 	}
 	
 	public void run()
@@ -48,11 +48,9 @@ public class FireBallSpell extends Spells {
 		// Se è scaduto il tempo:
 		if(this.stop && !ItIsSpell) 
 		{
-			System.out.println("NON E' LA MAGIA (timeout)");	
-			return;
-		}
-		
-		if(this.isSpell())
+			System.out.println("NON E' LA MAGIA (timeout)");
+		}		
+		else if(this.isSpell())
 		{
 			System.out.println("E' LA MAGIA !!!");
 			System.out.println("MEDIA: " + mediaX + " : " + mediaY + " : " + mediaZ);
@@ -62,6 +60,8 @@ public class FireBallSpell extends Spells {
 			System.out.println("NON E' LA MAGIA !!!");
 			System.out.println("MEDIA: " + mediaX + " : " + mediaY + " : " + mediaZ);
 		}
+		
+		this.playingMote.isChecking = false;
 		
 	}
 	

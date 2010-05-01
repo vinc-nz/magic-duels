@@ -9,6 +9,7 @@ import java.io.IOException;
 import Menu.src.MainMenu;
 
 import wiiMoteInput.PlayerMote;
+import wiiMoteInput.PlayerMoteButtonListener;
 
 import net.ClientGame;
 import net.NetGame;
@@ -69,8 +70,14 @@ public class Game extends GraphicFight {
 
 	protected void initInput(CharacterController playerController) {
 		//this.input = new KeyboardInput(playerController);
-		//this.playerMote.findMote();
+		this.playerMote.findMote();
+		this.playerMote.getMote().rumble(1000);
 		this.playerMote.createPlayingMote(playerController);
+/*		
+		this.playerMote.getPlayingMote().createButtonListener();
+		this.playerMote.getPlayingMote().createAccellerometerListener();
+		this.playerMote.getPlayingMote().openAccellerometerListener();
+*/
 		this.input = this.playerMote.getPlayingMote();
 	}
 	
