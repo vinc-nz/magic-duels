@@ -55,8 +55,8 @@ public class Game extends GraphicFight {
 	public void initSingleGame() {
 		this.initCharacters();
 		CharacterController human = new CharacterController(Fight.ID_P1, fight);
-		CharacterController ia = new CharacterController(Fight.ID_P2, fight);
-		new IAStub(ia,fight).start();
+		//CharacterController ia = new CharacterController(Fight.ID_P2, fight);
+		//new IAStub(ia,fight).start();
 		this.initInput(human);
 	}
 	
