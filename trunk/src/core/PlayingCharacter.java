@@ -134,7 +134,7 @@ public class PlayingCharacter extends Character {
 	//true se il personaggio può lanciare la magia
 	public boolean canCast(String spellName) {
 		return this.hasSpell(spellName)
-				//&& this.spellCastPosition
+				&& this.spellCastPosition
 				&& !this.spellInWaiting;
 	}
 	

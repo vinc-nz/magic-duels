@@ -105,11 +105,12 @@ public class CustomCamera {
 	public void update(Timer timer) {
 		//TODO eventualmente lanciare un'eccezione se i personaggi non sono stati settati
 		if (timer.getTimeInSeconds()- lastTime > UPTIME) {
-			if (focused.coreCharacter.isInSpellCastPosition())
-				this.setLookAtEnemyView();
-			else
-				//chaser.update(timer.getTimePerFrame());
-				this.setFromBacksView();
+//			if (focused.coreCharacter.isInSpellCastPosition())
+//				this.setLookAtEnemyView();
+//			else
+//				//chaser.update(timer.getTimePerFrame());
+//				this.setFromBacksView();
+			this.setLookAtEnemyView();
 		}
 	}
 
