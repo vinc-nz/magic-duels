@@ -116,12 +116,16 @@ public class Fight {
 	
 	//mette il mago in posizione per lanciare una magia, ruotandolo verso l'altro
 	public synchronized void moveInSpellCastPosition(short id) {
+		
+		this.getPlayer(id).spellCastPosition = true;
+	}
+	
+	public void lookAtEnemy(short id) {
 		PlayingCharacter toRotate = this.getPlayer(id);
 		PlayingCharacter enemy = this.getEnemy(toRotate);
 		
 		//fix dell'angolo in base alla differenza delle coordinate
 		toRotate.angle = World.angleBetween(toRotate.x, toRotate.y, enemy.x, enemy.y);
-		toRotate.spellCastPosition = true;
 	}
 
 	public synchronized void update(float time) {
@@ -132,6 +136,8 @@ public class Fight {
 			playerTwo.energyPoints++;
 			lastTime = time;
 		}
+		this.lookAtEnemy(ID_P1);
+		this.lookAtEnemy(ID_P2);
 	}
 	
 	public void start() {
