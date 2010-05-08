@@ -1,22 +1,16 @@
 package jmegraphic;
 
-import ia.IAStub;
 import input.CharacterController;
-import input.KeyboardInput;
 
 import java.io.IOException;
-
-import Menu.src.MainMenu;
-
-import wiiMoteInput.PlayerMote;
-import wiiMoteInput.PlayerMoteButtonListener;
 
 import net.ClientGame;
 import net.NetGame;
 import net.ServerGame;
-import core.Fight;
-import core.PlayingCharacter;
-import core.Spell;
+import wiiMoteInput.PlayerMote;
+import Menu.src.MainMenu;
+import core.fight.Fight;
+
 
 public class Game extends GraphicFight {
 	
@@ -29,18 +23,11 @@ public class Game extends GraphicFight {
 		this.playerMote = playerMote;
 	}
 
-	protected void initCharacters() {
-		Spell fireball = new Spell("Fireball", 5, 5, false, 0, 10);
-		PlayingCharacter p1 = new PlayingCharacter("RedDwarf", 100, 50, 5, 5, 2);
-		p1.addSpell(fireball);
-		PlayingCharacter p2 = new PlayingCharacter("WhiteDwarf", 100, 50, 5, 5, 2);
-		p2.addSpell(fireball);
-		this.fight = new Fight(p1, p2);
-	}
+	
 	
 	public void initNetGame(NetGame game) {
 		this.net = game;
-		this.initCharacters();
+		
 		CharacterController local = null;
 		try {
 			local = game.getController(this.fight);
@@ -53,7 +40,7 @@ public class Game extends GraphicFight {
 	}
 	
 	public void initSingleGame() {
-		this.initCharacters();
+		
 		CharacterController human = new CharacterController(Fight.ID_P1, fight);
 		//CharacterController ia = new CharacterController(Fight.ID_P2, fight);
 		//new IAStub(ia,fight).start();

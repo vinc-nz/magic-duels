@@ -22,19 +22,24 @@ import core.World;
 /*
  *  ENVIRONMENT
  */
-public class Arena extends GraphicObject {
-	int bound;
+public class Arena extends SceneElem {
+	
 	
 	public Arena() {
-		super("arena", false);
-		this.bound = World.centerDistance;
-		this.setupWalls();
-		this.setupFloor();
+		super("arena");
+		this.loadModel();
 		this.applyBlendState();
 		this.applyZBufferState();
 	}
+	
+	@Override
+	public void loadModel() {
+		this.setupWalls();
+		this.setupFloor();
+	}
 
 	private void setupWalls() {
+		int bound = World.centerDistance;
 		Quad wallModel = new Quad("wall model", bound*2, bound/2);
 		wallModel.setRenderQueueMode(Renderer.QUEUE_TRANSPARENT);
 		Texture t = TextureManager.loadTexture(
@@ -63,6 +68,7 @@ public class Arena extends GraphicObject {
 	}
 
 	private void setupFloor() {
+		int bound = World.centerDistance;
 		Quad model = new Quad("terrain", bound*2, bound*2);
 		Quaternion q = new Quaternion();
 		q.fromAngleAxis(-FastMath.PI/2, new Vector3f(1, 0, 0));

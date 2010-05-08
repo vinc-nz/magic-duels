@@ -11,29 +11,35 @@ import com.jmex.angelfont.BitmapText;
  * TESTO DA MOSTRARE A VIDEO
  */
 public class Notification extends HudObject {
-	BitmapText txt;
+	BitmapText graphicText;
+	String text;
 	float expireTime;
 
 	public Notification(String text) {
 		super(text);
+		this.text = text;
+        this.expireTime = -1;
+	}
+	
+	@Override
+	public void loadModel() {
 		BitmapFont fnt = BitmapFontLoader.loadDefaultFont();
 
-        txt = new BitmapText(fnt, false);
+        graphicText = new BitmapText(fnt, false);
 //      Rectangle box = new Rectangle(10, -10, display.getWidth() - 20,
 //                        display.getHeight() - 20);
 //      txt.setBox(box);
-        txt.setSize(32);
-        txt.setDefaultColor(ColorRGBA.green.clone());
-        txt.setText(text);
-        txt.update();
+        graphicText.setSize(32);
+        graphicText.setDefaultColor(ColorRGBA.green.clone());
+        graphicText.setText(text);
+        graphicText.update();
         
-        this.width = txt.getLineWidth()*BORDER_OFFSET;
-        this.height = txt.getLineHeight()*BORDER_OFFSET;
-        txt.getLocalTranslation().x = -width/2;
-        txt.getLocalTranslation().y = height/2;
-        this.attachChild(txt);
+        this.width = graphicText.getLineWidth()*BORDER_OFFSET;
+        this.height = graphicText.getLineHeight()*BORDER_OFFSET;
+        graphicText.getLocalTranslation().x = -width/2;
+        graphicText.getLocalTranslation().y = height/2;
         
-        this.expireTime = -1;
+        this.attachChild(graphicText);
 	}
 	
 	public void setExpireTime(float time) {
@@ -41,21 +47,24 @@ public class Notification extends HudObject {
 	}
 	
 	public void setText(String text) {
-		txt.setText(text);
+		this.text = text;
 	}
 	
 	public void setColour(ColorRGBA col) {
-		txt.setDefaultColor(col);
+		graphicText.setDefaultColor(col);
 	}
 
 	@Override
 	public void update() {
-		txt.update();
-		this.width = txt.getLineWidth()*BORDER_OFFSET;
-		txt.getLocalTranslation().x = -width/2;
+		graphicText.setText(text);
+		graphicText.update();
+		this.width = graphicText.getLineWidth()*BORDER_OFFSET;
+		graphicText.getLocalTranslation().x = -width/2;
+		if (this.toRemove())
+			this.destroy();
 	}
 	
-	@Override
+	
 	public boolean toRemove() {
 		if (expireTime == -1)
 			return false;

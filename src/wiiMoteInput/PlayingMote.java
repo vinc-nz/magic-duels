@@ -212,12 +212,10 @@ public class PlayingMote extends Thread implements InputInterface
 	}
 
 	@Override
-	public short getPlayerID() {
+	public int getPlayerID() {
 		return this.characterController.getPlayerID();
 	}
 
-	@Override
-	public void update(float time) {		
-	}
+	
 	
 }

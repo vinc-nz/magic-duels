@@ -3,16 +3,17 @@
  */
 package core.objects;
 
+import core.fight.Character;
+
+
 /**
  * @author spax
  *
  */
 public interface Spell {
 	
-	public int playerId = 0;
-	
+	public void setOwner(Character owner);
 	public int getManaCost();
 	public void launch();
-	public void update();
 
 }

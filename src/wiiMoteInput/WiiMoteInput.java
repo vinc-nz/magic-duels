@@ -5,13 +5,11 @@ import input.InputInterface;
 public class WiiMoteInput implements InputInterface {
 
 	@Override
-	public short getPlayerID() {
+	public int getPlayerID() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public void update(float time) {
-	}
+	
 
 }

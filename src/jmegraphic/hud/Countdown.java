@@ -2,7 +2,9 @@ package jmegraphic.hud;
 
 import com.jme.util.Timer;
 
-import core.Fight;
+import core.fight.Fight;
+
+
 
 public class Countdown extends Notification {
 	int seconds;
@@ -42,8 +44,8 @@ public class Countdown extends Notification {
 				lastTime = currentTime;
 				this.setText(Integer.toString(seconds));
 			}
-			super.update();
 		}
+		super.update();
 	}
 	
 	

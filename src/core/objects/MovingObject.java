@@ -44,34 +44,35 @@ public abstract class MovingObject extends AbstractObject {
 	
 	
 	public void moveForward() {
-		this.moveThrow(this.direction);
+		this.moveThrough(this.direction);
 	}
 	
 	public void moveBackward() {
-		this.moveThrow(this.direction.opposite());
+		this.moveThrough(this.direction.opposite());
 	}
 	
 	public void moveLeft() {
 		float angle = (float) -Math.PI/2;
-		this.moveThrow(this.direction.rotate(angle));
+		this.moveThrough(this.direction.rotate(angle));
 	}
 	
 	public void moveRight() {
 		float angle = (float) Math.PI/2;
-		this.moveThrow(this.direction.rotate(angle));
+		this.moveThrough(this.direction.rotate(angle));
 	}
 	
 	public void moveALeft() {
-		Direction d = Direction.xDirection().opposite();
-		this.moveThrow(d);
+		Direction d = Direction.yDirection().opposite();
+		this.moveThrough(d);
 	}
 	
 	public void moveARight() {
-		Direction d = Direction.xDirection();
-		this.moveThrow(d);
+		Direction d = Direction.yDirection();
+		this.moveThrough(d);
 	}
 	
-	private void moveThrow(Direction d) {
+	
+	private void moveThrough(Direction d) {
 		float x = d.getX() * speed;
 		float y = d.getY() * speed;
 		this.getPosition().move(x, y);

@@ -8,6 +8,13 @@ package core.spells;
  *
  */
 public class Fireball extends AbstractProjectileSpell {
+	
+	
+
+	public Fireball() {
+		super();
+		this.setSpeed(5);
+	}
 
 	/* (non-Javadoc)
 	 * @see core.spells.AbstractProjectileSpell#getDamage()

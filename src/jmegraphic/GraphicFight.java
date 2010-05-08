@@ -5,16 +5,16 @@ package jmegraphic;
  */
 
 import input.InputInterface;
-import input.KeyboardInput;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import jmegraphic.hud.Countdown;
 import jmegraphic.hud.HudObject;
 import jmegraphic.hud.StatusBars;
 import utils.ExplosionFactory;
-
 import Menu.src.MainMenu;
 
 import com.jme.app.BaseGame;
@@ -26,44 +26,44 @@ import com.jme.system.DisplaySystem;
 import com.jme.util.Timer;
 import com.jmex.effects.particles.ParticleMesh;
 
-import core.Damage;
-import core.Fight;
-import core.PlayingCharacter;
-import core.SpellInstance;
+
+import core.fight.Fight;
+import core.objects.AbstractObject;
+import core.space.World;
+import core.fight.Character;
+
+
 
 public class GraphicFight extends BaseGame {
 	Fight fight; // parita
 	CustomCamera camera; // camera
-	Node scene; // nodo radice
+	public Node scene; // nodo radice
 	
-	LinkedList<GraphicObject> objects; // lista degli oggetti da disegnare
+	ObjectMap objects;
+	List<SceneElem> elements;
+	
 	GraphicCharacter focused; //il mago inquadrato dalla telecamera
 	GraphicCharacter other;
 	
 	InputInterface input; // Input
 	Timer timer;
-	ModelManager manager;
+	
 	Countdown countdown;
 	float lastTime;
 	
-	static final float UPTIME = 0.01f;  //intervallo di aggiornamento (in secondi)
+	static final float UPTIME = 0.005f;  //intervallo di aggiornamento (in secondi)
 	
 	MainMenu mainMenu;
 	
 	public GraphicFight(MainMenu mainMenu) {
 		this.lastTime=0;
-		objects = new LinkedList<GraphicObject>();
-		manager = new ModelManager();
+		objects = new ObjectMap();
+		elements = new LinkedList<SceneElem>();
 		this.mainMenu = mainMenu;
+		this.fight = new Fight();
 	}
 	
-	public GraphicFight(Fight fight, KeyboardInput input) {
-		this.fight=fight;
-		this.input=input;
-		this.lastTime=0;
-		objects = new LinkedList<GraphicObject>();
-		manager = new ModelManager();
-	}
+	
 
 	@Override
 	protected void cleanup() {
@@ -73,32 +73,33 @@ public class GraphicFight extends BaseGame {
 	@Override
 	protected void initGame() {
 		//viene creato il root node
-		scene=new Node("battlefield");
+		scene = new Node("battlefield");
 		scene.attachChild(new Arena());
 		
 	    
-		PlayingCharacter player = fight.getPlayer(input.getPlayerID());
-		PlayingCharacter enemy = fight.getEnemy(player);
+		Character player = fight.getPlayer(input.getPlayerID());
+		Character enemy = fight.getEnemy(player);
 		
-		this.focused = new GraphicCharacter(manager,player);
-		objects.add(focused);
+		this.focused = new GraphicCharacter(player);
+		objects.put(player, focused);
 		StatusBars focusedBars = new StatusBars(player,true,true);
 		focusedBars.setPosition(HudObject.POSITION_BOTTOM_LEFT);
-		objects.add(focusedBars);
+		elements.add(focusedBars);
 		
-		this.other = new GraphicCharacter(manager,enemy);
-		objects.add(other);
+		this.other = new GraphicCharacter(enemy);
+		this.objects.put(enemy, other);
 		StatusBars otherBar = new StatusBars(enemy,true,false);
 		otherBar.setPosition(HudObject.POSITION_UPPER_RIGHT);
-		objects.add(otherBar);
+		elements.add(otherBar);
 		
 		ExplosionFactory.warmup();
 		
 		countdown = new Countdown(fight, 3);
-		objects.add(countdown);
+		elements.add(countdown);
 		
 		// attacca gli ogetti in lista al nodo radice
-		for(GraphicObject i:objects) {
+		for(SceneElem i:elements) {
+			i.loadModel();
 			scene.attachChild(i);
 		}
 		
@@ -159,23 +160,12 @@ public class GraphicFight extends BaseGame {
 			interpolation=timer.getTimePerFrame();
 			lastTime=timer.getTimeInSeconds();
 		
-			input.update(interpolation);
 			
 			
-			//prende una nuova magia dal core
-			SpellInstance newSpell = fight.pollSpell();
-			if (newSpell!=null) {
-				this.castGraphicSpell(newSpell);
-			}
+			fight.update();
 			
-			Damage damage = fight.pollDamage();
-			if (damage!=null) {
-				this.applyGraphicDamage(damage);
-			}
-			
-			this.updateObjects(); //aggiorna la lista degli oggetti
-			
-			fight.update(timer.getTimeInSeconds());
+			this.updateObjects();
+			this.updateElements();
 		
 			camera.update(timer);
 			
@@ -185,48 +175,52 @@ public class GraphicFight extends BaseGame {
 	}
 	
 	protected void updateObjects() {
-		List<GraphicObject> elemToRemove = new LinkedList<GraphicObject>();
-		for (GraphicObject i:objects) {
-			if (i.toRemove()) {
-				//metto in un'altra lista gli elementi da rimuovere
-				elemToRemove.add(i); 
-				scene.detachChild(i);
-			}
-			else {
-				i.update();
-				if (i.becomeVisible())
-					scene.attachChild(i);
-			}
+		
+		for (AbstractObject obj : World.getObjects() ) {
+			GraphicObject go = this.objects.get(obj);
+			if (go==null)
+				this.objects.add(obj);
+			else if (!go.isInGame()) 
+				this.objects.remove(obj);
+			else go.update();
+		}
+	}
+	
+	protected void updateElements() {
+		LinkedList<SceneElem> newElems = new LinkedList<SceneElem>();
+		
+		for (SceneElem sceneElem : this.elements) {
+			sceneElem.update();
+			if (sceneElem.isInGame())
+				newElems.add(sceneElem);
+			else {this.scene.detachChild(sceneElem);System.out.println("\n\n\n\n\n\n"+sceneElem);}
 		}
 		
-		for (GraphicObject i:elemToRemove)
-			objects.remove(i);
-		
-	}
-
-	protected void applyGraphicDamage(Damage damage) {
-		GraphicCharacter target = (damage.getTarget() == focused.coreCharacter ?
-									focused : other);
-		ParticleMesh explosion = ExplosionFactory.getExplosion();
-		explosion.setSpeed(10);
-		explosion.setLocalScale(0.5f);
-		explosion.forceRespawn();
-		target.attachChild(explosion);
-		
-	}
-
-	protected void castGraphicSpell(SpellInstance newSpell) {
-		GraphicCharacter spellCaster = (newSpell.getOwner() == focused.coreCharacter ?
-										focused : other);
-		
-		spellCaster.castGraphicSpell(newSpell);
-		
-		GraphicObject obj = new GraphicSpell(manager, newSpell);
-		objects.add(obj); 
+		this.elements = newElems;
 	}
 
 	public void startFight() {
 		countdown.start();
+	}
+	
+	public class ObjectMap extends HashMap<AbstractObject, GraphicObject> {
+		@Override
+		public GraphicObject put(AbstractObject key, GraphicObject value) {
+			GraphicFight.this.scene.attachChild(value);
+			value.loadModel();
+			return super.put(key, value);
+		}
+		
+		@Override
+		public GraphicObject remove(Object key) {
+			GraphicFight.this.scene.detachChild(this.get(key));
+			return super.remove(key);
+		}
+		
+		public void add(AbstractObject obj) {
+			GraphicObject go = GraphicObject.fromObject(obj);
+			this.put(obj, go);
+		}
 	}
 	
 }

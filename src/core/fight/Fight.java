@@ -5,7 +5,6 @@ package core.fight;
 
 import java.lang.reflect.Method;
 
-import core.objects.AbstractObject;
 import core.objects.Spell;
 import core.space.World;
 import core.spells.TargettingSpell;
@@ -31,8 +30,8 @@ public class Fight {
 	
 	
 	public Fight() {
-		players[0] = new Character("PlayerOne");
-		players[1] = new Character("PlayerTwo");
+		players[0] = new Character(Character.PLAYER_ONE);
+		players[1] = new Character(Character.PLAYER_TWO);
 		
 		players[0].getPosition().set(-100, 0);
 		players[1].getPosition().set(100, 0);
@@ -65,9 +64,7 @@ public class Fight {
 	}
 	
 	private void setSpellParams(int playerId, Spell s) {
-		if (s instanceof AbstractObject) {
-			((AbstractObject) s).setPosition(this.getPlayer(playerId).getPosition());
-		}
+		
 		
 		if (s instanceof TargettingSpell) {
 			Character enemy = this.getEnemy(this.getPlayer(playerId));
@@ -82,7 +79,7 @@ public class Fight {
 	public void moveCharacter(int playerId, String where) {
 		
 		if (running && !this.getPlayer(playerId).isPreparingSpell()) {
-			String methodName = "move" + where.substring(0, 1).toUpperCase() + where.substring(1);
+			String methodName = "moveA" + where.substring(0, 1).toUpperCase() + where.substring(1);
 			try {
 				Method m = Character.class.getMethod(methodName);
 				m.invoke(this.getPlayer(playerId));

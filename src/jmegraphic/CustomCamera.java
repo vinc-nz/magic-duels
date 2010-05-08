@@ -56,7 +56,7 @@ public class CustomCamera {
 		chaser.setMinDistance(minDistance);
 		chaser.setMaxDistance(maxDistance);
 		
-		this.setFromBacksView();
+		//this.setFromBacksView();
 	}
 	
 	
@@ -86,8 +86,9 @@ public class CustomCamera {
 	}
 	
 	public void setFromBacksView() {
-		float[] direction = focused.coreCharacter.getDirection();
-		Vector3f cameraVec = new Vector3f(direction[0], 0, direction[1]);
+		Vector3f cameraVec = new Vector3f();
+		cameraVec.x = focused.coreCharacter.getDirection().getX();
+		cameraVec.z = focused.coreCharacter.getDirection().getY();
 		this.setAlongDirection(cameraVec);
 		camera.getLocation().y=minDistance/4;
 		camera.update();
@@ -112,6 +113,7 @@ public class CustomCamera {
 //				this.setFromBacksView();
 			this.setLookAtEnemyView();
 		}
+		//this.chaser.update(timer.getTimePerFrame());
 	}
 
 }
