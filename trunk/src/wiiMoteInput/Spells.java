@@ -1,5 +1,6 @@
 package wiiMoteInput;
 
+import core.spells.Fireball;
 import input.CharacterController;
 import wiiMoteInput.spells.FireBallSpell;
 import wiiMoteInput.spells.FiveFireBallsSpell;
@@ -105,7 +106,7 @@ abstract public class Spells extends Thread {
 	
 	protected void castSpell()
 	{
-		characterController.castSpell("Fireball");
+		characterController.castSpell(Fireball.class);
 	}
 	
 	/*

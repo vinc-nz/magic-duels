@@ -4,6 +4,7 @@
 package core.space;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import core.objects.AbstractObject;
 
@@ -15,7 +16,7 @@ public class World {
 	
 	public static final int centerDistance=500;
 	
-	static LinkedList<AbstractObject> objects = new LinkedList<AbstractObject>();
+	public static LinkedList<AbstractObject> objects = new LinkedList<AbstractObject>();
 	
 	public static boolean validPosition(float x,float y) {
 		return (Math.abs(x)<centerDistance && Math.abs(y)<centerDistance);
@@ -25,9 +26,14 @@ public class World {
 		objects.add(obj);
 	}
 	
+	public static List<AbstractObject> getObjects() {
+		return new LinkedList<AbstractObject>(objects);
+	}
+	
 	public static void checkCollisions() {
 		LinkedList<AbstractObject> newList = new LinkedList<AbstractObject>();
 		for (AbstractObject abstractObject : objects) {
+			abstractObject.update();
 			if (abstractObject.isInGame())
 				newList.add(abstractObject);
 		}

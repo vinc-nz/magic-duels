@@ -1,6 +1,7 @@
 package jmegraphic.hud;
 
 import jmegraphic.GraphicObject;
+import jmegraphic.SceneElem;
 
 import com.jme.renderer.Renderer;
 import com.jme.system.DisplaySystem;
@@ -10,7 +11,7 @@ import com.jme.system.DisplaySystem;
  * GENERICO OGGETTO HUD
  */
 
-public abstract class HudObject extends GraphicObject {
+public abstract class HudObject extends SceneElem {
 	DisplaySystem display;
 	float width, height; //per il posizionamento
 	
@@ -23,12 +24,11 @@ public abstract class HudObject extends GraphicObject {
 	static final float BORDER_OFFSET = 1.3f;
 
 	public HudObject(String name) {
-		super(name, false);
+		super(name);
 		this.setRenderQueueMode(Renderer.QUEUE_ORTHO);
 		this.display = DisplaySystem.getDisplaySystem();
 		this.width = 0;
 		this.height = 0;
-		
 	}
 	
 	

@@ -2,7 +2,7 @@ package jmegraphic.hud;
 
 
 import utils.ProgressBar;
-import core.PlayingCharacter;
+import core.fight.Character;
 
 
 /*
@@ -11,12 +11,14 @@ import core.PlayingCharacter;
 public class StatusBars extends HudObject {
 	ProgressBar lifeBar;
 	ProgressBar manaBar;
-	PlayingCharacter coreCharacter;
+	Character coreCharacter;
 
 	
-	public StatusBars(PlayingCharacter coreCharacter, boolean lifeVisible, boolean manaVisible) {
+	public StatusBars(Character coreCharacter, boolean lifeVisible, boolean manaVisible) {
 		super("bars");
 		this.coreCharacter = coreCharacter;
+		
+		
 		
 		manaBar = new ProgressBar(display,"data/images/bluebar.png");
 		lifeBar = new ProgressBar(display, "data/images/greenbar.png");
@@ -27,12 +29,16 @@ public class StatusBars extends HudObject {
 		this.width = lifeBar.getWidth()*BORDER_OFFSET;
 		this.height = (lifeBar.getHeight()+manaBar.getHeight()/2)*BORDER_OFFSET;
 		
-		
 		if (lifeVisible)
 			this.attachChild(lifeBar.getNode());
 		if (manaVisible)
 			this.attachChild(manaBar.getNode());
 		this.setLightCombineMode(LightCombineMode.Off);
+	}
+	
+	@Override
+	public void loadModel() {
+		
 		
 	}
 	

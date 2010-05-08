@@ -6,7 +6,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import core.Fight;
+import core.fight.Fight;
+
+
 
 public class NetGame {
 	Socket channel;

@@ -11,7 +11,10 @@ import core.objects.Spell;
  * @author spax
  *
  */
-public class Character extends MovingObject {
+public class Character extends MovingObject { 
+	
+	public static final String PLAYER_ONE = "PlayerOne";
+	public static final String PLAYER_TWO = "PlayerTwo";
 	
 	int life;
 	int mana;
@@ -57,18 +60,17 @@ public class Character extends MovingObject {
 	
 	public void prepareSpell(Spell s) {
 		preparedSpell = s;
+		s.setOwner(this);
 		mana -= s.getManaCost();
 	}
 	
 	
-	public Spell castSpell() {
-		Spell s = preparedSpell;
-		preparedSpell = null;
-		return s;
+	public void castSpell() {
+		if (preparedSpell!=null) {
+			preparedSpell.launch();
+			preparedSpell = null;
+		}
 	}
-
-
-
 
 
 	/* (non-Javadoc)
@@ -83,6 +85,12 @@ public class Character extends MovingObject {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

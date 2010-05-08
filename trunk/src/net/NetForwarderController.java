@@ -6,7 +6,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import core.Fight;
+import core.fight.Fight;
+
+
 
 
 /*

@@ -16,7 +16,7 @@ import core.space.Position;
 public abstract class AbstractProjectileSpell extends MovingObject implements TargettingSpell {
 	
 	Position target;
-	boolean collideable = false;
+	Character owner;
 	
 	public abstract int getDamage();
 
@@ -29,7 +29,7 @@ public abstract class AbstractProjectileSpell extends MovingObject implements Ta
 
 	@Override
 	public void launch() {
-		Direction d = Direction.fromPoints(this.getPosition(), target);
+		Direction d = Direction.fromPoints(this.owner.getPosition(), target);
 		this.setDirection(d);
 		this.materialize();
 	}
@@ -49,14 +49,16 @@ public abstract class AbstractProjectileSpell extends MovingObject implements Ta
 	}
 	
 	@Override
+	public void setOwner(Character owner) {
+		this.owner = owner;
+		this.setPosition(owner.getPosition());
+	}
+	
+	@Override
 	public boolean collides(AbstractObject other) {
-		float dist = this.getPosition().distance(other.getPosition());
-		
-		if (!collideable && dist > 200) {
-			collideable = true;
-			return false;
-		}
-		return collideable && super.collides(other);
+		if (other!=this.owner)
+			return super.collides(other);
+		return false;
 	}
 
 }
