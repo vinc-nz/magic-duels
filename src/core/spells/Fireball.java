@@ -3,6 +3,8 @@
  */
 package core.spells;
 
+import core.objects.AbstractObject;
+
 /**
  * @author deamon
  *
@@ -41,6 +43,13 @@ public class Fireball extends AbstractProjectileSpell {
 	public int getManaCost() {
 		
 		return 5;
+	}
+	
+	@Override
+	public boolean collides(AbstractObject other) {
+		if (other instanceof Fireball)
+			return false;
+		return super.collides(other);
 	}
 
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import core.fight.Fight;
+import core.objects.Spell;
 
 
 
@@ -17,20 +18,31 @@ import core.fight.Fight;
 public class NetForwarderController extends CharacterController {
 	DataOutputStream forwarder;
 	
-	public NetForwarderController(short id, Fight fight, OutputStream os) {
+	public NetForwarderController(int id, Fight fight, OutputStream os) {
 		super(id,fight);
 		forwarder = new DataOutputStream(os);
 	}
 	
-	@Override
-	public void performAction(String trigger) {
+	
+	public void forward(String trigger) {
 		try {
 			forwarder.writeBytes(trigger + "\n");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		super.performAction(trigger);
+	}
+	
+	@Override
+	public void castSpell(Class<? extends Spell> spell) {
+		this.forward("spell>"+spell.getName());
+		super.castSpell(spell);
+	}
+	
+	@Override
+	public void move(String name) {
+		this.forward("move>"+name);
+		super.move(name);
 	}
 
 }

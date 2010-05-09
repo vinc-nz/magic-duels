@@ -17,10 +17,10 @@ public class CharacterController {
 	int playerID; // id player
 	Fight fight; // partita
 	
-	public CharacterController(int playerID, Fight fight2) {
+	public CharacterController(int playerID, Fight fight) {
 		super();
 		this.playerID = playerID;
-		this.fight = fight2;
+		this.fight = fight;
 	}
 	
 	/**
@@ -32,10 +32,25 @@ public class CharacterController {
 
 	//riceve il trigger e svolge l'azione
 	public void performAction(String trigger) {
-		
-		
+		int i = trigger.indexOf(">")+1;
+		if (trigger.contains("spell")) {
+			String name = "core.spells." + trigger.substring(i);
+			this.castSpell(name);
+		}
+		else if (trigger.contains("move")) {
+			this.move(trigger.substring(i));
+		}
 	}
 	
+	protected void castSpell(String spellName) {
+		try {
+			Class<? extends Spell> spell = (Class<? extends Spell>) Class.forName(spellName);
+			this.castSpell(spell);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * lancia una magia

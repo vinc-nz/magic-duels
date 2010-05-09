@@ -3,6 +3,9 @@ package jmegraphic;
 import input.CharacterController;
 
 import java.io.IOException;
+import java.util.logging.Logger;
+
+import com.jme.app.AbstractGame;
 
 import net.ClientGame;
 import net.NetGame;
@@ -68,21 +71,21 @@ public class Game extends GraphicFight {
 		this.input = this.playerMote.getPlayingMote();
 	}
 	
-	//per i settaggi video
-	public void videoSettings() {
-		this.setConfigShowMode(ConfigShowMode.AlwaysShow);
-		
-		Thread otherThread = new Thread() {
-			@Override
-			public void run() {
-				Game.this.getAttributes();
-			}
-		};
-	
-		otherThread.start();
-		
-		this.setConfigShowMode(ConfigShowMode.ShowIfNoConfig);
-	}
+//	//per i settaggi video
+//	public void videoSettings() {
+//		this.setConfigShowMode(ConfigShowMode.AlwaysShow);
+//		
+//		Thread otherThread = new Thread() {
+//			@Override
+//			public void run() {
+//				Game.this.getAttributes();
+//			}
+//		};
+//	
+//		otherThread.start();
+//		
+//		this.setConfigShowMode(ConfigShowMode.ShowIfNoConfig);
+//	}
 	
 	@Override
 	protected void initGame() {
