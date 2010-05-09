@@ -4,12 +4,15 @@ import wiiMoteInput.SpellStep;
 import wiiMoteInput.SpellTimer;
 import wiiMoteInput.Spells;
 
-public class FiveFireBallsSpell extends Spells {
+public class FanBalls extends Spells {
 
 	public final static SpellStep END = new SpellStep(130, 130, 165, CLOSE, CLOSE, CLOSE, AMB, AMB, AMB);
 	
-	public FiveFireBallsSpell() {
-		super("FiveFireBalls");
+	public boolean canCheck;
+	private FiveFireBallTimer canCheckTimer;
+	
+	public FanBalls() {
+		super("FanBalls");
 	}
 
 	public void run()
@@ -24,14 +27,18 @@ public class FiveFireBallsSpell extends Spells {
 		this.timer.start();
 		
 		this.stop = false;
-				
+		this.canCheck = false;
+		
+		this.canCheckTimer = new FiveFireBallTimer(this, 101);
+		this.canCheckTimer.start();
+		
 		int X = this.playingMote.getCurrentXvalue();
 		int Y = this.playingMote.getCurrentYvalue();
 		int Z = this.playingMote.getCurrentZvalue();
 		
 		boolean ItIsSpell = false;
 		
-		while( (!ItIsSpell && !this.stop) || (mediaX == 0 || mediaY == 0 || mediaZ == 0) )
+		while( (!this.canCheck) || (!ItIsSpell && !this.stop) || (mediaX == 0 || mediaY == 0 || mediaZ == 0))
 		{
 			ItIsSpell = this.isEndPosition(X, Y, Z);
 
@@ -74,7 +81,7 @@ public class FiveFireBallsSpell extends Spells {
 	@Override
 	protected boolean isSpell() {
 		System.out.println("ENTRO IN ISSPELL DI FIVE BALLS");
-		if(super.about(super.mediaZ, 170, IRRILEVANT, DX))
+		if(super.about(super.mediaZ, 150, IRRILEVANT, DX))
 		{
 			System.out.println("E' LA MAGIA !!!");
 			return true;

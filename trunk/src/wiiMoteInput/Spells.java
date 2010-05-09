@@ -3,7 +3,8 @@ package wiiMoteInput;
 import core.spells.Fireball;
 import input.CharacterController;
 import wiiMoteInput.spells.FireBallSpell;
-import wiiMoteInput.spells.FiveFireBallsSpell;
+import wiiMoteInput.spells.FanBalls;
+import wiiMoteInput.spells.NewSpell;
 
 /*
  * The function manages all the spells that a player could
@@ -26,7 +27,8 @@ abstract public class Spells extends Thread {
 	public static final int AMB = 2;
 	
 	protected static final SpellStep FIREBALL_START = new SpellStep(125, 125, 100, CLOSE, CLOSE, CLOSE, AMB, AMB, AMB);
-	protected static final SpellStep FIVEFIREBALLS_START = new SpellStep(110, 130, 140, CLOSE, CLOSE, CLOSE, AMB, AMB, AMB);
+	protected static final SpellStep FIVEFIREBALLS_START = new SpellStep(125, 125, 150, CLOSE, CLOSE, CLOSE, AMB, AMB, AMB);
+	protected static final SpellStep NEWSPELL_START = new SpellStep(125, 145, 140, CLOSE, CLOSE, CLOSE, AMB, AMB, AMB);
 	
 	public static final int TIMEOUT = 1500;
 	
@@ -87,26 +89,33 @@ abstract public class Spells extends Thread {
 
 		System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
 		
-		if(FIREBALL_START.isAtStep(X, Y, Z)){
+		if(FIREBALL_START.isAtStep(X, Y, Z))
+		{
 			System.out.println("FIREBALLS");
 			System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
 			return new FireBallSpell();
 		}
 		else 
+			if(NEWSPELL_START.isAtStep(X, Y, Z))
+			{
+				System.out.println("FIREBALLS");
+				System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
+				return new NewSpell();
+			}
+		else 
 			if(FIVEFIREBALLS_START.isAtStep(X, Y, Z))
 			{
 				System.out.println("FIREBALLS");
 				System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
-				return new FiveFireBallsSpell();
-			}
-		
+				return new FanBalls();
+			}		
 		return null;
 		
 	}
 	
 	protected void castSpell()
 	{
-		characterController.castSpell(Fireball.class);
+		characterController.castSpell(this.toString());
 	}
 	
 	/*

@@ -52,7 +52,13 @@ public class PlayerMote {
 			
 		}
 		
-		if (this.mote != null) return true;
+		if (this.mote != null)
+		{
+			Thread thread = new LedThread(this.mote);
+			thread.start();
+			
+			return true;
+		}
 		
 		return false;
 	}
