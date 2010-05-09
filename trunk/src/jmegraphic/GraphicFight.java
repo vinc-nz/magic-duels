@@ -42,8 +42,6 @@ public class GraphicFight extends BaseGame {
 	ObjectMap objects;
 	List<SceneElem> elements;
 	
-	GraphicCharacter focused; //il mago inquadrato dalla telecamera
-	GraphicCharacter other;
 	
 	InputInterface input; // Input
 	Timer timer;
@@ -51,7 +49,7 @@ public class GraphicFight extends BaseGame {
 	Countdown countdown;
 	float lastTime;
 	
-	static final float UPTIME = 0.005f;  //intervallo di aggiornamento (in secondi)
+	static final float UPTIME = 0.01f;  //intervallo di aggiornamento (in secondi)
 	
 	MainMenu mainMenu;
 	
@@ -80,13 +78,13 @@ public class GraphicFight extends BaseGame {
 		Character player = fight.getPlayer(input.getPlayerID());
 		Character enemy = fight.getEnemy(player);
 		
-		this.focused = new GraphicCharacter(player);
+		GraphicCharacter focused = new GraphicCharacter(player);
 		objects.put(player, focused);
 		StatusBars focusedBars = new StatusBars(player,true,true);
 		focusedBars.setPosition(HudObject.POSITION_BOTTOM_LEFT);
 		elements.add(focusedBars);
 		
-		this.other = new GraphicCharacter(enemy);
+		GraphicCharacter other = new GraphicCharacter(enemy);
 		this.objects.put(enemy, other);
 		StatusBars otherBar = new StatusBars(enemy,true,false);
 		otherBar.setPosition(HudObject.POSITION_UPPER_RIGHT);
@@ -193,7 +191,7 @@ public class GraphicFight extends BaseGame {
 			sceneElem.update();
 			if (sceneElem.isInGame())
 				newElems.add(sceneElem);
-			else {this.scene.detachChild(sceneElem);System.out.println("\n\n\n\n\n\n"+sceneElem);}
+			else this.scene.detachChild(sceneElem);
 		}
 		
 		this.elements = newElems;
