@@ -42,7 +42,7 @@ public class CharacterController {
 		}
 	}
 	
-	protected void castSpell(String spellName) {
+	public void castSpell(String spellName) {
 		try {
 			Class<? extends Spell> spell = (Class<? extends Spell>) Class.forName(spellName);
 			this.castSpell(spell);

@@ -21,7 +21,7 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 		
 		if (evento.isButtonAPressed())
 		{
-			this.characterController.switch_pos();
+			//this.characterController.switch_pos();
 			if(!this.playingMote.isChecking)
 			{
 				System.out.println("AVVIO IL THREAD PER IL CHECK!");
@@ -29,6 +29,13 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 			}
 		}
 		
+		if(evento.isButtonMinusPressed())
+			this.characterController.move("left");
+		
+		if(evento.isButtonPlusPressed())
+			this.characterController.move("right");
+		
+		/*
 		if(evento.isDPadDownPressed())
 		{
 			this.characterController.move("backward");
@@ -45,7 +52,7 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 		{
 			this.characterController.move("right");
 		}
-		
+		*/
 	}
 
 }
