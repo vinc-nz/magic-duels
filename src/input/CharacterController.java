@@ -33,16 +33,17 @@ public class CharacterController {
 	//riceve il trigger e svolge l'azione
 	public void performAction(String trigger) {
 		int i = trigger.indexOf(">")+1;
+		String name = trigger.substring(i);
 		if (trigger.contains("spell")) {
-			String name = "core.spells." + trigger.substring(i);
 			this.castSpell(name);
 		}
 		else if (trigger.contains("move")) {
-			this.move(trigger.substring(i));
+			this.move(name);
 		}
 	}
 	
 	public void castSpell(String spellName) {
+		spellName = "core.spells." + spellName;
 		try {
 			Class<? extends Spell> spell = (Class<? extends Spell>) Class.forName(spellName);
 			this.castSpell(spell);
