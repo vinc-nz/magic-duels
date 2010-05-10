@@ -6,7 +6,7 @@ import core.space.Direction;
 
 public class FanBalls implements Spell {
 	
-	private static final int N = 0;
+	private static final int N = 5;
 	private static final float ANGLE_OFFSET = (float) Math.PI/6;
 	
 	Fireball[] balls = new Fireball[N];

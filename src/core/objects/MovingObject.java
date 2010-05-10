@@ -62,12 +62,16 @@ public abstract class MovingObject extends AbstractObject {
 	}
 	
 	public void moveALeft() {
-		Direction d = Direction.yDirection().opposite();
+		Direction d = Direction.yDirection();
+		if (direction.getX()>0)
+			d = d.opposite();
 		this.moveThrough(d);
 	}
 	
 	public void moveARight() {
 		Direction d = Direction.yDirection();
+		if (direction.getX()<0)
+			d = d.opposite();
 		this.moveThrough(d);
 	}
 	
