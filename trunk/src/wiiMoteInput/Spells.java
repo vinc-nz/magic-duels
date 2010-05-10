@@ -1,9 +1,8 @@
 package wiiMoteInput;
 
-import core.spells.Fireball;
 import input.CharacterController;
-import wiiMoteInput.spells.FireBallSpell;
 import wiiMoteInput.spells.FanBalls;
+import wiiMoteInput.spells.FireBallSpell;
 import wiiMoteInput.spells.NewSpell;
 
 /*
@@ -96,19 +95,19 @@ abstract public class Spells extends Thread {
 			return new FireBallSpell();
 		}
 		else 
+			if(FIVEFIREBALLS_START.isAtStep(X, Y, Z))
+			{
+				System.out.println("FIREBALLS");
+				System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
+				return new FanBalls();
+			}
+		else 
 			if(NEWSPELL_START.isAtStep(X, Y, Z))
 			{
 				System.out.println("FIREBALLS");
 				System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
 				return new NewSpell();
 			}
-		else 
-			if(FIVEFIREBALLS_START.isAtStep(X, Y, Z))
-			{
-				System.out.println("FIREBALLS");
-				System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
-				return new FanBalls();
-			}		
 		return null;
 		
 	}
