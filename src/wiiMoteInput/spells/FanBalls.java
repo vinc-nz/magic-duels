@@ -81,7 +81,7 @@ public class FanBalls extends Spells {
 	@Override
 	protected boolean isSpell() {
 		System.out.println("ENTRO IN ISSPELL DI FIVE BALLS");
-		if(super.about(super.mediaZ, 150, IRRILEVANT, DX))
+		if(super.about(super.mediaZ, 130, IRRILEVANT, DX))
 		{
 			System.out.println("E' LA MAGIA !!!");
 			return true;
