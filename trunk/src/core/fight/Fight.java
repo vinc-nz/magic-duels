@@ -25,6 +25,7 @@ public class Fight {
 	
 	public boolean running;
 	public boolean finished;
+	private boolean paused;
 	
 	
 	
@@ -106,6 +107,15 @@ public class Fight {
 		
 		players[0].mana++;
 		players[1].mana++;
+	}
+
+
+	public boolean paused() {
+		return paused;
+	}
+	
+	public void togglePause() {
+		paused = !paused;
 	}
 
 }

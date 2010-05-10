@@ -8,11 +8,10 @@ import input.InputInterface;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import jmegraphic.hud.Countdown;
 import jmegraphic.hud.HudObject;
+import jmegraphic.hud.Notification;
 import jmegraphic.hud.StatusBars;
 import utils.ExplosionFactory;
 import Menu.src.MainMenu;
@@ -24,13 +23,11 @@ import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Node;
 import com.jme.system.DisplaySystem;
 import com.jme.util.Timer;
-import com.jmex.effects.particles.ParticleMesh;
 
-
+import core.fight.Character;
 import core.fight.Fight;
 import core.objects.AbstractObject;
 import core.space.World;
-import core.fight.Character;
 
 
 
@@ -40,9 +37,10 @@ public class GraphicFight extends BaseGame {
 	public Node scene; // nodo radice
 	
 	ObjectMap objects;
-	List<SceneElem> elements;
+	LinkedList<SceneElem> elements;
 	
 	int loading;
+	boolean paused;
 	
 	InputInterface input; // Input
 	Timer timer;
@@ -61,6 +59,7 @@ public class GraphicFight extends BaseGame {
 		this.mainMenu = mainMenu;
 		this.fight = new Fight();
 		this.loading = 0;
+		this.paused = false;
 	}
 	
 	
@@ -173,7 +172,14 @@ public class GraphicFight extends BaseGame {
 			
 			fight.update();
 			
-			this.updateObjects();
+			if (fight.paused()) {
+				if (!this.paused)
+					pause();
+			}
+			else if (this.paused)
+				resume();
+			else this.updateObjects();
+			
 			this.updateElements();
 		
 			camera.update(timer);
@@ -183,6 +189,25 @@ public class GraphicFight extends BaseGame {
 		} //ENDIF
 	}
 	
+	private void resume() {
+		SceneElem notification = elements.getLast();
+		this.scene.detachChild(notification);
+		elements.remove(notification);
+		this.paused = false;
+	}
+
+
+
+	private void pause() {
+		this.paused = true;
+		Notification n = new Notification("Pausa");
+		n.setPosition(HudObject.POSITION_CENTER);
+		this.scene.attachChild(n);
+		this.elements.add(n);
+	}
+
+
+
 	protected void updateObjects() {
 		
 		for (AbstractObject obj : World.getObjects() ) {

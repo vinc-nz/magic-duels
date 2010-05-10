@@ -75,4 +75,8 @@ public class CharacterController {
 		
 	}
 	
+	public void pause() {
+		fight.togglePause();
+	}
+	
 }
