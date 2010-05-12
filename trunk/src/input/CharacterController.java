@@ -43,7 +43,8 @@ public class CharacterController {
 	}
 	
 	public void castSpell(String spellName) {
-		spellName = "core.spells." + spellName;
+		if (!spellName.contains("."))
+			spellName = "core.spells." + spellName;
 		try {
 			Class<? extends Spell> spell = (Class<? extends Spell>) Class.forName(spellName);
 			this.castSpell(spell);
