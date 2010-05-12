@@ -17,12 +17,15 @@ public class DBFunctions {
 		return emf.createEntityManager();
 	}
 	
-	public static void iscrivi(String nome, String password, String mail, InetAddress ip)
+	public static boolean iscrivi(String nome, String password, String mail, InetAddress ip)
 	{
 		EntityManager em = DBFunctions.getEntityManager();
 		
 		try
 		{
+			Utente utenteDB = em.find(Utente.class, nome);
+			if(utenteDB != null) return false;
+			
 			em.getTransaction().begin();
 			Utente nuovo = new Utente();
 			nuovo.setNome(nome);
@@ -34,11 +37,17 @@ public class DBFunctions {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
+			return false;
 		} finally {
 			em.close();
+			return true;
 		}
 		
-		
+	}
+	
+	public static Utente logIn(String nome, String password)
+	{	
+		return DBFunctions.getEntityManager().find(Utente.class, nome);	
 	}
 	
 }
