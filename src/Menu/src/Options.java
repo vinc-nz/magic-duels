@@ -191,11 +191,12 @@ public class Options extends JPanel {
 			
 			@Override
 			public void paintIcon(Component c, Graphics g, int x, int y) {
-				// TODO Auto-generated method stub
-				if(wiiSelected)
+				
+				if(mainMenu.playMote.getMote() == null)
 					g.drawImage(wiiMoteSelected, 0,0, wiiMoteSelected.getWidth(null), wiiMoteSelected.getHeight(null), null);
 				else
 					g.drawImage(wiiMote, 0,0, wiiMote.getWidth(null), wiiMote.getHeight(null), null);
+				
 			}
 			
 			@Override
@@ -215,18 +216,24 @@ public class Options extends JPanel {
 		mote.setContentAreaFilled(false);
 		pVerticalEmpty2.add(mote);
 		
-		mote.addActionListener(
-			    new ActionListener() {
+		mote.addActionListener(new WiiMoteButton(mainMenu, this));
+				/*
+			    new ActionListener(MainMenu mainMenu) {
+			    			    	
+			    	
+			    	
 			    	@Override
 			        public void actionPerformed(ActionEvent e) {
 			    		if(wiiSelected)
+			    		{
 			    			wiiSelected = false;
+			    		}
 			    		else
 			    			wiiSelected = true;
 			    		//mainMenu.switchTo(mainPanel);
 			        }
 			    }
-			);
+			);*/
 			
 		//add lower horizontal empty panel
 		JPanel pHorizontalEmpty1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));

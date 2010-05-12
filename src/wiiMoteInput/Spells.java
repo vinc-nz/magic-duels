@@ -115,6 +115,7 @@ abstract public class Spells extends Thread {
 	protected void castSpell()
 	{
 		characterController.castSpell(this.toString());
+		System.out.println("LANCIATO!");
 	}
 	
 	/*

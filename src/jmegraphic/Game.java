@@ -60,8 +60,12 @@ public class Game extends GraphicFight {
 
 	protected void initInput(CharacterController playerController) {
 		//this.input = new KeyboardInput(playerController);
-		this.playerMote.findMote();
-		this.playerMote.getMote().rumble(1000);
+		if(playerMote.getMote() == null)
+		{
+			this.playerMote.findMote();
+			this.playerMote.getMote().rumble(1000);
+		}
+		
 		this.playerMote.createPlayingMote(playerController);
 /*		
 		this.playerMote.getPlayingMote().createButtonListener();
