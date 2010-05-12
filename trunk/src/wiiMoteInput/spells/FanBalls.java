@@ -53,7 +53,7 @@ public class FanBalls extends Spells {
 			Z = this.playingMote.getCurrentZvalue();
 		}
 		
-		// Se è scaduto il tempo:
+		// Se ï¿½ scaduto il tempo:
 		if(this.stop && !ItIsSpell) 
 		{
 			System.out.println("NON E' LA MAGIA (timeout)");	
@@ -84,6 +84,7 @@ public class FanBalls extends Spells {
 		if(super.about(super.mediaZ, 130, IRRILEVANT, DX))
 		{
 			System.out.println("E' LA MAGIA !!!");
+			super.castSpell();
 			return true;
 		}
 		

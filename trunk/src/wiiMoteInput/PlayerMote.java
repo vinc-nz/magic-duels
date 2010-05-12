@@ -82,7 +82,9 @@ public class PlayerMote {
 	{
 		if(this.mote != null)
 		{
-			this.playerMoteFinder.disconnectMote();
+			//this.playerMoteFinder.disconnectMote();
+			this.mote.disconnect();
+			this.notifyAll();
 		}
 	}
 	
