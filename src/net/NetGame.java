@@ -13,11 +13,11 @@ import core.fight.Fight;
 public class NetGame {
 	Socket channel;
 	NetListener listener;
-	short local;
+	int local;
 	
 	
 	
-	public NetGame(short local) {
+	public NetGame(int local) {
 		super();
 		this.channel = null;
 		this.local = local;

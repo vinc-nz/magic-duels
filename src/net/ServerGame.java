@@ -3,7 +3,7 @@ package net;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import core.Fight;
+import core.fight.Fight;
 
 public class ServerGame extends NetGame{
 	

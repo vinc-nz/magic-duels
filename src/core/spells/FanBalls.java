@@ -18,7 +18,7 @@ public class FanBalls implements Spell {
 	@Override
 	public int getManaCost() {
 		
-		return 25;
+		return balls[0].getManaCost()*N;
 	}
 
 	@Override
