@@ -21,10 +21,6 @@ public class Utente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id")
-	int id;
-	
 	@Column(name="nome")
 	String nome;
 	
@@ -39,14 +35,6 @@ public class Utente implements Serializable {
 
 	@Column(name="ip_iscrizione")
 	InetAddress ip_iscrizione;
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getNome() {
 		return nome;
