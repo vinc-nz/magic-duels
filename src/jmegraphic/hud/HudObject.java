@@ -47,22 +47,22 @@ public abstract class HudObject extends SceneElem {
 		switch (hint) {
 		case POSITION_BOTTOM:
 			this.getLocalTranslation().x = display.getWidth()/2;
-			this.getLocalTranslation().y = this.height/2;
+			this.getLocalTranslation().y = display.getHeight()/20;
 			break;
 		case POSITION_BOTTOM_LEFT:
 			this.getLocalTranslation().x = this.width/2;
-			this.getLocalTranslation().y = this.height/2;
+			this.getLocalTranslation().y = display.getHeight()/20;
 			break;
 		case POSITION_CENTER:
 			this.setPosition(0.5f, 0.5f);
 			break;
 		case POSITION_UP:
 			this.getLocalTranslation().x = display.getWidth()/2;
-			this.getLocalTranslation().y = display.getHeight() - this.height/2;
+			this.getLocalTranslation().y = display.getHeight() - display.getHeight()/20;
 			break;
 		case POSITION_UPPER_RIGHT:
 			this.getLocalTranslation().x = display.getWidth() - this.width/2;
-			this.getLocalTranslation().y = display.getHeight() - this.height/2;
+			this.getLocalTranslation().y = display.getHeight() -display.getHeight()/20;
 			break;
 		default:
 			break;

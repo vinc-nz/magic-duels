@@ -12,6 +12,11 @@ public class FanBalls implements Spell {
 	Fireball[] balls = new Fireball[N];
 	
 	
+	public FanBalls() {
+		for (int i = 0; i < balls.length; i++) {
+			balls[i] = new Fireball();
+		}
+	}
 	
 	
 
@@ -34,7 +39,6 @@ public class FanBalls implements Spell {
 	public void setOwner(Character owner) {
 		int j=0;
 		for (int i = 0; i < balls.length; i++) {
-			balls[i] = new Fireball();
 			balls[i].setOwner(owner);
 			j++;
 			if (i==N/2) j=-j+1;

@@ -4,6 +4,7 @@
 package core.fight;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 
 import core.objects.Spell;
 import core.space.World;
@@ -56,8 +57,8 @@ public class Fight {
 		if (running && !this.getPlayer(playerId).isPreparingSpell()) {
 			try {
 				Spell s = (Spell) spell.newInstance();
-				this.getPlayer(playerId).prepareSpell(s);
-				this.setSpellParams(playerId, s);
+				if (this.getPlayer(playerId).prepareSpell(s))
+					this.setSpellParams(playerId, s);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -105,8 +106,11 @@ public class Fight {
 		players[0].lookAt(players[1]);
 		players[1].lookAt(players[0]);
 		
-		players[0].mana++;
-		players[1].mana++;
+		long time = new Date().getTime();
+		if (time%1000==0) {
+			players[0].mana++;
+			players[1].mana++;
+		}
 	}
 
 
