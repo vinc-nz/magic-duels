@@ -18,6 +18,7 @@ public class Character extends MovingObject {
 	
 	int life;
 	int mana;
+	boolean enoughMana = true;
 	
 	Spell preparedSpell = null;
 	
@@ -29,6 +30,7 @@ public class Character extends MovingObject {
 		this.name = name;
 		this.life = 100;
 		this.mana = 100;
+		this.setRadius(10);
 		this.materialize();
 	}
 
@@ -58,13 +60,32 @@ public class Character extends MovingObject {
 	}
 	
 	
-	public void prepareSpell(Spell s) {
-		preparedSpell = s;
-		s.setOwner(this);
-		mana -= s.getManaCost();
+	public boolean prepareSpell(Spell s) {
+		int cost = s.getManaCost();
+		if (cost<=mana) {
+			preparedSpell = s;
+			s.setOwner(this);
+			mana -= cost;
+			return true;
+		}
+		this.enoughMana = false;
+		return false;
 	}
 	
 	
+	
+	public boolean notEnoughMana() {
+		if (!enoughMana) {
+			enoughMana = true;
+			return true;
+		}
+		return false;
+	}
+
+	public void setNotEnoughMana(boolean notEnoughMana) {
+		this.enoughMana = notEnoughMana;
+	}
+
 	public void castSpell() {
 		if (preparedSpell!=null) {
 			preparedSpell.launch();

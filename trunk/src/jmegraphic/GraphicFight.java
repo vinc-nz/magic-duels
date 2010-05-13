@@ -36,6 +36,7 @@ public class GraphicFight extends BaseGame {
 	CustomCamera camera; // camera
 	public Node scene; // nodo radice
 	
+	GraphicCharacter focused;
 	ObjectMap objects;
 	LinkedList<SceneElem> elements;
 	
@@ -48,7 +49,7 @@ public class GraphicFight extends BaseGame {
 	Countdown countdown;
 	float lastTime;
 	
-	static final float UPTIME = 0.01f;  //intervallo di aggiornamento (in secondi)
+	static final float UPTIME = 0.008f;  //intervallo di aggiornamento (in secondi)
 	
 	MainMenu mainMenu;
 	
@@ -81,7 +82,7 @@ public class GraphicFight extends BaseGame {
 		Character enemy = fight.getEnemy(player);
 		this.setLoading(40);
 		
-		GraphicCharacter focused = new GraphicCharacter(player);
+		this.focused = new GraphicCharacter(player);
 		objects.put(player, focused);
 		StatusBars focusedBars = new StatusBars(player,true,true);
 		focusedBars.setPosition(HudObject.POSITION_BOTTOM_LEFT);
@@ -217,6 +218,15 @@ public class GraphicFight extends BaseGame {
 			else if (!go.isInGame()) 
 				this.objects.remove(obj);
 			else go.update();
+		}
+		
+		if (focused.coreCharacter.notEnoughMana()) {
+			Notification noMana = new Notification("NO MANA!");
+			noMana.setPosition(HudObject.POSITION_BOTTOM);
+			noMana.setExpireTime(3);
+			noMana.loadModel();
+			scene.attachChild(noMana);
+			this.elements.add(noMana);
 		}
 	}
 	
