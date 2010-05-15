@@ -9,7 +9,7 @@ import core.fight.Fight;
 public class ClientGame extends NetGame {
 	
 	public ClientGame(String address, int port) {
-		super(Fight.ID_P2);
+		super(2);
 		try {
 			channel = new Socket(address, port);
 		} catch (UnknownHostException e) {

@@ -8,7 +8,7 @@ import core.fight.Fight;
 public class ServerGame extends NetGame{
 	
 	public ServerGame(int port) {
-		super(Fight.ID_P1);
+		super(1);
 		ServerSocket s;
 		try {
 			s = new ServerSocket(port);

@@ -29,9 +29,9 @@ public class NetGame {
 	}
 	
 	public void buildListener(Fight fight) throws IOException {
-		short id = Fight.ID_P1;
+		short id = 1;
 		if (local == id)
-			id = Fight.ID_P2;
+			id = 2;
 		CharacterController controller = new CharacterController(id, fight);
 		this.listener = new NetListener(controller,channel.getInputStream());
 	}

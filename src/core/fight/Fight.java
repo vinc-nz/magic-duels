@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.util.Date;
 
 import core.objects.Spell;
+import core.space.Position;
 import core.space.World;
 import core.spells.TargettingSpell;
 
@@ -16,10 +17,7 @@ import core.spells.TargettingSpell;
  */
 public class Fight {
 	
-	public static final int ID_P1 = 0; 
-	public static final int ID_P2 = 1;
-	
-	Character[] players = new Character[2];
+	Character[] players = new Character[4];
 	
 	
 	
@@ -32,11 +30,19 @@ public class Fight {
 	
 	
 	public Fight() {
-		players[0] = new Character(Character.PLAYER_ONE);
-		players[1] = new Character(Character.PLAYER_TWO);
+		Position[] positions = {
+				new Position(100, 100),
+				new Position(-100, 100),
+				new Position(100, -100),
+				new Position(-100, -100)
+		};
 		
-		players[0].getPosition().set(-100, 0);
-		players[1].getPosition().set(100, 0);
+		for (int i = 0; i < players.length; i++) {
+			String name = "Player" + Integer.toString(i+1);
+			players[i] = new Character(name);
+			players[i].setPosition(positions[i]);
+		}
+		
 		
 		running = false;
 		finished = false;
@@ -45,11 +51,11 @@ public class Fight {
 	
 	
 	public Character getPlayer(int id) {
-		return players[id];
+		return players[id-1];
 	}
 	
 	public Character getEnemy(Character character) {
-		return (character == players[0] ? players[1] : players[0]);
+		return this.getPlayer(character.target);
 	}
 	
 	
@@ -91,6 +97,11 @@ public class Fight {
 		}
 	}
 	
+	public void nextTarget(int playerId) {
+		Character player = this.getPlayer(playerId);
+		player.target = player.target%4+1;
+	}
+	
 	public void start() {
 		running = true; 
 	}
@@ -102,14 +113,13 @@ public class Fight {
 	
 	public void update() {
 		World.checkCollisions();
+		boolean increaseMana = new Date().getTime() % 1000==0;
 		
-		players[0].lookAt(players[1]);
-		players[1].lookAt(players[0]);
-		
-		long time = new Date().getTime();
-		if (time%1000==0) {
-			players[0].mana++;
-			players[1].mana++;
+		for (int i = 0; i < players.length; i++) {
+			int target = players[i].target;
+			players[i].lookAt(this.getPlayer(target));
+			if (increaseMana) 
+				players[i].mana++;
 		}
 	}
 
