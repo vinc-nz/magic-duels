@@ -6,31 +6,26 @@ package core.spells;
 import core.fight.Character;
 import core.objects.AbstractObject;
 import core.objects.MovingObject;
-import core.space.Direction;
+import core.objects.Spell;
 import core.space.Position;
 
 /**
  * @author spax
  *
  */
-public abstract class AbstractProjectileSpell extends MovingObject implements TargettingSpell {
+public abstract class AbstractProjectileSpell extends MovingObject implements Spell {
 	
 	Position target;
 	Character owner;
 	
 	public abstract int getDamage();
 
-	@Override
-	public void setTarget(Position target) {
-		this.target = target;
-		
-	}
+	
 	
 
 	@Override
 	public void launch() {
-		Direction d = Direction.fromPoints(this.owner.getPosition(), target);
-		this.setDirection(d);
+		this.setDirection(owner.getDirection());
 		this.materialize();
 	}
 	

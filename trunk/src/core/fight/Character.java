@@ -13,9 +13,6 @@ import core.objects.Spell;
  */
 public class Character extends MovingObject { 
 	
-	public static final String PLAYER_ONE = "PlayerOne";
-	public static final String PLAYER_TWO = "PlayerTwo";
-	
 	int life;
 	int mana;
 	int target;
@@ -31,7 +28,8 @@ public class Character extends MovingObject {
 		this.name = name;
 		this.life = 100;
 		this.mana = 100;
-		this.setRadius(10);
+		this.target = 1;
+		this.setRadius(25);
 		this.materialize();
 	}
 
@@ -94,6 +92,15 @@ public class Character extends MovingObject {
 		}
 	}
 
+	
+
+	public int getTarget() {
+		return target;
+	}
+
+	public void setTarget(int target) {
+		this.target = target;
+	}
 
 	/* (non-Javadoc)
 	 * @see core.objects.AbstractObject#handleCollision(core.objects.AbstractObject)

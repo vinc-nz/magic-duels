@@ -30,17 +30,21 @@ public class Fight {
 	
 	
 	public Fight() {
+		int distance = 200;
 		Position[] positions = {
-				new Position(100, 100),
-				new Position(-100, 100),
-				new Position(100, -100),
-				new Position(-100, -100)
+				new Position(distance, distance),
+				new Position(-distance, distance),
+				new Position(distance, -distance),
+				new Position(-distance, -distance)
 		};
+		
+		int targets[] = {2,1,4,3};
 		
 		for (int i = 0; i < players.length; i++) {
 			String name = "Player" + Integer.toString(i+1);
 			players[i] = new Character(name);
 			players[i].setPosition(positions[i]);
+			players[i].target = targets[i];
 		}
 		
 		
@@ -100,6 +104,8 @@ public class Fight {
 	public void nextTarget(int playerId) {
 		Character player = this.getPlayer(playerId);
 		player.target = player.target%4+1;
+		if (player.target == playerId)
+			this.nextTarget(playerId);
 	}
 	
 	public void start() {
@@ -121,6 +127,10 @@ public class Fight {
 			if (increaseMana) 
 				players[i].mana++;
 		}
+	}
+	
+	public int numberOfPlayers() {
+		return players.length;
 	}
 
 

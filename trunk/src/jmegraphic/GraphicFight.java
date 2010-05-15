@@ -39,6 +39,7 @@ public class GraphicFight extends BaseGame {
 	GraphicCharacter focused;
 	ObjectMap objects;
 	LinkedList<SceneElem> elements;
+	StatusBars enemyBars;
 	
 	int loading;
 	boolean paused;
@@ -77,25 +78,26 @@ public class GraphicFight extends BaseGame {
 		scene = new Node("battlefield");
 		scene.attachChild(new Arena());
 		this.setLoading(35);
-	    
-		Character player = fight.getPlayer(input.getPlayerID());
-		Character enemy = fight.getEnemy(player);
-		this.setLoading(40);
 		
-		this.focused = new GraphicCharacter(player);
-		objects.put(player, focused);
-		StatusBars focusedBars = new StatusBars(player,true,true);
-		focusedBars.setPosition(HudObject.POSITION_BOTTOM_LEFT);
-		elements.add(focusedBars);
-		this.setLoading(70);
-		
-		GraphicCharacter other = new GraphicCharacter(enemy);
-		this.objects.put(enemy, other);
-		StatusBars otherBar = new StatusBars(enemy,true,false);
-		otherBar.setPosition(HudObject.POSITION_UPPER_RIGHT);
-		elements.add(otherBar);
+		for (int i=1;i<=fight.numberOfPlayers();i++) {
+			Character player = fight.getPlayer(i);
+			GraphicCharacter graphicCharacter = new GraphicCharacter(player);
+			this.objects.put(player, graphicCharacter);
+			if (i==input.getPlayerID()) {
+				this.focused = graphicCharacter;
+				StatusBars focusedBars = new StatusBars(player,true,true);
+				focusedBars.setPosition(HudObject.POSITION_BOTTOM_LEFT);
+				elements.add(focusedBars);
+				this.setLoading(50);
+			}
+		}
 		this.setLoading(80);
 		
+		int enemy = focused.coreCharacter.getTarget();
+		this.enemyBars = new StatusBars(fight.getPlayer(enemy), true, false);
+		enemyBars.setPosition(HudObject.POSITION_UPPER_RIGHT);
+		elements.add(enemyBars);
+	    
 		ExplosionFactory.warmup();
 		
 		countdown = new Countdown(fight, 3);
@@ -110,7 +112,7 @@ public class GraphicFight extends BaseGame {
 		this.setLoading(95);
 		
 		//camera in terza persona
-		camera.setCharacters(focused, other);
+		camera.setFocused(focused);
 		this.setLoading(100);
 	}
 
@@ -183,13 +185,21 @@ public class GraphicFight extends BaseGame {
 			
 			this.updateElements();
 		
-			camera.update(timer);
+			this.updateCamera();
 			
 			scene.updateGeometricState(interpolation, true);
 			scene.updateRenderState();
 		} //ENDIF
 	}
 	
+	protected void updateCamera() {
+		int enemy = focused.coreCharacter.getTarget();
+		GraphicObject target = objects.get(fight.getPlayer(enemy));
+		camera.setTarget(target);
+		camera.update();
+	}
+
+
 	private void resume() {
 		SceneElem notification = elements.getLast();
 		this.scene.detachChild(notification);
@@ -231,6 +241,9 @@ public class GraphicFight extends BaseGame {
 	}
 	
 	protected void updateElements() {
+		int enemy = focused.coreCharacter.getTarget();
+		enemyBars.setCoreCharacter(fight.getPlayer(enemy));
+		
 		LinkedList<SceneElem> newElems = new LinkedList<SceneElem>();
 		
 		for (SceneElem sceneElem : this.elements) {

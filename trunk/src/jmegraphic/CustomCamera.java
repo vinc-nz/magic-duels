@@ -1,12 +1,10 @@
 package jmegraphic;
 
-import com.jme.input.ChaseCamera;
 import com.jme.math.FastMath;
 import com.jme.math.Vector3f;
 import com.jme.renderer.Camera;
 import com.jme.renderer.Renderer;
 import com.jme.system.DisplaySystem;
-import com.jme.util.Timer;
 
 
 /*
@@ -15,9 +13,9 @@ import com.jme.util.Timer;
 
 public class CustomCamera {
 	Camera camera;
-	ChaseCamera chaser;	//per la telecamera a inseguimento
+	
 	GraphicCharacter focused;  //il personaggio da inquadrare
-	GraphicCharacter enemy;		//avversario
+	GraphicObject target;		//avversario
 	Renderer renderer;
 	float minDistance;		//distanze della telecamera
 	float maxDistance;
@@ -46,42 +44,33 @@ public class CustomCamera {
 	}
 	
 	
-	//imposta i personaggi da inquadrare
-	public void setCharacters(GraphicCharacter focused, GraphicCharacter enemy) {
+	
+	
+	public void setFocused(GraphicCharacter focused) {
 		this.focused = focused;
-		this.enemy = enemy;
-		
-		//setup chase camera
-		chaser = new ChaseCamera(camera, focused);
-		chaser.setMinDistance(minDistance);
-		chaser.setMaxDistance(maxDistance);
-		
-		//this.setFromBacksView();
 	}
-	
-	
-	//camera a inseguimento
-	public void setChaserView() {
-		chaser.update(0);
-	}
-	
+
+
+
+
 	protected void setAlongDirection(Vector3f direction) {
 		Vector3f location = focused.getLocalTranslation().clone();
-		location.addLocal(direction.negate().mult(minDistance));
+		location.addLocal(direction.negate().mult(minDistance/2));
 		camera.setLocation(location);
 		camera.setDirection(direction);
 		camera.setUp(new Vector3f(0, 1, 0));
 		//camera.setUp(Vector3f.UNIT_Y);
 		camera.setLeft(direction.cross(new Vector3f(0, -1, 0)));
+		camera.getLocation().addLocal(camera.getLeft().negate().mult(50));
 	}
 	
 	//inquadra entrambi dalle spalle del focused
-	public void setLookAtEnemyView() {
+	public void setLookAtView() {
 		Vector3f location = focused.getLocalTranslation();
-		Vector3f cameraVec = enemy.getLocalTranslation().subtract(location).normalize();
+		Vector3f cameraVec = target.getLocalTranslation().subtract(location).normalize();
 		this.setAlongDirection(cameraVec);
-		camera.getLocation().y=minDistance;
-		this.inclineView(0.08f);
+		camera.getLocation().y=minDistance/4;
+//		this.inclineView(0.08f);
 		camera.update();
 	}
 	
@@ -103,17 +92,22 @@ public class CustomCamera {
 		camera.setUp(direction.cross(camera.getLeft()));
 	}
 	
-	public void update(Timer timer) {
-		//TODO eventualmente lanciare un'eccezione se i personaggi non sono stati settati
-		if (timer.getTimeInSeconds()- lastTime > UPTIME) {
-//			if (focused.coreCharacter.isInSpellCastPosition())
-//				this.setLookAtEnemyView();
-//			else
-//				//chaser.update(timer.getTimePerFrame());
-//				this.setFromBacksView();
-			this.setLookAtEnemyView();
-		}
-		//this.chaser.update(timer.getTimePerFrame());
+	
+	
+	public void setTarget(GraphicObject target) {
+		this.target = target;
+	}
+
+
+
+
+	public void update() {
+//		float time = Timer.getTimer().getTimeInSeconds();
+//		if ( time - lastTime > UPTIME) {
+			this.setLookAtView();
+//			lastTime = time;
+//		}
+		
 	}
 
 }

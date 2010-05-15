@@ -105,6 +105,7 @@ public class Mouse extends MouseAdapter{
 		super.mouseClicked(e);
 		
 		if(mainPanel.sExit){
+			//TODO kill wii
 			mainMenu.close();
 		}
 		
