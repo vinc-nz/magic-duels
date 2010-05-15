@@ -113,7 +113,8 @@ public abstract class GraphicObject extends SceneElem {
 
 
 	public static GraphicObject fromObject(AbstractObject obj) {
-		String name = "jmegraphic.spells." + obj.getName();
+		String name = obj.getClass().getName();
+		name = GraphicObject.class.getPackage().getName() + name.substring(name.indexOf('.'));
 		try {
 			Class go = Class.forName(name);
 			GraphicObject instance = (GraphicObject) go.newInstance();

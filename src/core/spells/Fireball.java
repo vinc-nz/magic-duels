@@ -16,6 +16,7 @@ public class Fireball extends AbstractProjectileSpell {
 	public Fireball() {
 		super();
 		this.setSpeed(5);
+		this.setRadius(10);
 	}
 
 	/* (non-Javadoc)

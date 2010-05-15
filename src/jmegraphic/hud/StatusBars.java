@@ -58,6 +58,14 @@ public class StatusBars extends HudObject {
 		lifeBar.setScale((display.getWidth() / 150), 
 					(display.getHeight() / 300));
 	}
+	
+	
+
+	
+
+	public void setCoreCharacter(Character coreCharacter) {
+		this.coreCharacter = coreCharacter;
+	}
 
 	@Override
 	public void update() {

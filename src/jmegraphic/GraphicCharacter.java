@@ -91,7 +91,7 @@ public class GraphicCharacter extends GraphicObject {
 	protected boolean pointOfAnimation(short animation, float part) {
 		//TODO controllare che il valore di part sia valido
 		return currentAnim == animation
-				&& controller.getCurrentTime()+0.01 >= (controller.getMaxTime()*part);
+				&& controller.getCurrentTime()+GraphicFight.UPTIME >= (controller.getMaxTime()*part);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class GraphicCharacter extends GraphicObject {
 		String modelUrl = url + "dwarf1.ms3d";
 		String name = coreCharacter.getName();
 		name = name.substring(name.length()-1);
-		String textureUrl = url + "dwarf" + name + "jpg";
+		String textureUrl = url + "dwarf" + name + ".jpg";
 		
 		Node model = ModelLoader.loadModel(modelUrl,
 				"", 1, new Quaternion());
