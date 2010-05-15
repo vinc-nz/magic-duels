@@ -9,7 +9,7 @@ import com.intel.bluetooth.BlueCoveImpl;
  * The class manages the Wii Mote Controller 
  * with all its functions
  */
-public class PlayerMote {
+public class PlayerMote extends Thread {
 	
 	protected Mote mote;
 	protected PlayerMoteFinder playerMoteFinder;
@@ -21,9 +21,9 @@ public class PlayerMote {
 	 * The function is used to connect a WiiMote Controller.
 	 * @return true if connected, false otherwise
 	 */
-	public boolean findMote()
+	public void findMote()
 	{
-
+/*
 		BlueCoveImpl.setConfigProperty("bluecove.stack", "widcomm");
 		
 		this.playerMoteFinder = new PlayerMoteFinder();
@@ -61,6 +61,8 @@ public class PlayerMote {
 		}
 		
 		return false;
+		*/
+		this.start();
 	}
 	
 	/*
@@ -116,19 +118,46 @@ public class PlayerMote {
 	public PlayingMote getPlayingMote() {
 		return this.playingMote;
 	}
-/*
-	public static void main(String[] args) {
+
+	@Override
+	public void run() {
+
+
+		BlueCoveImpl.setConfigProperty("bluecove.stack", "widcomm");
 		
-		PlayerMote playerMote = new PlayerMote();
-		playerMote.findMote();
+		this.playerMoteFinder = new PlayerMoteFinder();
+		this.playerMoteFinder.start();
 		
-		playerMote.getMote().rumble(1000);
+		while(this.playerMoteFinder.getMote() == null)
+			try {
+				Thread.sleep(101);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 		
-		playerMote.getMote().addCoreButtonListener(new PlayerMoteButtonListener());
+		this.mote = this.playerMoteFinder.getMote();
 		
+		if (mote != null) {
+			
+			while (mote.getStatusInformationReport() == null) {
+				System.out.println("waiting for status information report");
+				try {
+					Thread.sleep(10l);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println(mote.getStatusInformationReport());	
+			
+		}
 		
-		//PlayingMote playingMote = new PlayingMote(characterController, playerMote);
-		
+		if (this.mote != null)
+		{
+			Thread thread = new LedThread(this.mote);
+			thread.start();
+			
+		}	
+	
 	}
-*/	
+	
 }

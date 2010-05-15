@@ -1,7 +1,6 @@
 package Menu.src;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -13,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,12 +31,12 @@ public class Options extends JPanel {
 	MainPanel mainPanel;
 	
 	Image background;
-	Image wiiMote;
-	Image wiiMoteSelected;
 	JButton mote;
 	
-	boolean wiiSelected;
-	
+	boolean wiiMoteFlashing;
+	Image flashing;
+	Thread flashingThread;
+	AniMaker animaker;
 	/** Container */
 	Vector<String> fullscreenTrueFalse;
 	
@@ -49,12 +47,10 @@ public class Options extends JPanel {
 		super();
 		this.mainMenu = mainMenu;
 		this.mainPanel = mainPanel;
-		
-		wiiSelected = false;
-		
-		background = new ImageIcon("src/Menu/data/mainMenu2.jpg").getImage();
-		wiiMote = new ImageIcon("src/Menu/data/wiiMote.jpg").getImage();
-		wiiMoteSelected = new ImageIcon("src/Menu/data/wiiMoteSelected.jpg").getImage();
+				
+		this.background = new ImageIcon("src/Menu/data/mainMenu2.jpg").getImage();
+		//this.startFlashing();
+		this.wiiMoteFlashing = false;
 		
 		// Get screen size informations
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -187,53 +183,15 @@ public class Options extends JPanel {
 		pVerticalEmpty2.setPreferredSize(new Dimension(screenSize.width/8, 1));
 		add(pVerticalEmpty2,BorderLayout.EAST);
 		
-		mote = new JButton(new Icon() {
-			
-			@Override
-			public void paintIcon(Component c, Graphics g, int x, int y) {
-				
-				if(mainMenu.playMote.getMote() == null)
-					g.drawImage(wiiMoteSelected, 0,0, wiiMoteSelected.getWidth(null), wiiMoteSelected.getHeight(null), null);
-				else
-					g.drawImage(wiiMote, 0,0, wiiMote.getWidth(null), wiiMote.getHeight(null), null);
-				
-			}
-			
-			@Override
-			public int getIconWidth() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-			
-			@Override
-			public int getIconHeight() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-		});
-				
+		mote = new JButton(new WiiMoteIcon(this));
+		
+		//this.startFlashing();
+
 		mote.setBorderPainted(true);
 		mote.setContentAreaFilled(false);
 		pVerticalEmpty2.add(mote);
 		
-		mote.addActionListener(new WiiMoteButton(mainMenu, this));
-				/*
-			    new ActionListener(MainMenu mainMenu) {
-			    			    	
-			    	
-			    	
-			    	@Override
-			        public void actionPerformed(ActionEvent e) {
-			    		if(wiiSelected)
-			    		{
-			    			wiiSelected = false;
-			    		}
-			    		else
-			    			wiiSelected = true;
-			    		//mainMenu.switchTo(mainPanel);
-			        }
-			    }
-			);*/
+		mote.addActionListener(new WiiMoteButtonListener(mainMenu, this));
 			
 		//add lower horizontal empty panel
 		JPanel pHorizontalEmpty1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -252,6 +210,24 @@ public class Options extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		g.drawImage( background, 0, 0, this.getWidth(), this.getHeight(), null);
-		mote.setSize(wiiMote.getWidth(null), wiiMote.getHeight(null));
+		mote.setSize(73,307);
 	}
+	
+	public void startFlashing()
+	{
+		this.wiiMoteFlashing = true;
+		this.animaker = AniMaker.bindAnimation("../data/clips.png", 73, 307, 80, mote);
+		this.animaker.startAnimation();
+	}
+
+	public void stopFlashing()
+	{
+		
+		this.wiiMoteFlashing = false;
+		this.animaker.stopAnimation();
+		this.animaker = null;
+		this.mote.setIcon(new WiiMoteIcon(this));
+
+	}
+
 }
