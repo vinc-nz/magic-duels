@@ -33,7 +33,7 @@ public class Arena extends SceneElem {
 		super("arena");
 		display = DisplaySystem.getDisplaySystem();
 		this.loadModel();
-		this.buildLighting();
+		//this.buildLighting();
 		//this.applyBlendState();
 		this.applyZBufferState();
 	}
@@ -43,6 +43,7 @@ public class Arena extends SceneElem {
 		//this.setupWalls();
 		this.buildSkyBox();
 		//this.buildTerrain();
+		this.setupColumns();
 		this.setupFloor();
 	}
 
@@ -124,7 +125,7 @@ public class Arena extends SceneElem {
 				new Vector3f(-bound, 0, -bound)
 		};
 		
-		for (int i=0;i<=4;i++) {
+		for (int i=0;i<4;i++) {
 			SharedMesh column = new SharedMesh(model);
 			column.setLocalTranslation(positions[i]);
 			this.attachChild(column);

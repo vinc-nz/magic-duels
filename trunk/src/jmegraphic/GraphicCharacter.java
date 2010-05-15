@@ -51,10 +51,11 @@ public class GraphicCharacter extends GraphicObject {
 		
 		if (pointOfAnimation(ATTACK,1)) { //se l'animazione di attacco è finita
 			this.setAnimation(STAND);
+		}
+		else if (pointOfAnimation(ATTACK, 0.95f)) {
+			coreCharacter.castSpell();
 			this.preparingSpell = false;
 		}
-		else if (pointOfAnimation(ATTACK, 0.95f))
-			coreCharacter.castSpell();
 		
 		this.calculateRotation();
 		
