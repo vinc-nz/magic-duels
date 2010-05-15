@@ -70,6 +70,11 @@ public class CharacterController {
 	public void move(String name) {
 		fight.moveCharacter(playerID, name);
 	}
+	
+	
+	public void nextTarget() {
+		fight.nextTarget(playerID);
+	}
 
 	public void switch_pos() {
 		// TODO Auto-generated method stub

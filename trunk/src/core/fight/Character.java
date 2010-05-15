@@ -18,6 +18,7 @@ public class Character extends MovingObject {
 	
 	int life;
 	int mana;
+	int target;
 	boolean enoughMana = true;
 	
 	Spell preparedSpell = null;

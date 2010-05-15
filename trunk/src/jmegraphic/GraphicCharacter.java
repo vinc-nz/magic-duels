@@ -97,16 +97,10 @@ public class GraphicCharacter extends GraphicObject {
 	@Override
 	public void loadModel() {
 		String url = "data/models/dwarf/";
-		String modelUrl = url;
-		String textureUrl = url;
-		if (this.getObject().getName().equals(Character.PLAYER_ONE)) {
-			modelUrl+="dwarf1.ms3d";
-			textureUrl+="dwarf.jpg";
-		}
-		else {
-			modelUrl+="dwarf2.ms3d";
-			textureUrl+="dwarf2.jpg";
-		}
+		String modelUrl = url + "dwarf1.ms3d";
+		String name = coreCharacter.getName();
+		name = name.substring(name.length()-1);
+		String textureUrl = url + "dwarf" + name + "jpg";
 		
 		Node model = ModelLoader.loadModel(modelUrl,
 				"", 1, new Quaternion());
