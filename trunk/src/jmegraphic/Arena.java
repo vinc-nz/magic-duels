@@ -2,12 +2,6 @@ package jmegraphic;
 
 import java.net.URL;
 
-import javax.swing.ImageIcon;
-
-import jmetest.renderer.TestSkybox;
-import jmetest.terrain.TestTerrain;
-
-import com.jme.bounding.BoundingBox;
 import com.jme.image.Texture;
 import com.jme.image.Texture.WrapMode;
 import com.jme.light.DirectionalLight;
@@ -20,15 +14,10 @@ import com.jme.scene.SharedMesh;
 import com.jme.scene.Skybox;
 import com.jme.scene.shape.Box;
 import com.jme.scene.shape.Quad;
-import com.jme.scene.state.CullState;
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.TextureState;
-import com.jme.scene.state.CullState.Face;
 import com.jme.system.DisplaySystem;
 import com.jme.util.TextureManager;
-import com.jmex.terrain.TerrainBlock;
-import com.jmex.terrain.util.MidPointHeightMap;
-import com.jmex.terrain.util.ProceduralTextureGenerator;
 
 import core.space.World;
 
@@ -115,8 +104,8 @@ public class Arena extends SceneElem {
 	}
 	
 	private void setupColumns() {
-		int bound = World.centerDistance-25;
-		Box model = new Box("column model", new Vector3f(0, 50, 0), 25, 25, 25);
+		int bound = World.centerDistance;
+		Box model = new Box("column model", new Vector3f(0, 0, 0), new Vector3f(50, 50, 50));
 		
 		URL textureLoc = this.getClass().getClassLoader().getResource("data/textures/floor.jpg");
 		Texture t = TextureManager.loadTexture(textureLoc,Texture.MinificationFilter.Trilinear,
@@ -129,10 +118,10 @@ public class Arena extends SceneElem {
 		model.setRenderState(ts);
 		
 		Vector3f[] positions = {
-				new Vector3f(bound, 50, bound),
-				new Vector3f(-bound, 50, bound),
-				new Vector3f(bound, 50, -bound),
-				new Vector3f(-bound, 50, -bound)
+				new Vector3f(bound-50, 0, bound-50),
+				new Vector3f(-bound, 0, bound-50),
+				new Vector3f(bound-50, 0, -bound),
+				new Vector3f(-bound, 0, -bound)
 		};
 		
 		for (int i=0;i<=4;i++) {
@@ -148,32 +137,32 @@ public class Arena extends SceneElem {
 		Skybox skybox = new Skybox("skybox", 1000, 1000, 1000);
 
 		Texture north = TextureManager.loadTexture(
-				TestSkybox.class.getClassLoader().getResource(
+				Arena.class.getClassLoader().getResource(
 						"data/textures/north.jpg"),
 						Texture.MinificationFilter.BilinearNearestMipMap,
 						Texture.MagnificationFilter.Bilinear);
 		Texture south = TextureManager.loadTexture(
-				TestSkybox.class.getClassLoader().getResource(
+				Arena.class.getClassLoader().getResource(
 						"data/textures/south.jpg"),
 						Texture.MinificationFilter.BilinearNearestMipMap,
 						Texture.MagnificationFilter.Bilinear);
 		Texture east = TextureManager.loadTexture(
-				TestSkybox.class.getClassLoader().getResource(
+				Arena.class.getClassLoader().getResource(
 						"data/textures/east.jpg"),
 						Texture.MinificationFilter.BilinearNearestMipMap,
 						Texture.MagnificationFilter.Bilinear);
 		Texture west = TextureManager.loadTexture(
-				TestSkybox.class.getClassLoader().getResource(
+				Arena.class.getClassLoader().getResource(
 						"data/textures/west.jpg"),
 						Texture.MinificationFilter.BilinearNearestMipMap,
 						Texture.MagnificationFilter.Bilinear);
 		Texture up = TextureManager.loadTexture(
-				TestSkybox.class.getClassLoader().getResource(
+				Arena.class.getClassLoader().getResource(
 						"data/textures/top.jpg"),
 						Texture.MinificationFilter.BilinearNearestMipMap,
 						Texture.MagnificationFilter.Bilinear);
 		Texture down = TextureManager.loadTexture(
-				TestSkybox.class.getClassLoader().getResource(
+				Arena.class.getClassLoader().getResource(
 						"data/textures/bottom.jpg"),
 						Texture.MinificationFilter.BilinearNearestMipMap,
 						Texture.MagnificationFilter.Bilinear);
