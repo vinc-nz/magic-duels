@@ -46,7 +46,6 @@ abstract public class Spells extends Thread {
 	protected abstract boolean isSpell();
 	
 	public String toString() {
-		System.out.println("TO STRING: " + currentSpellName);
 		return this.currentSpellName;
 	}
 		
@@ -72,7 +71,6 @@ abstract public class Spells extends Thread {
 	{
 		if(this.getEndStep().isAtStep(currentXvalue, currentYvalue, currentZvalue))
 		{
-			System.out.println("POSIZIONE FINALE!");
 			return true;			
 		}
 		
@@ -115,7 +113,6 @@ abstract public class Spells extends Thread {
 	protected void castSpell()
 	{
 		characterController.castSpell(this.toString());
-		System.out.println("LANCIATO!");
 	}
 	
 	/*
