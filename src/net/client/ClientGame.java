@@ -35,8 +35,7 @@ public class ClientGame extends NetGame {
 			if (i+1!=this.getLocalId())
 				controllers[i] = new ClientController(i+1, this.getFight(), channel.getOutputStream());
 		}
-		this.listener = new ClientListener(controllers, channel.getInputStream());
-		this.listener.start();
+		this.listener = new ClientListener(controllers, channel.getInputStream(), this.getLocalId());
 	}
 	
 	@Override
@@ -49,5 +48,6 @@ public class ClientGame extends NetGame {
 	@Override
 	public void waitOthers() throws IOException {
 		listener.waitReadySignal();
+		listener.start();
 	}
 }
