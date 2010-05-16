@@ -70,7 +70,8 @@ class ButtonListener implements ActionListener {
 		
 	}
 	
-	public void actionPerformed(ActionEvent e) {    
+	public void actionPerformed(ActionEvent e)
+	{    
 	
 		if (e.getActionCommand().equals("SERVER")) {
 			mainMenu.switchTo(new LayoutServer(game, mainMenu, mainPanel, menuMultiplayer));
@@ -83,5 +84,6 @@ class ButtonListener implements ActionListener {
 		if (e.getActionCommand().equals("BACK MENU")) {
 			mainMenu.switchTo(mainPanel);
 	    }
-	 }
+	 
+	}
 }

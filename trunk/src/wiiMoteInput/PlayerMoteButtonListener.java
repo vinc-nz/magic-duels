@@ -1,19 +1,25 @@
 package wiiMoteInput;
 
 import input.CharacterController;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
 import motej.event.CoreButtonEvent;
 import motej.event.CoreButtonListener;
 
 public class PlayerMoteButtonListener implements CoreButtonListener {
 	
 	protected CharacterController characterController;
-	
 	protected PlayingMote playingMote;
+	
+	long buttonBTimeStamp;
 	
 	public PlayerMoteButtonListener(PlayingMote playingMote, CharacterController characterController)
 	{
 		this.characterController = characterController;
-		this.playingMote = playingMote;		
+		this.playingMote = playingMote;
+		this.buttonBTimeStamp = 0;
 	}
 
 	@Override
@@ -30,7 +36,12 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 			this.characterController.move("right");
 
 		if(evento.isButtonBPressed())
-			this.characterController.nextTarget();
-	}
+		{
+			long nextTimestamp = new Date().getTime();
+			if( nextTimestamp - this.buttonBTimeStamp > 1000)
+				this.characterController.nextTarget();
+					
+		}
 
+	}
 }
