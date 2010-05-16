@@ -1,0 +1,94 @@
+package net.server;
+
+import input.CharacterController;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import net.NetForwarderController;
+import net.NetGame;
+import net.NetListener;
+import net.client.ClientController;
+
+import core.fight.Fight;
+
+public class ServerGame extends NetGame{
+	Socket[] channels;
+	NetListener[] listeners;
+	DataOutputStream[] out;
+	int clientsReady;
+
+	public ServerGame(int port) throws IOException {
+		this("Player1", 4, port);
+		this.clientsReady = 0;
+	}
+
+	public ServerGame(String name, int numberOfPlayers, int port) throws IOException {
+		super(name,numberOfPlayers,1);
+		ServerSocket s;
+		s = new ServerSocket(port);
+		for (int i=0;i<numberOfPlayers-1;i++) 
+			channels[i] = s.accept();
+	}
+
+	@Override
+	public void buildListening() throws IOException {
+		this.buildForwarding();
+		listeners = new NetListener[channels.length];
+		for (int i = 0; i < listeners.length; i++) {
+			NetForwarderController controller = 
+				new ClientController(i+2, this.getFight(), channels[i].getOutputStream());
+			listeners[i] = new ServerListener(controller, channels[i].getInputStream());
+			listeners[i].start();
+		}
+	}
+	
+	public void buildForwarding() throws IOException {
+		out = new DataOutputStream[channels.length];
+		for (int i = 0; i < channels.length; i++) {
+			out[i] = new DataOutputStream(channels[i].getOutputStream());
+		}
+	}
+
+	@Override
+	public CharacterController getController() throws IOException {
+		return new ServerController(1, this.getFight(), this);
+	}
+
+	@Override
+	public void sayReady() throws IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void forward(String trigger) throws IOException {
+		int sender = NetListener.getId(trigger);
+		for (int i = 0; i < out.length; i++) {
+			if (sender!=i+2)
+				out[i].writeBytes(trigger + "\n");
+		}
+	}
+
+
+	@Override
+	public synchronized void waitOthers() throws IOException {
+		if (clientsReady<channels.length)
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+
+	public synchronized void clientReady() {
+		clientsReady++;
+		if (clientsReady==channels.length)
+			notify();
+	}
+
+
+
+}
