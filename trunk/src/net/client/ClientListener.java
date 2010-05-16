@@ -9,16 +9,20 @@ import net.NetListener;
 public class ClientListener extends NetListener {
 	
 	CharacterController[] controllers;
+	int id;
 
-	public ClientListener(CharacterController[] controllers, InputStream is) {
+	public ClientListener(CharacterController[] controllers, InputStream is, int id) {
 		super(is);
 		this.controllers = controllers;
+		this.id = id;
 	}
 
 	@Override
 	protected void performAction(String trigger) {
-		int playerId = NetListener.getId(trigger);
-		controllers[playerId-1].performAction(trigger);
+		String id = trigger.substring(0, trigger.indexOf('>'));
+		int playerId = Integer.parseInt(id);
+		if (playerId!=this.id)
+			controllers[playerId-1].performAction(trigger);
 	}
 
 	

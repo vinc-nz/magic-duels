@@ -32,7 +32,7 @@ public class CharacterController {
 
 	//riceve il trigger e svolge l'azione
 	public void performAction(String trigger) {
-		int i = trigger.indexOf(">")+1;
+		int i = trigger.lastIndexOf('>')+1;
 		String name = trigger.substring(i);
 		if (trigger.contains("spell")) {
 			this.castSpell(name);

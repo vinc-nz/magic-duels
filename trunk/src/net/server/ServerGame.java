@@ -28,8 +28,9 @@ public class ServerGame extends NetGame{
 	public ServerGame(String name, int numberOfPlayers, int port) throws IOException {
 		super(name,numberOfPlayers,1);
 		ServerSocket s;
+		channels = new Socket[numberOfPlayers-1];
 		s = new ServerSocket(port);
-		for (int i=0;i<numberOfPlayers-1;i++) 
+		for (int i=0;i<channels.length;i++) 
 			channels[i] = s.accept();
 	}
 
@@ -47,7 +48,7 @@ public class ServerGame extends NetGame{
 	
 	public void buildForwarding() throws IOException {
 		out = new DataOutputStream[channels.length];
-		for (int i = 0; i < channels.length; i++) {
+		for (int i = 0; i < out.length; i++) {
 			out[i] = new DataOutputStream(channels[i].getOutputStream());
 		}
 	}
@@ -64,10 +65,8 @@ public class ServerGame extends NetGame{
 	}
 
 	public void forward(String trigger) throws IOException {
-		int sender = NetListener.getId(trigger);
 		for (int i = 0; i < out.length; i++) {
-			if (sender!=i+2)
-				out[i].writeBytes(trigger + "\n");
+			out[i].writeBytes(trigger + "\n");
 		}
 	}
 

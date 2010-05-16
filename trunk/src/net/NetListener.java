@@ -47,10 +47,7 @@ public abstract class NetListener extends Thread {
 		return running;
 	}
 	
-	public static int getId(String trigger) {
-		String id = trigger.substring(0, trigger.indexOf('>'));
-		return Integer.parseInt(id);
-	}
+	
 
 	protected abstract void performAction(String trigger) throws IOException;
 
