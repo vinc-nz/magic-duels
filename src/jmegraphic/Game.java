@@ -31,7 +31,7 @@ public class Game extends GraphicFight {
 	
 	public void initNetGame(NetGame game) {
 		this.net = game;
-		
+		this.fight = game.getFight();
 		CharacterController local = null;
 		try {
 			local = game.getController();
