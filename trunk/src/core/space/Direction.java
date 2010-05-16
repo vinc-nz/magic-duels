@@ -71,5 +71,9 @@ public class Direction {
 		while (this.angle>2*Math.PI)
 			this.angle-=2*Math.PI;
 	}
+	
+	public float difference(Direction d) {
+		return Math.abs(d.angle - this.angle);
+	}
 
 }

@@ -1,6 +1,9 @@
 package jmegraphic.hud;
 
 
+import com.jme.math.Vector3f;
+import com.jme.renderer.ColorRGBA;
+
 import utils.ProgressBar;
 import core.fight.Character;
 
@@ -11,10 +14,11 @@ import core.fight.Character;
 public class StatusBars extends HudObject {
 	ProgressBar lifeBar;
 	ProgressBar manaBar;
+	Notification characterName;
 	Character coreCharacter;
 
 	
-	public StatusBars(Character coreCharacter, boolean lifeVisible, boolean manaVisible) {
+	public StatusBars(Character coreCharacter, boolean lifeVisible, boolean manaVisible, boolean nameVisible) {
 		super("bars");
 		this.coreCharacter = coreCharacter;
 		
@@ -22,9 +26,11 @@ public class StatusBars extends HudObject {
 		
 		manaBar = new ProgressBar(display,"data/images/bluebar.png");
 		lifeBar = new ProgressBar(display, "data/images/greenbar.png");
+		characterName = new Notification(coreCharacter.getName());
 		
 		setupLifeBar();
 		setupManaBar();
+		setupName();
 		
 		this.width = lifeBar.getWidth()*BORDER_OFFSET;
 		this.height = (lifeBar.getHeight()+manaBar.getHeight()/2)*BORDER_OFFSET;
@@ -33,9 +39,18 @@ public class StatusBars extends HudObject {
 			this.attachChild(lifeBar.getNode());
 		if (manaVisible)
 			this.attachChild(manaBar.getNode());
+		if (nameVisible)
+			this.attachChild(characterName);
 		this.setLightCombineMode(LightCombineMode.Off);
 	}
 	
+	protected void setupName() {
+		characterName.loadModel();
+		characterName.setLocalScale(0.5f);
+		characterName.setColour(ColorRGBA.black);
+		characterName.getLocalTranslation().y-=lifeBar.getHeight()/4;
+	}
+
 	@Override
 	public void loadModel() {
 		
@@ -71,6 +86,8 @@ public class StatusBars extends HudObject {
 	public void update() {
 		manaBar.setValue(coreCharacter.getMana());
 		lifeBar.setValue(coreCharacter.getLife());
+		characterName.setText(coreCharacter.getName());
+		characterName.update();
 	}
 
 }

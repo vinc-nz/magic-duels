@@ -101,13 +101,21 @@ public class Character extends MovingObject {
 	public void setTarget(int target) {
 		this.target = target;
 	}
+	
+	@Override
+	public boolean collides(AbstractObject other) {
+		if (other instanceof Character)
+			return this.getPosition().distance(other.getPosition())<50;
+		return super.collides(other);
+	}
 
 	/* (non-Javadoc)
 	 * @see core.objects.AbstractObject#handleCollision(core.objects.AbstractObject)
 	 */
 	@Override
 	public void handleCollision(AbstractObject other) {
-		// TODO Auto-generated method stub
+		if (other == null || other instanceof Character)
+			this.forbidDirection();
 
 	}
 

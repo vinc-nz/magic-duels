@@ -91,7 +91,7 @@ public class Fight {
 	public void moveCharacter(int playerId, String where) {
 		
 		if (running && !this.getPlayer(playerId).isPreparingSpell()) {
-			String methodName = "moveA" + where.substring(0, 1).toUpperCase() + where.substring(1);
+			String methodName = "move" + where.substring(0, 1).toUpperCase() + where.substring(1);
 			try {
 				Method m = Character.class.getMethod(methodName);
 				m.invoke(this.getPlayer(playerId));

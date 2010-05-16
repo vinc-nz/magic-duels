@@ -1,5 +1,8 @@
 package jmegraphic.hud;
 
+import java.io.IOException;
+import java.net.URL;
+
 import com.jme.renderer.ColorRGBA;
 import com.jme.util.Timer;
 import com.jmex.angelfont.BitmapFont;
@@ -23,14 +26,21 @@ public class Notification extends HudObject {
 	
 	@Override
 	public void loadModel() {
-		BitmapFont fnt = BitmapFontLoader.loadDefaultFont();
+		URL fntFile = this.getClass().getClassLoader().getResource("data/font/Dalelands.fnt");
+		URL texFile = this.getClass().getClassLoader().getResource("data/font/Dalelands.tga");
+		BitmapFont fnt;
+		try {
+			fnt = BitmapFontLoader.load(fntFile, texFile);
+		} catch (IOException e) {
+			fnt = BitmapFontLoader.loadDefaultFont();
+		}
 
         graphicText = new BitmapText(fnt, false);
 //      Rectangle box = new Rectangle(10, -10, display.getWidth() - 20,
 //                        display.getHeight() - 20);
 //      txt.setBox(box);
         graphicText.setSize(32);
-        graphicText.setDefaultColor(ColorRGBA.green.clone());
+        graphicText.setDefaultColor(ColorRGBA.white.clone());
         graphicText.setText(text);
         graphicText.update();
         

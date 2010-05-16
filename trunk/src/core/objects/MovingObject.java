@@ -13,11 +13,15 @@ import core.space.Direction;
 public abstract class MovingObject extends AbstractObject {
 	
 	Direction direction;
+	Direction forbiddenDirection;
+	Direction lastMovement;
 	
 	float speed = 1;
 	
 	public MovingObject() {
 		this.direction = new Direction();
+		this.forbiddenDirection = null;
+		this.lastMovement = null;
 	}
 	
 	
@@ -77,11 +81,18 @@ public abstract class MovingObject extends AbstractObject {
 	
 	
 	private void moveThrough(Direction d) {
-		float x = d.getX() * speed;
-		float y = d.getY() * speed;
-		this.getPosition().move(x, y);
+		if (forbiddenDirection == null || d.difference(forbiddenDirection)>Math.PI/3) {
+			this.lastMovement = d;
+			this.forbiddenDirection = null;
+			float x = d.getX() * speed;
+			float y = d.getY() * speed;
+			this.getPosition().move(x, y);
+		}
 	}
 
+	public void forbidDirection() {
+		this.forbiddenDirection = lastMovement;
+	}
 	
 
 }
