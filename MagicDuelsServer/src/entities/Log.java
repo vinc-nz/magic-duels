@@ -2,7 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.net.Inet4Address;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

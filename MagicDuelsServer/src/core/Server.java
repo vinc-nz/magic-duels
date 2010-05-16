@@ -11,17 +11,21 @@ public class Server extends Thread{
 
 	ServerSocket serverSocket;
 	List<Connection> players;
+	List<HostedGame> hostedGames;
 	
 	public Server(int porta) {
 	
 		try {
 			this.serverSocket = new ServerSocket(porta);
+			System.out.println("SERVER IN ASCOLTO SULLA PORTA: " + porta);
 		} catch (IOException e) {
 			System.out.println("Impossibile aprire una connessione!");
 		}
 		
 		this.players = new LinkedList<Connection>();
+		this.hostedGames = new LinkedList<HostedGame>();
 		
+		this.start();
 	}
 	
 	public void sendChatMessage(String msg)
@@ -29,8 +33,13 @@ public class Server extends Thread{
 		for (Iterator iterator = this.players.iterator(); iterator.hasNext();) 
 		{
 			Connection connection = (Connection) iterator.next();	
-			connection.sendMessage(Connection.CHAT + msg);
+			connection.sendMessage(Messages.CHAT + msg);
 		}	
+	}
+
+	public void removePlayer(Connection player)
+	{
+		this.players.remove(player);
 	}
 	
 	@Override
@@ -41,9 +50,10 @@ public class Server extends Thread{
 		while(true)
 		{
 			try {
-
+				System.out.println("ATTENDO NUOVA CONNESSIONE");
 				connection = this.serverSocket.accept();
-				this.players.add(new Connection(connection));
+				System.out.println("NEW CONNECTION: " + connection.getLocalAddress());
+				this.players.add(new Connection(connection, this));
 
 			} catch (IOException e) {
 				System.out.println("Impossibile accettare la connessione!");
@@ -51,5 +61,38 @@ public class Server extends Thread{
 			
 		}
 	}
+	
+	public static String getClientList(Server server)
+	{
+		List<Connection> clients = server.players;
+		
+		String clientList = Messages.CLIENTLIST;
+		
+		for (Iterator iterator = clients.iterator(); iterator.hasNext();)
+			clientList = clientList + ((Connection)iterator.next()).utente.getNome() + ";";
+			
+		return clientList;
+	}
+	
+	public static String getGameList(Server server)
+	{
+		List<HostedGame> games = server.hostedGames;
+		
+		String gameList = Messages.GAMELIST;
+		
+		HostedGame game;
+		for (Iterator iterator = games.iterator(); iterator.hasNext();)
+		{
+			game = (HostedGame)iterator.next();
+			
+			gameList = gameList + game.getHost().utente.getNome() + ";";
+			gameList = gameList + game.getGameName() + ";";
+			gameList = gameList + game.getHost().player.getLocalAddress() + ";";
+			gameList = gameList + game.getPorta() + ";";
+		}
+		
+		return gameList;
+	}
+	
 	
 }
