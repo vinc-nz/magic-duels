@@ -3,13 +3,14 @@ package jmegraphic;
 import input.CharacterController;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 import com.jme.app.AbstractGame;
 
-import net.ClientGame;
 import net.NetGame;
-import net.ServerGame;
+import net.client.ClientGame;
+import net.server.ServerGame;
 import wiiMoteInput.PlayerMote;
 import Menu.src.MainMenu;
 import core.fight.Fight;
@@ -33,8 +34,8 @@ public class Game extends GraphicFight {
 		
 		CharacterController local = null;
 		try {
-			local = game.getController(this.fight);
-			game.buildListener(this.fight);
+			local = game.getController();
+			game.buildListening();
 			this.initInput(local);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -43,19 +44,30 @@ public class Game extends GraphicFight {
 	}
 	
 	public void initSingleGame() {
-		
+		this.initSingleGame("Player1", 2);
+	}	
+	
+	public void initSingleGame(String name, int numberOfPlayers) {
+		this.fight = new Fight(numberOfPlayers);
+		this.fight.getPlayer(1).setName(name);
 		CharacterController human = new CharacterController(1, fight);
-		//CharacterController ia = new CharacterController(Fight.ID_P2, fight);
-		//new IAStub(ia,fight).start();
 		this.initInput(human);
 	}
 	
-	public void initServerGame(int port) {
+	public void initServerGame(int port) throws IOException {
 		this.initNetGame(new ServerGame(port));
 	}
 	
-	public void initClientGame(String server, int port) {
+	public void initServerGame(String name, int numberOfPlayers, int port) throws IOException {
+		this.initNetGame(new ServerGame(name, numberOfPlayers, port));
+	}
+	
+	public void initClientGame(String server, int port) throws UnknownHostException, IOException {
 		this.initNetGame(new ClientGame(server, port));
+	}
+	
+	public void initClientGame(String name, int numberOfPlayers, int localId, String address, int port) throws UnknownHostException, IOException {
+		this.initNetGame(new ClientGame(name, numberOfPlayers, localId, address, port));
 	}
 
 	protected void initInput(CharacterController playerController) {
@@ -75,28 +87,19 @@ public class Game extends GraphicFight {
 		this.input = this.playerMote.getPlayingMote();
 	}
 	
-//	//per i settaggi video
-//	public void videoSettings() {
-//		this.setConfigShowMode(ConfigShowMode.AlwaysShow);
-//		
-//		Thread otherThread = new Thread() {
-//			@Override
-//			public void run() {
-//				Game.this.getAttributes();
-//			}
-//		};
-//	
-//		otherThread.start();
-//		
-//		this.setConfigShowMode(ConfigShowMode.ShowIfNoConfig);
-//	}
+
 	
 	@Override
 	protected void initGame() {
 		super.initGame();
 		if (net != null) {
-			net.sayReady();
-			net.waitOther();
+			try {
+				net.sayReady();
+				net.waitOthers();
+			} catch (IOException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
 		super.startFight();
 	}

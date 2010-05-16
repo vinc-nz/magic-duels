@@ -33,7 +33,7 @@ public class Arena extends SceneElem {
 		super("arena");
 		display = DisplaySystem.getDisplaySystem();
 		this.loadModel();
-		this.addBoundingBox();
+		//this.addBoundingBox();
 		this.buildLighting();
 		this.applyZBufferState();
 	}

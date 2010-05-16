@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.util.Date;
 
 import core.objects.Spell;
+import core.space.Direction;
 import core.space.Position;
 import core.space.World;
 import core.spells.TargettingSpell;
@@ -17,32 +18,24 @@ import core.spells.TargettingSpell;
  */
 public class Fight {
 	
-	Character[] players = new Character[4];
-	
-	
-	
+	Character[] players;
 	
 	public boolean running;
 	public boolean finished;
 	private boolean paused;
 	
 	
-	
-	
-	public Fight() {
-		int distance = 200;
-		Position[] positions = {
-				new Position(distance, distance),
-				new Position(-distance, distance),
-				new Position(distance, -distance),
-				new Position(-distance, -distance)
-		};
+	public Fight(int numberOfPlayers) {
+		players = new Character[numberOfPlayers];
 		
-		int targets[] = {2,1,4,3};
+		Position[] positions = this.dispose(numberOfPlayers);
+		
+		int targets[] = this.defaultTargetting(numberOfPlayers);
 		
 		for (int i = 0; i < players.length; i++) {
 			String name = "Player" + Integer.toString(i+1);
 			players[i] = new Character(name);
+			players[i].setId(i+1);
 			players[i].setPosition(positions[i]);
 			players[i].target = targets[i];
 		}
@@ -54,6 +47,32 @@ public class Fight {
 	}
 	
 	
+	private int[] defaultTargetting(int numberOfPlayers) {
+		int[] targetting = new int[numberOfPlayers];
+		int target = 2;
+		for (int i = 0; i < targetting.length; i+=2) {
+			targetting[i] = target + (i%numberOfPlayers);
+			targetting[i+1] = targetting[i] - 1;
+		}
+		return targetting;
+	}
+
+
+	private Position[] dispose(int numberOfPlayers) {
+		int distance = 200;
+		float angleOffset = (float)(2*Math.PI/numberOfPlayers);
+		Direction d = new Direction();
+		Position[] pos = new Position[numberOfPlayers];
+		for (int i = 0; i < pos.length; i++) {
+			Direction charcaterDirection = d.rotate(angleOffset*i);
+			pos[i] = new Position(
+					charcaterDirection.getX()*distance, 
+					charcaterDirection.getY()*distance);
+		}
+		return pos;
+	}
+
+
 	public Character getPlayer(int id) {
 		return players[id-1];
 	}

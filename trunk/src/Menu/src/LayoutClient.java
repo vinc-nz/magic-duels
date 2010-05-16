@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -93,7 +95,15 @@ public class LayoutClient extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("OK")) {
-				game.initClientGame(ipText.getText(), Integer.parseInt(portText.getText()));
+				try {
+					game.initClientGame(ipText.getText(), Integer.parseInt(portText.getText()));
+				} catch (UnknownHostException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				game.start();
 			}
 			

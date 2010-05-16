@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -83,7 +84,12 @@ public class LayoutServer extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("OK")) {
-				game.initServerGame(Integer.parseInt(portText.getText()));
+				try {
+					game.initServerGame(Integer.parseInt(portText.getText()));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				mainMenu.switchTo(mainPanel);
 				game.start();
 				

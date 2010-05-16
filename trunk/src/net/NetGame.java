@@ -2,58 +2,51 @@ package net;
 
 import input.CharacterController;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import core.fight.Fight;
 
 
 
-public class NetGame {
-	Socket channel;
-	NetListener listener;
-	int local;
+public abstract class NetGame {
+	int localId;
+	int numberOfPlayers;
+	String name;
+	Fight fight;
 	
 	
 	
-	public NetGame(int local) {
-		super();
-		this.channel = null;
-		this.local = local;
-	}
 	
-	public CharacterController getController(Fight fight) throws IOException {
-		return new NetForwarderController(local,fight,channel.getOutputStream());
-		
-	}
-	
-	public void buildListener(Fight fight) throws IOException {
-		short id = 1;
-		if (local == id)
-			id = 2;
-		CharacterController controller = new CharacterController(id, fight);
-		this.listener = new NetListener(controller,channel.getInputStream());
+	public NetGame(String name, int numberOfPlayers, int localId) {
+		this.name = name;
+		this.numberOfPlayers = numberOfPlayers;
+		this.localId = localId;
+		this.fight = new Fight(numberOfPlayers);
+		fight.getPlayer(localId).setName(name);
 	}
 
-	public void sayReady() {
-		try {
-			DataOutputStream o = new DataOutputStream(channel.getOutputStream());
-			o.writeBytes("ready\n");
-		} catch (IOException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+	
+	
+	public int getLocalId() {
+		return localId;
 	}
 
-	public void waitOther() {
-		try {
-			listener.waitReadySignal();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		listener.start();
+
+
+	public abstract CharacterController getController() throws IOException;
+	public abstract void buildListening() throws IOException;
+	
+
+
+	public Fight getFight() {
+		return fight;
 	}
+	
+	
+
+	public abstract void sayReady() throws IOException;
+	public abstract void waitOthers() throws IOException;
 	
 }

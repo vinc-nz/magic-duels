@@ -13,6 +13,7 @@ import core.objects.Spell;
  */
 public class Character extends MovingObject { 
 	
+	int id;
 	int life;
 	int mana;
 	int target;
@@ -32,6 +33,20 @@ public class Character extends MovingObject {
 		this.setRadius(25);
 		this.materialize();
 	}
+
+	
+	
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 
 	public int getLife() {
 		if (life>0)
@@ -127,6 +142,11 @@ public class Character extends MovingObject {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void setName(String name) {
+		this.name = name;
 		
 	}
 

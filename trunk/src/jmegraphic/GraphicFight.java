@@ -59,7 +59,6 @@ public class GraphicFight extends BaseGame {
 		objects = new ObjectMap();
 		elements = new LinkedList<SceneElem>();
 		this.mainMenu = mainMenu;
-		this.fight = new Fight();
 		this.paused = false;
 	}
 	

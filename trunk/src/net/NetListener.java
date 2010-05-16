@@ -1,19 +1,17 @@
 package net;
 
-import input.CharacterController;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
-public class NetListener extends Thread {
-	CharacterController controller;
-	BufferedReader input;
+public abstract class NetListener extends Thread {
 	
-	public NetListener(CharacterController controller, InputStream is) {
-		this.controller = controller;
+	BufferedReader input;
+	boolean running = false;
+	
+	public NetListener(InputStream is) {
 		input = new BufferedReader(new InputStreamReader(is));
 	}
 	
@@ -23,18 +21,37 @@ public class NetListener extends Thread {
 	}
 	
 	@Override
+	public synchronized void start() {
+		this.running = true;
+		super.start();
+	}
+	
+	@Override
 	public void run() {
 		super.run();
-		String trigger;
-		while (true) {
+		String trigger = null;
+		while (listening(true)) {
 			try {
 				trigger = input.readLine();
+				this.performAction(trigger);
 			} catch (IOException e) {
 				e.printStackTrace();
-				break;
+				running = false;
 			}
-			controller.performAction(trigger);
 		}
 	}
+	
+	private synchronized boolean listening(boolean continueRunning) {
+		if (running && !continueRunning)
+			running = false;
+		return running;
+	}
+	
+	public static int getId(String trigger) {
+		String id = trigger.substring(0, trigger.indexOf('>'));
+		return Integer.parseInt(id);
+	}
+
+	protected abstract void performAction(String trigger) throws IOException;
 
 }
