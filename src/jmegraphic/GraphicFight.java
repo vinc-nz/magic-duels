@@ -41,7 +41,7 @@ public class GraphicFight extends BaseGame {
 	LinkedList<SceneElem> elements;
 	StatusBars enemyBars;
 	
-	int loading;
+	
 	boolean paused;
 	
 	InputInterface input; // Input
@@ -60,7 +60,6 @@ public class GraphicFight extends BaseGame {
 		elements = new LinkedList<SceneElem>();
 		this.mainMenu = mainMenu;
 		this.fight = new Fight();
-		this.loading = 0;
 		this.paused = false;
 	}
 	
@@ -73,11 +72,11 @@ public class GraphicFight extends BaseGame {
 
 	@Override
 	protected void initGame() {
-		this.setLoading(30);
+		
 		//viene creato il root node
 		scene = new Node("battlefield");
-		scene.attachChild(new Arena());
-		this.setLoading(35);
+		
+		
 		
 		for (int i=1;i<=fight.numberOfPlayers();i++) {
 			Character player = fight.getPlayer(i);
@@ -85,16 +84,16 @@ public class GraphicFight extends BaseGame {
 			this.objects.put(player, graphicCharacter);
 			if (i==input.getPlayerID()) {
 				this.focused = graphicCharacter;
-				StatusBars focusedBars = new StatusBars(player,true,true);
+				StatusBars focusedBars = new StatusBars(player,true,true,false);
 				focusedBars.setPosition(HudObject.POSITION_BOTTOM_LEFT);
 				elements.add(focusedBars);
-				this.setLoading(50);
+				
 			}
 		}
-		this.setLoading(80);
+		
 		
 		int enemy = focused.coreCharacter.getTarget();
-		this.enemyBars = new StatusBars(fight.getPlayer(enemy), true, false);
+		this.enemyBars = new StatusBars(fight.getPlayer(enemy), true, false, true);
 		enemyBars.setPosition(HudObject.POSITION_UPPER_RIGHT);
 		elements.add(enemyBars);
 	    
@@ -102,18 +101,19 @@ public class GraphicFight extends BaseGame {
 		
 		countdown = new Countdown(fight, 3);
 		elements.add(countdown);
-		this.setLoading(85);
+		
 		
 		// attacca gli ogetti in lista al nodo radice
 		for(SceneElem i:elements) {
 			i.loadModel();
 			scene.attachChild(i);
 		}
-		this.setLoading(95);
+		
+		scene.attachChild(new Arena());
 		
 		//camera in terza persona
 		camera.setFocused(focused);
-		this.setLoading(100);
+		
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class GraphicFight extends BaseGame {
 		int width=mainMenu.WIDTH;
 		int height=mainMenu.HEIGHT;
 		
-		this.setLoading(10);
+		
 		try {
 			display=DisplaySystem.getDisplaySystem();
 			display.createWindow(width, height, 
@@ -133,7 +133,7 @@ public class GraphicFight extends BaseGame {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		this.setLoading(20);
+		
 		// setta il colore di default
 		display.getRenderer().setBackgroundColor(ColorRGBA.black);
 		
@@ -142,7 +142,7 @@ public class GraphicFight extends BaseGame {
 		KeyBindingManager.getKeyBindingManager().set("exit", KeyInput.KEY_ESCAPE);
 		
 		timer = Timer.getTimer();
-		this.setLoading(25);
+		
 	}
 
 	@Override
@@ -260,26 +260,6 @@ public class GraphicFight extends BaseGame {
 		countdown.start();
 	}
 	
-	
-	
-	public synchronized int getLoading() {
-		try {
-			wait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return loading;
-	}
-
-
-
-	public synchronized void setLoading(int loading) {
-		this.loading = loading;
-		notify();
-	}
-
-
 
 	public class ObjectMap extends HashMap<AbstractObject, GraphicObject> {
 		@Override
