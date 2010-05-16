@@ -1,12 +1,15 @@
 package core;
 
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import entities.Log;
 import entities.Utente;
 
 public class DBFunctions {
@@ -23,6 +26,7 @@ public class DBFunctions {
 		
 		try
 		{
+			
 			Utente utenteDB = em.find(Utente.class, nome);
 			if(utenteDB != null) return false;
 			
@@ -35,6 +39,7 @@ public class DBFunctions {
 			nuovo.setIp_iscrizione(ip);
 			em.persist(nuovo);
 			em.getTransaction().commit();
+			
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			return false;
@@ -45,9 +50,45 @@ public class DBFunctions {
 		
 	}
 	
-	public static Utente logIn(String nome, String password)
+	public static Utente logIn(String nome, String password, InetAddress ip)
 	{	
-		return DBFunctions.getEntityManager().find(Utente.class, nome);	
+		
+		Utente utenteDB = DBFunctions.getEntityManager().find(Utente.class, nome);
+		
+		if(utenteDB != null)
+		{
+			if(DBFunctions.newConnectionLog((Inet4Address)ip, utenteDB))
+				return utenteDB;
+			else 
+				return null;
+		}
+		else
+			return null;
+	}
+	
+	public static boolean newConnectionLog(Inet4Address ip, Utente utente)
+	{
+		EntityManager em = DBFunctions.getEntityManager();
+		
+		try
+		{
+			
+			em.getTransaction().begin();
+			Log nuovo = new Log();
+			nuovo.setIp(ip);
+			nuovo.setTimestamp(new Timestamp(new Date().getTime()));
+			nuovo.setUtente(utente);
+			em.persist(nuovo);
+			em.getTransaction().commit();
+			
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			return false;
+		} finally {
+			em.close();
+			return true;
+		}
+		
 	}
 	
 }

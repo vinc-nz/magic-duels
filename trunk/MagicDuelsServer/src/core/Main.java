@@ -2,19 +2,19 @@ package core;
 
 public class Main {
 
-	public static int main(String[] args) {
+	public static void main(String[] args) {
+		
+		try{
+			
+			int porta = Integer.parseInt(args[0]);
+			Server server = new Server(porta);
 
-		if(args[0] == null)
-		{
+		} catch (ArrayIndexOutOfBoundsException e) {
+
 			System.out.println("Deve essere inserita una porta!");
-			return 1;
+			return;
+		
 		}
-		
-		int porta = Integer.parseInt(args[0]);
-		
-		
-		
-		return 0;
 		
 	}
 
