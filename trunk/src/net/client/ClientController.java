@@ -21,8 +21,9 @@ public class ClientController extends NetForwarderController {
 		try {
 			forwarder.writeBytes(trigger + "\n");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("errore ClientController");
 			e.printStackTrace();
+			System.exit(4);
 		}
 	}
 

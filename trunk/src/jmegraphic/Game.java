@@ -38,8 +38,9 @@ public class Game extends GraphicFight {
 			game.buildListening();
 			this.initInput(local);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("errore initNetGame");
 			e.printStackTrace();
+			System.exit(5);
 		}
 	}
 	
@@ -97,8 +98,9 @@ public class Game extends GraphicFight {
 				net.sayReady();
 				net.waitOthers();
 			} catch (IOException e) {
-				// TODO: handle exception
+				System.out.println("errore initGame");
 				e.printStackTrace();
+				System.exit(1);
 			}
 		}
 		super.startFight();

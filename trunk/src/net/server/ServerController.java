@@ -20,8 +20,9 @@ public class ServerController extends NetForwarderController {
 		try {
 			game.forward(trigger);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("errore ServerController");
 			e.printStackTrace();
+			System.exit(3);
 		}
 	}
 
