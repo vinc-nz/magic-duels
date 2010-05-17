@@ -12,8 +12,6 @@ import net.NetGame;
 import net.NetListener;
 import net.client.ClientController;
 
-import core.fight.Fight;
-
 public class ServerGame extends NetGame{
 	Socket[] channels;
 	NetListener[] listeners;
@@ -88,7 +86,5 @@ public class ServerGame extends NetGame{
 		if (clientsReady==channels.length)
 			notify();
 	}
-
-
 
 }

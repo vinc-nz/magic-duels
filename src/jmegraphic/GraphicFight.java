@@ -14,12 +14,10 @@ import jmegraphic.hud.HudObject;
 import jmegraphic.hud.Notification;
 import jmegraphic.hud.StatusBars;
 import utils.ExplosionFactory;
-import Menu.src.MainMenu;
 
 import com.jme.app.BaseGame;
 import com.jme.input.KeyBindingManager;
 import com.jme.input.KeyInput;
-import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Node;
 import com.jme.system.DisplaySystem;
 import com.jme.util.Timer;
@@ -34,7 +32,7 @@ import core.space.World;
 public class GraphicFight extends BaseGame {
 	Fight fight; // parita
 	CustomCamera camera; // camera
-	public Node scene; // nodo radice
+	Node scene; // nodo radice
 	
 	GraphicCharacter focused;
 	ObjectMap objects;
@@ -52,13 +50,13 @@ public class GraphicFight extends BaseGame {
 	
 	static final float UPTIME = 0.008f;  //intervallo di aggiornamento (in secondi)
 	
-	MainMenu mainMenu;
 	
-	public GraphicFight(MainMenu mainMenu) {
+	
+	public GraphicFight() {
 		this.lastTime=0;
+		timer = Timer.getTimer();
 		objects = new ObjectMap();
 		elements = new LinkedList<SceneElem>();
-		this.mainMenu = mainMenu;
 		this.paused = false;
 	}
 	
@@ -71,6 +69,9 @@ public class GraphicFight extends BaseGame {
 
 	@Override
 	protected void initGame() {
+		
+		KeyBindingManager.getKeyBindingManager().set("exit", KeyInput.KEY_ESCAPE);
+		camera = new CustomCamera(display);
 		
 		//viene creato il root node
 		scene = new Node("battlefield");
@@ -117,31 +118,20 @@ public class GraphicFight extends BaseGame {
 
 	@Override
 	protected void initSystem() {
-		// creazione display
-		int width=mainMenu.WIDTH;
-		int height=mainMenu.HEIGHT;
-		
-		
+		this.creanteDisplay(settings.getWidth(), settings.getHeight(), settings.isFullscreen());
+	}
+	
+	protected void creanteDisplay(int width, int height, boolean fullscreen) {
 		try {
 			display=DisplaySystem.getDisplaySystem();
 			display.createWindow(width, height, 
 								settings.getDepth(), 
 								settings.getFrequency(), 
-								mainMenu.fullscreen);
+								fullscreen);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		
-		// setta il colore di default
-		display.getRenderer().setBackgroundColor(ColorRGBA.black);
-		
-		camera = new CustomCamera(display);
-		
-		KeyBindingManager.getKeyBindingManager().set("exit", KeyInput.KEY_ESCAPE);
-		
-		timer = Timer.getTimer();
-		
 	}
 
 	@Override
