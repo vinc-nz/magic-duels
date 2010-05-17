@@ -111,8 +111,8 @@ public class Mouse extends MouseAdapter{
 		
 		if(mainPanel.sNewGame){
 			game.initSingleGame();
-			game.start();
 			//mainMenu.setVisible(false);
+			game.start();
 		}
 		
 		if(mainPanel.sMultiplayer){

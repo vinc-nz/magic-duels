@@ -32,7 +32,6 @@ public class MainMenu extends JFrame {
 		new MainMenu();
 	}
 
-
 	public MainMenu() {
 		super();
 
@@ -52,6 +51,7 @@ public class MainMenu extends JFrame {
 			}
 		}
 		
+		fullscreen( displayModes.get( WIDTH + "x" + HEIGHT ) );
 		playMote = new PlayerMote();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -71,10 +71,9 @@ public class MainMenu extends JFrame {
 				new Game(playMote,this), this);
 	    
 		switchTo( panel );
-		size = Toolkit.getDefaultToolkit().getScreenSize();
-		
-		setPreferredSize(size);
-		setSize(size);
+		//size = Toolkit.getDefaultToolkit().getScreenSize();
+		//setPreferredSize(size);
+		//setSize(size);
 		setVisible(true);
 	}
 
@@ -89,6 +88,15 @@ public class MainMenu extends JFrame {
 		getContentPane().add(p);
 	    validate();
 	    p.requestFocus();
+	}
+	
+	public void fullscreen( DisplayMode displayMode ) {
+		device.setFullScreenWindow(this);
+		device.setDisplayMode( displayMode );
+		currentDM = displayMode;
+		size = new Dimension( displayMode.getWidth(), 
+				displayMode.getHeight() );
+		setSize(size);
 	}
 }
 
