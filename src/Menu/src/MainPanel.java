@@ -57,7 +57,6 @@ class MainPanel extends JPanel{
 
 		position = new int[12];
 		
-
 		Dimension size = new Dimension(fantasy.getWidth(null), fantasy.getHeight(null));
 
 		this.addMouseListener(new Mouse(position, fantasy, newGame, multiplayer, credits, options, exit, game, 
@@ -70,7 +69,6 @@ class MainPanel extends JPanel{
 	}
 
 	public void paintComponent(Graphics g) {
-
 		g.drawImage(fantasy, 0, 0, this.getWidth(), this.getHeight(), null);
 		
 		if(sNewGame)

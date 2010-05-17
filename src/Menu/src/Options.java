@@ -165,7 +165,7 @@ public class Options extends JPanel {
 			        			mainMenu.fullscreen = true;
 			        		else
 			        			mainMenu.fullscreen = false;
-			        			
+			 
 			            mainMenu.switchTo(mainPanel);
 			        }
 			    }
