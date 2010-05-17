@@ -10,11 +10,11 @@ import entities.Utente;
 
 
 public class Main {
-/*
+
 	public static void main(String[] args) {
 		
 		try {
-			DBFunctions.iscrivi("io", "lalal", "mailmail", Inet4Address.getLocalHost());
+			DBFunctions.iscrivi("Brutto", "brutto", "mailmail", Inet4Address.getLocalHost());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -22,7 +22,7 @@ public class Main {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPASE2");
 		EntityManager em = emf.createEntityManager();
 		
-		Utente ut = em.find(Utente.class, 351);
+		Utente ut = em.find(Utente.class, "io");
 		
 		System.out.println(ut.getNome());
 		System.out.println(ut.getIp_iscrizione());
@@ -30,5 +30,5 @@ public class Main {
 
 		
 	}
-	*/
+	
 }

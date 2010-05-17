@@ -40,7 +40,7 @@ public class Connection extends Thread {
 			this.start();
 			
 		} catch (IOException e) {
-			System.out.println("Errore durante la creazione degli IOStream");
+			System.out.println("Server>Errore durante la creazione degli IOStream");
 		}
 		
 	}
@@ -63,6 +63,8 @@ public class Connection extends Thread {
 			
 		} while(!message.equals(Messages.CLOSE) && this.utente == null);
 		
+		System.out.println("INIZIO SECONDO WHILE (THREAD)");
+		
 		if(this.utente != null)
 		{
 			this.initLobby();
@@ -76,7 +78,7 @@ public class Connection extends Thread {
 					sendMessage(Messages.CLOSE);
 			
 				if(message.startsWith(Messages.CHAT))
-					this.server.sendChatMessage(message);
+					this.server.sendChatMessage(message.substring(Messages.CHAT.length()));
 				
 			}
 		}
@@ -90,8 +92,8 @@ public class Connection extends Thread {
 	{
 		String []logInfo = (msg.substring(Messages.LOGIN.length())).split(";");
 		
-		Utente utente = DBFunctions.logIn(logInfo[0], logInfo[1], this.player.getInetAddress());
-		if(utente == null)
+		this.utente = DBFunctions.logIn(logInfo[0], logInfo[1], this.player.getInetAddress());
+		if(this.utente == null)
 			this.sendMessage(Messages.LOGINFAILED);
 		else
 			this.sendMessage(Messages.LOGINOK);
@@ -106,7 +108,7 @@ public class Connection extends Thread {
 			System.out.println("server>" + msg);
 		}
 		catch(IOException ioException){
-			System.out.println("Errore durante l'invio del messaggio al client");
+			System.out.println("Server>Errore durante l'invio del messaggio al client");
 		}
 	}
 

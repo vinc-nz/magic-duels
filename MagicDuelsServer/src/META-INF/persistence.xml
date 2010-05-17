@@ -5,11 +5,10 @@
 		<class>entities.Game</class>
 		<class>entities.Log</class>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/magic-duels"/>
-			<property name="javax.persistence.jdbc.user" value="neb"/>
-			<property name="javax.persistence.jdbc.password" value="lalala"/>
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.case-insensitive-columns" value="true"/>
+			<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/magic-duels"/>
+			<property name="eclipselink.jdbc.user" value="neb"/>
+			<property name="eclipselink.jdbc.password" value="lalala"/>
+			<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 		</properties>
 	</persistence-unit>
 </persistence>
