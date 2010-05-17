@@ -76,6 +76,7 @@ public class ServerGame extends NetGame{
 		if (clientsReady<channels.length)
 			try {
 				wait();
+				this.forward("ready");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
