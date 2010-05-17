@@ -21,7 +21,7 @@ public class ServerGame extends NetGame{
 	int clientsReady;
 
 	public ServerGame(int port) throws IOException {
-		this("Player1", 4, port);
+		this("Player1", 2, port);
 		this.clientsReady = 0;
 	}
 
@@ -41,7 +41,7 @@ public class ServerGame extends NetGame{
 		for (int i = 0; i < listeners.length; i++) {
 			NetForwarderController controller = 
 				new ClientController(i+2, this.getFight(), channels[i].getOutputStream());
-			listeners[i] = new ServerListener(controller, channels[i].getInputStream());
+			listeners[i] = new ServerListener(controller, channels[i].getInputStream(), this);
 			listeners[i].start();
 		}
 	}

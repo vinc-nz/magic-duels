@@ -12,10 +12,11 @@ public class ServerListener extends NetListener {
 	boolean clientReady;
 	ServerGame game;
 
-	public ServerListener(CharacterController controller, InputStream is) {
+	public ServerListener(CharacterController controller, InputStream is, ServerGame game) {
 		super(is);
 		this.controller = controller;
 		this.clientReady = false;
+		this.game = game;
 	}
 
 	@Override
