@@ -24,8 +24,8 @@ public class MainMenu extends JFrame {
 	
 	PlayerMote playMote;
 	
-	public int WIDTH = 1280;
-	public int HEIGHT = 800;
+	public int WIDTH;
+	public int HEIGHT;
 	public boolean fullscreen = true;
 	
 	public static void main(String[] args) {
@@ -50,6 +50,11 @@ public class MainMenu extends JFrame {
 				}
 			}
 		}
+		
+		DisplayMode dm = device.getDisplayModes()[0];
+		
+		WIDTH = dm.getWidth();
+		HEIGHT = dm.getHeight();
 		
 		fullscreen( displayModes.get( WIDTH + "x" + HEIGHT ) );
 		playMote = new PlayerMote();
