@@ -37,6 +37,8 @@ public abstract class NetListener extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 				running = false;
+				System.out.println("errore del listener");
+				System.exit(2);
 			}
 		}
 	}
