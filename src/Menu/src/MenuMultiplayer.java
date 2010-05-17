@@ -34,7 +34,6 @@ public class MenuMultiplayer extends JPanel  {
 		buttTwo = new JButton("CLIENT");
 		buttBack = new JButton("BACK MENU");
 		
-
 		add(buttOne); 
 		add(buttTwo);
 		add(buttBack);
@@ -42,7 +41,6 @@ public class MenuMultiplayer extends JPanel  {
 		buttOne.addActionListener(new ButtonListener(game, mainMenu, mainPanel, this));
 		buttTwo.addActionListener(new ButtonListener(game, mainMenu, mainPanel, this));
 		buttBack.addActionListener(new ButtonListener(game,  mainMenu, mainPanel, this));
-		
 		
 		setVisible(true); 
 	}

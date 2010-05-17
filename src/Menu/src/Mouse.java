@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JPanel;
+
 import jmegraphic.Game;
 
 public class Mouse extends MouseAdapter{
@@ -116,7 +118,8 @@ public class Mouse extends MouseAdapter{
 		}
 		
 		if(mainPanel.sMultiplayer){
-			mainMenu.switchTo(new MenuMultiplayer(game, mainMenu, mainPanel));
+			//mainMenu.switchTo(new MenuMultiplayer(game, mainMenu, mainPanel));
+			mainMenu.switchTo(new MainMulti(this.mainMenu));
 		}
 		
 		if(mainPanel.sOptions){

@@ -76,8 +76,6 @@ public class GraphicFight extends BaseGame {
 		//viene creato il root node
 		scene = new Node("battlefield");
 		
-		
-		
 		for (int i=1;i<=fight.numberOfPlayers();i++) {
 			Character player = fight.getPlayer(i);
 			GraphicCharacter graphicCharacter = new GraphicCharacter(player);
