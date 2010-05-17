@@ -122,7 +122,7 @@ public class Fight {
 	
 	public void nextTarget(int playerId) {
 		Character player = this.getPlayer(playerId);
-		player.target = player.target%4+1;
+		player.target = player.target%numberOfPlayers()+1;
 		if (player.target == playerId)
 			this.nextTarget(playerId);
 	}
