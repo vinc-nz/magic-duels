@@ -4,9 +4,6 @@ import input.CharacterController;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
-
-import com.jme.app.AbstractGame;
 
 import net.NetGame;
 import net.client.ClientGame;
@@ -20,13 +17,19 @@ public class Game extends GraphicFight {
 	
 	NetGame net = null;
 	PlayerMote playerMote;
+	MainMenu mainMenu;
 
 	
 	public Game(PlayerMote playerMote, MainMenu mainMenu) {
-		super(mainMenu);
+		super();
 		this.playerMote = playerMote;
+		this.mainMenu = mainMenu;
 	}
 
+	@Override
+	protected void initSystem() {
+		this.creanteDisplay(mainMenu.WIDTH, mainMenu.HEIGHT, mainMenu.fullscreen);
+	}
 	
 	
 	public void initNetGame(NetGame game) {

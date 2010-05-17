@@ -42,7 +42,6 @@ public class ClientGame extends NetGame {
 	public void sayReady() throws IOException {
 		DataOutputStream o = new DataOutputStream(channel.getOutputStream());
 		o.writeBytes("ready\n");
-		o.close();
 	}
 
 	@Override
@@ -50,4 +49,5 @@ public class ClientGame extends NetGame {
 		listener.waitReadySignal();
 		listener.start();
 	}
+	
 }
