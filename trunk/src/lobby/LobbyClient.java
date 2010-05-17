@@ -8,6 +8,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Menu.src.Lobby;
+
 public class LobbyClient extends Thread {
 	
 	Socket connection;
@@ -19,12 +21,25 @@ public class LobbyClient extends Thread {
  	List<String> players;
  	List<HostedGameInfo> hostedGameList;
  	
+ 	// Grafica della Lobby
+ 	Lobby graphicLobby;
+ 	
 	public LobbyClient() {
-	
-		this.onlinePlayer = null;		
-		
+		this.onlinePlayer = null;
 	}
 	
+	public void setGraphicLobby(Lobby graphicLobby) {
+		this.graphicLobby = graphicLobby;
+	}
+
+	public List<String> getPlayers() {
+		return players;
+	}
+
+	public List<HostedGameInfo> getHostedGameList() {
+		return hostedGameList;
+	}
+
 	public boolean connect(String ip, int port)
 	{
 		try {
@@ -35,19 +50,10 @@ public class LobbyClient extends Thread {
 			this.out.flush();
 			this.in = new ObjectInputStream(this.connection.getInputStream());
 			
-			if(this.readMessage() == Messages.WELCOME)
+			if(this.readMessage().equals(Messages.WELCOME))
 				return true;
 			else
 				return false;
-			/*
-			try {
-				
-				if( ((String)this.in.readObject()).equals(LobbyClient.WELCOME) )
-					System.out.println("CONNESSIONE STABILITA");
-				
-			} catch (ClassNotFoundException e) {
-				System.out.println("Formato messaggio non riconosciuto");
-			}*/
 			
 		} catch (UnknownHostException e) {
 			System.out.println("L'host è sconosciuto");
@@ -91,7 +97,7 @@ public class LobbyClient extends Thread {
 	public boolean logIn(String nome, String password)
 	{
 		this.sendMessage(Messages.LOGIN + nome + ";" + password);
-		if(this.readMessage() == Messages.LOGINOK)
+		if(this.readMessage().equals(Messages.LOGINOK))
 		{
 			this.onlinePlayer = new OnlinePlayer(nome);
 			this.start();
@@ -123,7 +129,7 @@ public class LobbyClient extends Thread {
 		
 		this.sendMessage(Messages.LOBBYSTARTED);
 		
-		while(!message.equals(Messages.CLOSE))
+		while(message == null || !message.equals(Messages.CLOSE))
 		{					
 			
 			message = this.readMessage();
@@ -133,14 +139,29 @@ public class LobbyClient extends Thread {
 			else if(message.startsWith(Messages.GAMELIST))
 				this.refreshGameList(message);
 			else if(message.startsWith(Messages.CHAT))
-				System.out.println(message);
+				this.writeChatMessage(message);
 			
+			System.out.println("RICEVO " + message);
+
 		}
 		
 		this.closeConnection();
-		
 	}
 
+	public void sendChatMessage(String message)
+	{
+		this.sendMessage(Messages.CHAT + message);
+		System.out.println("INVIO " + Messages.CHAT + message);
+	}
+	
+	public void writeChatMessage(String message)
+	{
+		
+		String []msg = message.substring(Messages.CHAT.length()).split(";", 2);
+		
+		this.graphicLobby.writeChatMessage(msg[1].substring(0, Integer.parseInt(msg[0])), msg[1].substring(Integer.parseInt(msg[0])));
+	}
+	
 	public void refreshClientList(String message)
 	{
 		this.players = LobbyClient.getClientList(message);
@@ -167,6 +188,10 @@ public class LobbyClient extends Thread {
 	public static List getGameList(String message)
 	{
 		String list = message.substring(Messages.GAMELIST.length());
+
+		if(list.length() == 0)
+			return new ArrayList();
+		
 		String []games = list.split(";");
 		
 		List<HostedGameInfo> gameList = new ArrayList<HostedGameInfo>();
@@ -176,12 +201,6 @@ public class LobbyClient extends Thread {
 			gameList.add(new HostedGameInfo(games[i], games[i+1], games[i+2], Integer.parseInt(games[i+3])));
 		
 		return gameList;
-	}
-	
-	public static void main(String[] args) {
-
-		LobbyClient lobby = new LobbyClient();
-	
 	}
 	
 }

@@ -38,9 +38,9 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 		if(evento.isButtonBPressed())
 		{
 			long nextTimestamp = new Date().getTime();
-			if( nextTimestamp - this.buttonBTimeStamp > 1000)
+			if( nextTimestamp - this.buttonBTimeStamp > 300)
 				this.characterController.nextTarget();
-					
+			this.buttonBTimeStamp = nextTimestamp;
 		}
 
 	}
