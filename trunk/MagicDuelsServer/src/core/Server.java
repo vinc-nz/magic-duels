@@ -33,7 +33,8 @@ public class Server extends Thread{
 		for (Iterator iterator = this.players.iterator(); iterator.hasNext();) 
 		{
 			Connection connection = (Connection) iterator.next();	
-			connection.sendMessage(Messages.CHAT + msg);
+			connection.sendMessage(Messages.CHAT + connection.utente.getNome().length() + ";" + connection.utente.getNome() + msg);
+			
 		}	
 	}
 
@@ -93,6 +94,5 @@ public class Server extends Thread{
 		
 		return gameList;
 	}
-	
 	
 }
