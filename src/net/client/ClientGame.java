@@ -33,7 +33,7 @@ public class ClientGame extends NetGame {
 		CharacterController[] controllers = new CharacterController[this.getFight().numberOfPlayers()];
 		for (int i = 0; i < controllers.length; i++) {
 			if (i+1!=this.getLocalId())
-				controllers[i] = new CharacterController(this.getLocalId(), this.getFight());
+				controllers[i] = new CharacterController(i+1, this.getFight());
 		}
 		this.listener = new ClientListener(controllers, channel.getInputStream(), this.getLocalId());
 	}
