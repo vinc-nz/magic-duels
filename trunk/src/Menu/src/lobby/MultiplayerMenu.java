@@ -3,8 +3,11 @@ package Menu.src.lobby;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -26,7 +29,7 @@ public class MultiplayerMenu extends JPanel {
 	public static String NEWACCOUNT = "New Lobby Account";
 	public static String DIRECTCONNECTION = "Direct Connection";
 	
-	public MultiplayerMenu(MainMenu mainMenu) {
+	public MultiplayerMenu(final MainMenu mainMenu) {
 		
 		this.mainMenu = mainMenu;
 		
@@ -45,6 +48,7 @@ public class MultiplayerMenu extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				
+				mainMenu.ok.play();
 			    JTabbedPane tabSource = (JTabbedPane) e.getSource();
 			    String tab = tabSource.getTitleAt(tabSource.getSelectedIndex());
 			    if(tab.equals(MultiplayerMenu.LOGIN))
@@ -54,6 +58,21 @@ public class MultiplayerMenu extends JPanel {
 			
 			}
 		});
+		
+		JButton buttonBack = new JButton("BACK");
+		this.add(buttonBack);
+		
+		
+		// cancel return to main panel
+		buttonBack.addActionListener(
+		    new ActionListener() {
+				@Override
+		        public void actionPerformed(ActionEvent e) {
+					mainMenu.ok.play();
+		            mainMenu.switchTo(mainMenu.panel);	
+		        }
+		    }
+		);
 		
 		this.tabbedPane.setPreferredSize(new Dimension(500, 130));
 		super.add(this.tabbedPane);
