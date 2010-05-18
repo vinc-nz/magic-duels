@@ -4,16 +4,15 @@ import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import java.util.LinkedHashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import wiiMoteInput.PlayerMote;
-
 import jmegraphic.Game;
+import lobby.LobbyClient;
+import wiiMoteInput.PlayerMote;
 
 public class MainMenu extends JFrame {
 	
@@ -22,6 +21,7 @@ public class MainMenu extends JFrame {
 	GraphicsDevice device;
 	LinkedHashMap<String, DisplayMode> displayModes;
 	
+	public LobbyClient lobbyClient;
 	PlayerMote playMote;
 	
 	public int WIDTH;
@@ -57,7 +57,9 @@ public class MainMenu extends JFrame {
 		HEIGHT = dm.getHeight();
 		
 		fullscreen( displayModes.get( WIDTH + "x" + HEIGHT ) );
-		playMote = new PlayerMote();
+		
+		this.lobbyClient = new LobbyClient();
+		this.playMote = new PlayerMote();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		

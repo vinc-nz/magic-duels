@@ -1,4 +1,4 @@
-package Menu.src;
+package Menu.src.lobby;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

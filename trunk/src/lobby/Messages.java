@@ -7,6 +7,12 @@ public class Messages {
 	
 	public static String CHAT = "CHAT>";
 	
+	// NEWUSER>NOMEUTENTE;PASSWORD;MAIL
+	public static String NEWUSER = "NEWUSER>";
+
+	public static String NEWUSEROK = "NEWUSEROK";
+	public static String NEWUSERFAILED = "NEWUSERFAILED";
+
 	// LOGIN>UTENTE;PASSWORD
 	public static String LOGIN = "LOGIN>";
 	

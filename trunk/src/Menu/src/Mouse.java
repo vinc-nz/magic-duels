@@ -4,7 +4,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JPanel;
+import Menu.src.lobby.MultiplayerMenu;
 
 import jmegraphic.Game;
 
@@ -19,7 +19,7 @@ public class Mouse extends MouseAdapter{
 	int position[];
 	MainPanel mainPanel;
 	Game game;
-	MenuMultiplayer menuMultiplayer;
+	MultiplayerMenu multiplayerMenu;
 	MainMenu mainMenu;
 	Options optionsPanel;
 	
@@ -37,7 +37,8 @@ public class Mouse extends MouseAdapter{
 		this.position = initialPosition;
 		
 		this.mainPanel = mainPanel;
-		
+		this.optionsPanel = new Options(this.mainMenu, this.mainPanel);
+		this.multiplayerMenu = new MultiplayerMenu(this.mainMenu);
 	}
 	
 	public void mouseMoved(MouseEvent e){
@@ -118,12 +119,11 @@ public class Mouse extends MouseAdapter{
 		}
 		
 		if(mainPanel.sMultiplayer){
-			//mainMenu.switchTo(new MenuMultiplayer(game, mainMenu, mainPanel));
-			mainMenu.switchTo(new MainMulti(this.mainMenu));
+			mainMenu.switchTo(this.multiplayerMenu);
 		}
 		
 		if(mainPanel.sOptions){
-			mainMenu.switchTo( new Options(mainMenu, mainPanel));
+			mainMenu.switchTo(this.optionsPanel);
 		}
 		
 		if(mainPanel.sCredits){

@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Menu.src.Lobby;
+import Menu.src.lobby.Lobby;
 
 public class LobbyClient extends Thread {
 	
@@ -63,6 +63,11 @@ public class LobbyClient extends Thread {
 		}		
 		
 		return false;
+	}
+	
+	public boolean isConnected()
+	{
+		return (this.connection != null && this.connection.isConnected());
 	}
 	
 	public void sendMessage(String msg)
@@ -170,6 +175,15 @@ public class LobbyClient extends Thread {
 	public void refreshGameList(String message)
 	{
 		this.hostedGameList = LobbyClient.getGameList(message);
+	}
+	
+	public boolean newUser(String utente, String password, String mail)
+	{
+		this.sendMessage(Messages.NEWUSER + utente + ";" + password + ";" + mail);
+		if(this.readMessage().equals(Messages.NEWUSEROK))
+			return true;
+		else
+			return false;
 	}
 	
 	public static List getClientList(String message)
