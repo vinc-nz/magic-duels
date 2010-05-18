@@ -25,8 +25,9 @@ public class MainMenu extends JFrame {
 	PlayerMote playMote;
 	MP3 sound;
 	MP3 colonna;
-	MP3 ok;
+	public MP3 ok;
 	
+	public MainPanel panel;
 	public int WIDTH;
 	public int HEIGHT;
 	public boolean fullscreen = true;
@@ -71,7 +72,7 @@ public class MainMenu extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		MainPanel panel = new MainPanel(
+		panel = new MainPanel(
 				new ImageIcon("src/Menu/data/mainMenu2.jpg").getImage(),
 				new ImageIcon("src/Menu/data/imageNewGame.png").getImage(),
 				new ImageIcon("src/Menu/data/imageMultiplayer.png").getImage(),
