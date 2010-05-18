@@ -23,6 +23,9 @@ public class MainMenu extends JFrame {
 	
 	public LobbyClient lobbyClient;
 	PlayerMote playMote;
+	MP3 sound;
+	MP3 colonna;
+	MP3 ok;
 	
 	public int WIDTH;
 	public int HEIGHT;
@@ -34,7 +37,7 @@ public class MainMenu extends JFrame {
 
 	public MainMenu() {
 		super();
-
+		
 		setUndecorated(true);  
 	    setResizable(false);
 	    
@@ -60,6 +63,11 @@ public class MainMenu extends JFrame {
 		
 		this.lobbyClient = new LobbyClient();
 		this.playMote = new PlayerMote();
+	
+		sound = new MP3("src/Menu/data/Click.mp3");
+		colonna = new MP3("src/Menu/data/colonna.mp3");
+		ok = new MP3("src/Menu/data/ok.mp3");
+		colonna.play();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
