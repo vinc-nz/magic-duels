@@ -146,8 +146,8 @@ public class Options extends JPanel {
 		    new ActionListener() {
 				@Override
 		        public void actionPerformed(ActionEvent e) {
-		            mainMenu.switchTo(mainPanel);
-		        	
+					mainMenu.ok.play();
+		            mainMenu.switchTo(mainPanel);	
 		        }
 		    }
 		);
@@ -165,7 +165,7 @@ public class Options extends JPanel {
 			        			mainMenu.fullscreen = true;
 			        		else
 			        			mainMenu.fullscreen = false;
-			 
+			        	mainMenu.ok.play();
 			            mainMenu.switchTo(mainPanel);
 			        }
 			    }
@@ -216,18 +216,17 @@ public class Options extends JPanel {
 	public void startFlashing()
 	{
 		this.wiiMoteFlashing = true;
+		mainMenu.ok.play();
 		this.animaker = AniMaker.bindAnimation("../data/clips.png", 73, 307, 80, mote);
 		this.animaker.startAnimation();
 	}
 
 	public void stopFlashing()
 	{
-		
 		this.wiiMoteFlashing = false;
 		this.animaker.stopAnimation();
 		this.animaker = null;
 		this.mote.setIcon(new WiiMoteIcon(this));
-
 	}
 
 }

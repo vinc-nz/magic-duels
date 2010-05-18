@@ -26,11 +26,14 @@ class MainPanel extends JPanel{
 	Game game;
 	MainMenu mainMenu;
 	
+	
 	public MainPanel(Image fantasy, Image newGame, Image multiplayer, Image options, 
 			Image credits, Image exit, Image selectNewGame,
 			Image selecMultiplayer, Image selectOptions,
 			Image selectCredits, Image selectExit, Game game, MainMenu mainMenu){
 	
+		
+		
 		this.game = game;
 		this.mainMenu = mainMenu;
 
@@ -66,6 +69,7 @@ class MainPanel extends JPanel{
 
 		setPreferredSize(size);
 		setSize(size);
+		
 	}
 
 	public void paintComponent(Graphics g) {
@@ -73,7 +77,9 @@ class MainPanel extends JPanel{
 		
 		if(sNewGame)
 			g.drawImage(selectNewGame, konst2(200), konst(100), imageGetWidth(), imageGetHeight(), null);
+			
 		else{
+			
 			g.drawImage(newGame, konst2(200), konst(100), imageGetWidth(), imageGetHeight(), null);
 			position[0]=konst2(200); position[1]=konst(100);
 		}
