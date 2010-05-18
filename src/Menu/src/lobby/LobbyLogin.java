@@ -1,10 +1,8 @@
-package Menu.src;
+package Menu.src.lobby;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -14,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import lobby.LobbyClient;
+import Menu.src.MainMenu;
 
 public class LobbyLogin extends JPanel {
 
@@ -29,15 +27,11 @@ public class LobbyLogin extends JPanel {
 	JButton login;
 	
 	JPanel centerPanel;
-	
-	LobbyClient lobbyClient;
-	
+		
 	public LobbyLogin(MainMenu mainMenu) {
 			
 		this.mainMenu = mainMenu;
-		
-		this.lobbyClient = new LobbyClient();
-		
+				
 		this.serverIp = new JTextField("127.0.0.1");
 		this.serverPort = new JTextField("7000");
 		this.user = new JTextField("Neb");
@@ -46,40 +40,40 @@ public class LobbyLogin extends JPanel {
 		this.login = new JButton("Effettua il LogIn");
 		this.connect = new JButton("Connetti al Server");
 		
-		this.centerPanel = new JPanel();
-		this.connecting();
+		this.checkPanel();
 		
-		super.setPreferredSize(new Dimension(480, 100));
 	}
 	
 	public void connecting()
 	{
+		super.removeAll();
 		super.setLayout(new BorderLayout());
-		super.add(new JLabel("WELCOME TO THE LOBBY!"), BorderLayout.NORTH);
 
-		this.centerPanel.removeAll();
+		this.centerPanel = new JPanel();
 		this.centerPanel = new JPanel(new GridLayout(2, 2));
 		
-		GridBagConstraints c = new GridBagConstraints();
-		//c.insets = new Insets(30, 30, 30, 30);
-		
-		//this.centerPanel.getLayout().
-		
-		this.centerPanel.add(new JLabel("Server ip:"), c);
-		this.centerPanel.add(this.serverIp, c);
-		this.centerPanel.add(new JLabel("Server Port:"));
+		this.centerPanel.add(new JLabel("IP Server:"));
+		this.centerPanel.add(this.serverIp);
+		this.centerPanel.add(new JLabel("Porta Server:"));
 		this.centerPanel.add(this.serverPort);
-			
+
 		this.addConnectButtonListener();
 		
 		super.add(centerPanel, BorderLayout.CENTER);
-		super.add(this.connect, BorderLayout.SOUTH);	
+		super.add(this.connect, BorderLayout.SOUTH);
+		
+		super.repaint();
+		super.revalidate();
 	}
 
 	public void logging()
 	{
-		this.centerPanel.removeAll();
+		super.removeAll();
+		super.setLayout(new BorderLayout());
+		
+		this.centerPanel = new JPanel();
 		this.centerPanel = new JPanel(new GridLayout(2, 2));
+		
 		this.centerPanel.add(new JLabel("Nome Utente:"));
 		this.centerPanel.add(this.user);
 		this.centerPanel.add(new JLabel("Password:"));
@@ -87,15 +81,11 @@ public class LobbyLogin extends JPanel {
 		
 		super.removeAll();
 		super.setLayout(new BorderLayout());
-		super.add(new JLabel("WELCOME TO THE LOBBY!"), BorderLayout.NORTH);
 
 		this.addLoginButtonListener();
 		
 		super.add(this.centerPanel, BorderLayout.CENTER);
 		super.add(this.login, BorderLayout.SOUTH);
-	
-		this.centerPanel.revalidate();
-		this.centerPanel.repaint();
 		
 		super.repaint();
 		super.revalidate();
@@ -111,11 +101,10 @@ public class LobbyLogin extends JPanel {
 
 			String ip = LobbyLogin.this.serverIp.getText();
 			int port = Integer.parseInt(LobbyLogin.this.serverPort.getText());
-			if(LobbyLogin.this.lobbyClient.connect(ip, port))
-			{
-				System.out.println("true");
+			if(LobbyLogin.this.mainMenu.lobbyClient.connect(ip, port))
 				LobbyLogin.this.logging();
-			}
+			else
+				System.out.println("NON CONNESSO");
 		}
 			
 		});
@@ -132,17 +121,22 @@ public class LobbyLogin extends JPanel {
 
 			String nome = LobbyLogin.this.user.getText();
 			String password = LobbyLogin.this.password.getText();
-			if(LobbyLogin.this.lobbyClient.logIn(nome, password))
-			{
-				System.out.println("LOGGATO!");
-				LobbyLogin.this.mainMenu.switchTo(new Lobby(LobbyLogin.this.lobbyClient));
-			}
+			if(LobbyLogin.this.mainMenu.lobbyClient.logIn(nome, password))
+				LobbyLogin.this.mainMenu.switchTo(new Lobby(LobbyLogin.this.mainMenu.lobbyClient));
 			else
 				System.out.println("NOT LOGGED");
 		}
 			
 		});
 
+	}
+	
+	public void checkPanel()
+	{
+		if(this.mainMenu.lobbyClient.isConnected())
+			this.logging();
+		else
+			this.connecting();
 	}
 	
 }
