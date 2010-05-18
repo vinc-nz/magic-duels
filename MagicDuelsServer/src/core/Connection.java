@@ -57,9 +57,12 @@ public class Connection extends Thread {
 			
 			if(message.startsWith(Messages.LOGIN))
 				login(message);
-			// TODO: iscrizione
-			else if(message.startsWith("NEW"))
-				login(message);
+			
+			if(message.startsWith(Messages.NEWUSER))
+				if(Server.newUser(message, this.player.getLocalAddress()))
+					this.sendMessage(Messages.NEWUSEROK);
+				else
+					this.sendMessage(Messages.NEWUSERFAILED);
 			
 		} while(!message.equals(Messages.CLOSE) && this.utente == null);
 		
@@ -78,8 +81,8 @@ public class Connection extends Thread {
 					sendMessage(Messages.CLOSE);
 			
 				if(message.startsWith(Messages.CHAT))
-					this.server.sendChatMessage(message.substring(Messages.CHAT.length()));
-				
+					this.server.sendChatMessage(this.utente.getNome(), message.substring(Messages.CHAT.length()));
+			
 			}
 		}
 		

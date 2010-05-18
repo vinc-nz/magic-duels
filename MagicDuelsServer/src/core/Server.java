@@ -1,6 +1,7 @@
 package core;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Iterator;
@@ -28,12 +29,12 @@ public class Server extends Thread{
 		this.start();
 	}
 	
-	public void sendChatMessage(String msg)
+	public void sendChatMessage(String sender, String msg)
 	{	
 		for (Iterator iterator = this.players.iterator(); iterator.hasNext();) 
 		{
 			Connection connection = (Connection) iterator.next();	
-			connection.sendMessage(Messages.CHAT + connection.utente.getNome().length() + ";" + connection.utente.getNome() + msg);
+			connection.sendMessage(Messages.CHAT + sender.length() + ";" + sender + msg);
 			
 		}	
 	}
@@ -81,6 +82,9 @@ public class Server extends Thread{
 		
 		String gameList = Messages.GAMELIST;
 		
+		if(games.isEmpty())
+			return gameList;
+		
 		HostedGame game;
 		for (Iterator iterator = games.iterator(); iterator.hasNext();)
 		{
@@ -93,6 +97,15 @@ public class Server extends Thread{
 		}
 		
 		return gameList;
+	}
+	
+	public static boolean newUser(String msg, InetAddress ip)
+	{
+		String []values = msg.substring(Messages.NEWUSER.length()).split(";");
+		if(DBFunctions.iscrivi(values[0], values[1], values[2], ip))
+			return true;
+		else
+			return false;
 	}
 	
 }
