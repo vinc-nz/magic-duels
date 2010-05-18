@@ -42,6 +42,7 @@ public class DBFunctions {
 			
 		} catch (Exception e) {
 			em.getTransaction().rollback();
+			//e.printStackTrace();
 			return false;
 		} finally {
 			em.close();

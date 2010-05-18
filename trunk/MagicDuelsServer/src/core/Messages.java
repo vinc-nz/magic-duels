@@ -7,6 +7,12 @@ public class Messages {
 	
 	public static String CHAT = "CHAT>";
 	
+	// NEWUSER>NOMEUTENTE;PASSWORD;MAIL
+	public static String NEWUSER = "NEWUSER>";
+
+	public static String NEWUSEROK = "NEWUSEROK";
+	public static String NEWUSERFAILED = "NEWUSERFAILED";
+
 	// LOGIN>UTENTE;PASSWORD
 	public static String LOGIN = "LOGIN>";
 	
@@ -18,7 +24,7 @@ public class Messages {
 	// CLIENTLIST>NOME1;NOME2;ECC
 	public static String CLIENTLIST = "CLIENTLIST>";	
 	
-	// GAMELIST>NOMEHOST1;NOMEGAME1;IP1;PORTA1;NOMEHOST2;NOMEGAME2;IP2;PORTA2;ECC
+	// GAMELIST>NOMEGAME1;IP1;PORTA1;NOMEGAME2;IP2;PORTA2;ECC
 	public static String GAMELIST = "GAMELIST>";
 	
 	//CREATE>IP;PORT
