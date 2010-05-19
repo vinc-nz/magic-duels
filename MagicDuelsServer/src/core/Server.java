@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class Server extends Thread{
 
 	ServerSocket serverSocket;
 	List<Connection> players;
-	List<HostedGame> hostedGames;
+	HashMap<String, HostedGame> hostedGames;
 	
 	public Server(int porta) {
 	
@@ -24,7 +25,7 @@ public class Server extends Thread{
 		}
 		
 		this.players = new LinkedList<Connection>();
-		this.hostedGames = new LinkedList<HostedGame>();
+		this.hostedGames = new HashMap<String, HostedGame>();
 		
 		this.start();
 	}
@@ -78,7 +79,7 @@ public class Server extends Thread{
 	
 	public static String getGameList(Server server)
 	{
-		List<HostedGame> games = server.hostedGames;
+		HashMap<String, HostedGame> games = server.hostedGames;
 		
 		String gameList = Messages.GAMELIST;
 		
@@ -86,7 +87,7 @@ public class Server extends Thread{
 			return gameList;
 		
 		HostedGame game;
-		for (Iterator iterator = games.iterator(); iterator.hasNext();)
+		for (Iterator iterator = games.keySet().iterator(); iterator.hasNext();)
 		{
 			game = (HostedGame)iterator.next();
 			
