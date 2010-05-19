@@ -71,9 +71,6 @@ public class LogingTab extends MultiplayerMenuTabs {
 		
 		JPanel centerPanel = new JPanel(new GridLayout(2, 2));
 		
-		centerPanel = new JPanel();
-		centerPanel = new JPanel(new GridLayout(2, 2));
-		
 		centerPanel.add(new JLabel("Nome Utente:"));
 		centerPanel.add(this.user);
 		centerPanel.add(new JLabel("Password:"));
@@ -86,13 +83,15 @@ public class LogingTab extends MultiplayerMenuTabs {
 
 				String nome = LogingTab.this.user.getText();
 				String password = LogingTab.this.password.getText();
+				
 				if(LogingTab.this.mainMenu.lobbyClient.logIn(nome, password))
 					LogingTab.this.mainMenu.switchTo(new Lobby(LogingTab.this.mainMenu.lobbyClient));
 				else
 					System.out.println("NOT LOGGED");
 			}
 				
-			});		
+			});
+		
 		super.add(centerPanel, BorderLayout.CENTER);
 		super.add(this.login, BorderLayout.SOUTH);
 		

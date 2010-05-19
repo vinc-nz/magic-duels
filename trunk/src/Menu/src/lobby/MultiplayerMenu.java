@@ -24,6 +24,7 @@ public class MultiplayerMenu extends JPanel {
 	
 	LogingTab logingTab;
 	SigningTab signingTab;
+	DirectConnectionServerTab directConnectionServerTab;
 	
 	public static String LOGIN = "Login to the Lobby";
 	public static String NEWACCOUNT = "New Lobby Account";
@@ -37,11 +38,12 @@ public class MultiplayerMenu extends JPanel {
 		
 		this.logingTab = new LogingTab(this.mainMenu);
 		this.signingTab = new SigningTab(this.mainMenu);
+		this.directConnectionServerTab = new DirectConnectionServerTab(this.mainMenu);
 		
 		this.tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.tabbedPane.addTab(MultiplayerMenu.LOGIN, this.logingTab);
 		this.tabbedPane.addTab(MultiplayerMenu.NEWACCOUNT, this.signingTab);
-		this.tabbedPane.addTab(MultiplayerMenu.DIRECTCONNECTION, new JPanel());
+		this.tabbedPane.addTab(MultiplayerMenu.DIRECTCONNECTION, this.directConnectionServerTab);
 				
 		this.tabbedPane.addChangeListener(new ChangeListener() {
 			

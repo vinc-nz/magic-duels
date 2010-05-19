@@ -29,15 +29,10 @@ public class WiiMoteIcon extends Thread implements Icon {
 		
 		if(!this.options.wiiMoteFlashing)
 			if(this.options.mainMenu.playMote.getMote() == null)
-			{
 				g.drawImage(this.unConnectedMote, 0,0, this.unConnectedMote.getWidth(null), this.unConnectedMote.getHeight(null), null);
-				System.out.println("IMG 2");
-			}
 			else
-			{
 				g.drawImage(this.connectedMote, 0,0, this.connectedMote.getWidth(null), this.connectedMote.getHeight(null), null);
-				System.out.println("IMG 3");
-			}
+				
 	}
 	
 	@Override
