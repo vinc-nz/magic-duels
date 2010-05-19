@@ -27,10 +27,18 @@ public class Messages {
 	// GAMELIST>NOMEGAME1;IP1;PORTA1;NOMEGAME2;IP2;PORTA2;ECC
 	public static String GAMELIST = "GAMELIST>";
 	
-	//CREATE>IP;PORT
+	//CREATE>NOMEGAME;NUMPLAYERS;NUMPORTA
 	public static String CREATE = "CREATE>";
 	
-	// JOIN>IP;PORT
+	public static String CREATEOK = "CREATEOK";
+	public static String CREATEFAILED = "CREATEFAILED";
+	
 	public static String JOIN = "JOIN>";
+	public static String LEAVE = "LEAVE";
+	
+	public static String OPEN = "Aperto";
+	public static String CLOSED = "Chiuso";
+	public static String IA = "Computer";
+	public static String HUMAN = "HUMAN";
 	
 }

@@ -8,6 +8,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.swing.internal.plaf.synth.resources.synth;
+
 import Menu.src.lobby.Lobby;
 
 public class LobbyClient extends Thread {
@@ -20,6 +22,8 @@ public class LobbyClient extends Thread {
  	
  	List<String> players;
  	List<HostedGameInfo> hostedGameList;
+ 	
+ 	LobbyHostedGame hostedGame;
  	
  	// Grafica della Lobby
  	Lobby graphicLobby;
@@ -38,6 +42,10 @@ public class LobbyClient extends Thread {
 
 	public List<HostedGameInfo> getHostedGameList() {
 		return hostedGameList;
+	}
+
+	public LobbyHostedGame getHostedGame() {
+		return hostedGame;
 	}
 
 	public boolean connect(String ip, int port)
@@ -81,7 +89,7 @@ public class LobbyClient extends Thread {
 		}
 	}
 
-	public String readMessage()
+	public synchronized String readMessage()
 	{
 		try{
 			
@@ -92,6 +100,7 @@ public class LobbyClient extends Thread {
 			
 		} catch(IOException e) {
 			System.out.println("Errore durante la ricezione del messaggio");
+			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			System.out.println("Classe non trovata!");
 		}
@@ -124,8 +133,7 @@ public class LobbyClient extends Thread {
 		} catch (IOException e) {
 			System.out.println("Errore nella chiusura della connessione");
 		}
-		
-	}	
+	}
 	
 	@Override
 	public void run() {
@@ -140,12 +148,20 @@ public class LobbyClient extends Thread {
 			message = this.readMessage();
 			
 			if(message.startsWith(Messages.CLIENTLIST))
-				this.refreshClientList(message);
+				this.setClientList(message);
+			
 			else if(message.startsWith(Messages.GAMELIST))
-				this.refreshGameList(message);
+				this.setGameList(message);
+			
 			else if(message.startsWith(Messages.CHAT))
 				this.writeChatMessage(message);
 			
+			else if(message.equals(Messages.CREATEOK))
+				this.graphicLobby.initHostedGamePanel();
+			
+			else if(message.equals(Messages.CREATEFAILED))
+				System.out.println("NON CREATA");
+				
 			System.out.println("RICEVO " + message);
 
 		}
@@ -167,14 +183,14 @@ public class LobbyClient extends Thread {
 		this.graphicLobby.writeChatMessage(msg[1].substring(0, Integer.parseInt(msg[0])), msg[1].substring(Integer.parseInt(msg[0])));
 	}
 	
-	public void refreshClientList(String message)
+	public void setClientList(String message)
 	{
-		this.players = LobbyClient.getClientList(message);
+		this.players = LobbyClient.createClientList(message);
 	}
 	
-	public void refreshGameList(String message)
+	public void setGameList(String message)
 	{
-		this.hostedGameList = LobbyClient.getGameList(message);
+		this.hostedGameList = LobbyClient.createGameList(message);
 	}
 	
 	public boolean newUser(String utente, String password, String mail)
@@ -186,7 +202,7 @@ public class LobbyClient extends Thread {
 			return false;
 	}
 	
-	public static List getClientList(String message)
+	public static List createClientList(String message)
 	{
 		String list = message.substring(Messages.CLIENTLIST.length());
 		String []clients = list.split(";");
@@ -199,7 +215,7 @@ public class LobbyClient extends Thread {
 		return clientList;
 	}
 	
-	public static List getGameList(String message)
+	public static List createGameList(String message)
 	{
 		String list = message.substring(Messages.GAMELIST.length());
 
@@ -215,6 +231,18 @@ public class LobbyClient extends Thread {
 			gameList.add(new HostedGameInfo(games[i], games[i+1], games[i+2], Integer.parseInt(games[i+3])));
 		
 		return gameList;
+	}
+	
+	public void createGame(String gameName, int numSlots, int numPorta)
+	{
+		String msg = Messages.CREATE;
+		msg += gameName + ";";
+		msg += String.valueOf(numSlots) + ";";
+		msg += String.valueOf(numPorta) + ";";
+		
+		this.sendMessage(msg);
+		
+		this.hostedGame = new LobbyHostedGame(gameName, numPorta, numSlots);
 	}
 	
 }
