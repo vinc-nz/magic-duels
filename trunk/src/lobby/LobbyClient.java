@@ -242,7 +242,7 @@ public class LobbyClient extends Thread {
 		
 		this.sendMessage(msg);
 		
-		this.hostedGame = new LobbyHostedGame(gameName, numPorta, numSlots);
+		this.hostedGame = new LobbyHostedGame(this, gameName, numPorta, numSlots);
 	}
 	
 }

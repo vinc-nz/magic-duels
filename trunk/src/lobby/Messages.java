@@ -36,6 +36,9 @@ public class Messages {
 	public static String JOIN = "JOIN>";
 	public static String LEAVE = "LEAVE";
 	
+	//CHANGESLOTTYPE>SLOTINDEX;SLOTTYPE  (it's the same for server-> and client->server)
+	public static String CHANGESLOTTYPE = "CHANGESLOTTYPE>";
+	
 	public static String OPEN = "Aperto";
 	public static String CLOSED = "Chiuso";
 	public static String IA = "Computer";

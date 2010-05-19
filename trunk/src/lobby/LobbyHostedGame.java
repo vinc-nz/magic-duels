@@ -5,6 +5,8 @@ import java.util.List;
 
 public class LobbyHostedGame {
 
+	LobbyClient lobbyClient;
+	
 	String gameName;
 	int porta;
 	int numSlots;
@@ -12,8 +14,10 @@ public class LobbyHostedGame {
 	
 	List<LobbyHostedGameSlot> slots;
 	
-	public LobbyHostedGame(String gameName, int porta, int numSlots)
+	public LobbyHostedGame(LobbyClient lobbyClient, String gameName, int porta, int numSlots)
 	{
+		this.lobbyClient = lobbyClient;
+		
 		this.gameName = gameName;
 		this.porta = porta;
 		this.numSlots = numSlots;
@@ -29,6 +33,11 @@ public class LobbyHostedGame {
 	
 	public void changeSlotState(int slotIndex, String state)
 	{
+		String msg = Messages.CHANGESLOTTYPE;
+		msg += String.valueOf(slotIndex) + ";";
+		msg += state;
+		
+		this.lobbyClient.sendMessage(msg);
 		this.slots.get(slotIndex).type = state;
 	}
 	
