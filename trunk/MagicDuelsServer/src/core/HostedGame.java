@@ -9,6 +9,10 @@ public class HostedGame {
 	int porta;
 	
 	String gameName;
+
+	int numSlots;
+	int freeSlots;
+	
 	List<HostedGameSlot> slots;
 	
 	public HostedGame(Connection host, int porta, String gameName, int numSlots)
@@ -16,11 +20,16 @@ public class HostedGame {
 		this.host = host;
 		this.porta = porta;
 		this.gameName = gameName;
+		this.numSlots = numSlots;
+		this.freeSlots = numSlots;
 		this.slots = new ArrayList<HostedGameSlot>();
 		
 		for (int i = 0; i < numSlots; i++)
 			this.slots.add(new HostedGameSlot());
+		
 	}
+	
+	// TODO: aggiunta/rimozione giocatore : syncronized
 	
 	public Connection getHost() {
 		return host;

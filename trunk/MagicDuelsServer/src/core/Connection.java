@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Iterator;
-import java.util.List;
 
 import entities.Utente;
 
@@ -78,10 +76,16 @@ public class Connection extends Thread {
 				System.out.println("client>" + message);
 				
 				if (message.equals(Messages.CLOSE))
-					sendMessage(Messages.CLOSE);
+					this.sendMessage(Messages.CLOSE);
 			
 				if(message.startsWith(Messages.CHAT))
 					this.server.sendChatMessage(this.utente.getNome(), message.substring(Messages.CHAT.length()));
+				
+				if(message.startsWith(Messages.CREATE))
+					this.newGame(message);
+				
+				if(message.startsWith(Messages.CHANGESLOTTYPE))
+					System.out.println("CHANGE SLOT STATE");
 			
 			}
 		}
@@ -157,4 +161,22 @@ public class Connection extends Thread {
 		}
 	}
 
+	public void newGame(String msg)
+	{
+		String []gameParameter = msg.substring(Messages.CREATE.length()).split(";");
+		
+		if(this.hostedGame != null)
+			this.sendMessage(Messages.CREATEFAILED);
+		
+		this.hostedGame = new HostedGame(this, Integer.parseInt(gameParameter[2]), gameParameter[0], Integer.parseInt(gameParameter[1]));
+		this.server.hostedGames.put(this.hostedGame.gameName, this.hostedGame);
+		
+		this.sendMessage(Messages.CREATEOK);
+	}
+	
+	public void changeSlotState(int slotIndex, String state)
+	{
+		this.hostedGame.slots.get(slotIndex).changeSlotState(state);
+	}
+	
 }
