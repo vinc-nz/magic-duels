@@ -10,20 +10,23 @@ import lobby.Messages;
 
 public class SlotComboBox extends JComboBox {
 
-	int index;
 	LobbyHostedGame hostedGame;
+	int index;
 	
-	public SlotComboBox(int index) {
+	public SlotComboBox(LobbyHostedGame hostedGame, int index) {
 		
 		super(new String[] {Messages.OPEN, Messages.CLOSED, Messages.IA});
 
+		this.hostedGame = hostedGame;
 		this.index = index;
 
 		super.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent act) {
+			public void actionPerformed(ActionEvent act)
+			{
 				JComboBox cb = (JComboBox)act.getSource();
+				
 				SlotComboBox.this.hostedGame.changeSlotState(SlotComboBox.this.index, (String)cb.getSelectedItem());
 
 			}

@@ -246,7 +246,7 @@ public class Lobby extends JPanel {
 		ArrayList<SlotComboBox> slots = new ArrayList<SlotComboBox>();
 		for (int i = 0; i < hostedGame.getNumSlots(); i++) {
 			giocatore = i + 1;
-			slot = new SlotComboBox(i);
+			slot = new SlotComboBox(this.lobbyClient.getHostedGame(), i);
 			slots.add(slot);
 			panel.add(new JLabel("Giocatore " + giocatore));
 			panel.add(slot);
