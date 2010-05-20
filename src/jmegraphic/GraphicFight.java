@@ -52,7 +52,6 @@ public abstract class GraphicFight extends JmeGame {
 		objects = new ObjectMap();
 		elements = new LinkedList<SceneElem>();
 		this.paused = false;
-		this.input = this.getInputInterface();
 	}
 	
 	protected abstract InputInterface getInputInterface();
@@ -76,6 +75,7 @@ public abstract class GraphicFight extends JmeGame {
 	@Override
 	protected void initGame() {
 		super.initGame();
+		this.input = this.getInputInterface();
 		camera = new CustomCamera(display);
 		
 		
