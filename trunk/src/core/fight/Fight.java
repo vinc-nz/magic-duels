@@ -11,6 +11,7 @@ import core.space.Direction;
 import core.space.Position;
 import core.space.World;
 import core.spells.TargettingSpell;
+import game.Error;
 
 /**
  * @author spax
@@ -18,11 +19,15 @@ import core.spells.TargettingSpell;
  */
 public class Fight {
 	
+	static final int MANA_INCREASE_FACTOR = 500;
+	
 	Character[] players;
 	
 	public boolean running;
 	public boolean finished;
 	private boolean paused;
+	
+	Error fightError;
 	
 	
 	public Fight(int numberOfPlayers) {
@@ -43,6 +48,8 @@ public class Fight {
 		
 		running = false;
 		finished = false;
+		paused = false;
+		fightError = Error.NONE;
 		
 	}
 	
@@ -83,7 +90,7 @@ public class Fight {
 	
 	
 	public void prepareSpell(int playerId, Class<? extends Spell> spell) {
-		if (running && !this.getPlayer(playerId).isPreparingSpell()) {
+		if (isActive() && !this.getPlayer(playerId).isPreparingSpell()) {
 			try {
 				Spell s = (Spell) spell.newInstance();
 				if (this.getPlayer(playerId).prepareSpell(s))
@@ -109,7 +116,7 @@ public class Fight {
 	
 	public void moveCharacter(int playerId, String where) {
 		
-		if (running && !this.getPlayer(playerId).isPreparingSpell()) {
+		if (isActive() && !this.getPlayer(playerId).isPreparingSpell()) {
 			String methodName = "move" + where.substring(0, 1).toUpperCase() + where.substring(1);
 			try {
 				Method m = Character.class.getMethod(methodName);
@@ -121,10 +128,12 @@ public class Fight {
 	}
 	
 	public void nextTarget(int playerId) {
-		Character player = this.getPlayer(playerId);
-		player.target = player.target%numberOfPlayers()+1;
-		if (player.target == playerId)
-			this.nextTarget(playerId);
+		if (isActive()) {
+			Character player = this.getPlayer(playerId);
+			player.target = player.target%numberOfPlayers()+1;
+			if (player.target == playerId)
+				this.nextTarget(playerId);
+		}
 	}
 	
 	public void start() {
@@ -137,14 +146,16 @@ public class Fight {
 	}
 	
 	public void update() {
-		World.checkCollisions();
-		boolean increaseMana = new Date().getTime() % 1000==0;
-		
-		for (int i = 0; i < players.length; i++) {
-			int target = players[i].target;
-			players[i].lookAt(this.getPlayer(target));
-			if (increaseMana) 
-				players[i].mana++;
+		if (isActive()) {
+			World.checkCollisions();
+			boolean increaseMana = new Date().getTime() % MANA_INCREASE_FACTOR==0;
+			
+			for (int i = 0; i < players.length; i++) {
+				int target = players[i].target;
+				players[i].lookAt(this.getPlayer(target));
+				if (increaseMana) 
+					players[i].mana++;
+			}
 		}
 	}
 	
@@ -157,8 +168,41 @@ public class Fight {
 		return paused;
 	}
 	
-	public void togglePause() {
+	public synchronized void togglePause() {
 		paused = !paused;
+		notify();
+	}
+
+
+	public Error getFightError() {
+		return fightError;
+	}
+
+
+	public synchronized void notifyError(Error fightError) {
+		this.fightError = fightError;
+		notify();
+	}
+	
+	public synchronized void checkState() {
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean isActive() {
+		return running && !paused;
+	}
+
+
+	public void setNames(String[] names) {
+		for (int i = 0; i < players.length; i++) {
+			players[i].setName(names[i]);
+		}
+		
 	}
 
 }

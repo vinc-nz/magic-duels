@@ -1,5 +1,7 @@
 package net;
 
+import game.Game;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +11,6 @@ import java.io.InputStreamReader;
 public abstract class NetListener extends Thread {
 	
 	BufferedReader input;
-	boolean running = false;
 	
 	public NetListener(InputStream is) {
 		input = new BufferedReader(new InputStreamReader(is));
@@ -20,37 +21,29 @@ public abstract class NetListener extends Thread {
 		return message.equals("ready");
 	}
 	
-	@Override
-	public synchronized void start() {
-		this.running = true;
-		super.start();
-	}
+	
 	
 	@Override
 	public void run() {
-		super.run();
+		boolean running = true;
 		String trigger = null;
-		while (listening(true)) {
+		while (running) {
 			try {
 				trigger = input.readLine();
 				this.performAction(trigger);
 			} catch (IOException e) {
-				e.printStackTrace();
 				running = false;
-				System.out.println("errore del listener");
-				System.exit(2);
 			}
 		}
 	}
 	
-	private synchronized boolean listening(boolean continueRunning) {
-		if (running && !continueRunning)
-			running = false;
-		return running;
-	}
-	
+	public abstract Game getGame();
 	
 
-	protected abstract void performAction(String trigger) throws IOException;
+	protected void performAction(String message) {
+		if (Message.someoneLeaves(message))
+			this.getGame().notifyLeaving(Message.getPlayerId(message));
+		
+	}
 
 }
