@@ -15,11 +15,6 @@ import jmegraphic.hud.Notification;
 import jmegraphic.hud.StatusBars;
 import utils.ExplosionFactory;
 
-import com.jme.app.BaseGame;
-import com.jme.input.KeyBindingManager;
-import com.jme.input.KeyInput;
-import com.jme.scene.Node;
-import com.jme.system.DisplaySystem;
 import com.jme.util.Timer;
 
 import core.fight.Character;
@@ -29,10 +24,9 @@ import core.space.World;
 
 
 
-public class GraphicFight extends BaseGame {
+public abstract class GraphicFight extends JmeGame {
 	Fight fight; // parita
 	CustomCamera camera; // camera
-	Node scene; // nodo radice
 	
 	GraphicCharacter focused;
 	ObjectMap objects;
@@ -58,9 +52,21 @@ public class GraphicFight extends BaseGame {
 		objects = new ObjectMap();
 		elements = new LinkedList<SceneElem>();
 		this.paused = false;
+		this.input = this.getInputInterface();
 	}
 	
+	protected abstract InputInterface getInputInterface();
 	
+	
+	
+
+	public Fight getFight() {
+		return fight;
+	}
+
+	public void initFight(int numberOfPlayers) {
+		this.fight = new Fight(numberOfPlayers);
+	}
 
 	@Override
 	protected void cleanup() {
@@ -69,12 +75,9 @@ public class GraphicFight extends BaseGame {
 
 	@Override
 	protected void initGame() {
-		
-		KeyBindingManager.getKeyBindingManager().set("exit", KeyInput.KEY_ESCAPE);
+		super.initGame();
 		camera = new CustomCamera(display);
 		
-		//viene creato il root node
-		scene = new Node("battlefield");
 		
 		for (int i=1;i<=fight.numberOfPlayers();i++) {
 			Character player = fight.getPlayer(i);
@@ -104,79 +107,41 @@ public class GraphicFight extends BaseGame {
 		// attacca gli ogetti in lista al nodo radice
 		for(SceneElem i:elements) {
 			i.loadModel();
-			scene.attachChild(i);
+			this.attach(i);
 		}
 		
-		scene.attachChild(new Arena());
+		this.attach(new Arena());
 		
 		//camera in terza persona
 		camera.setFocused(focused);
 		
+		new FightStateChecker(this).start();
 	}
 
-	@Override
-	protected void initSystem() {
-		this.creanteDisplay(settings.getWidth(), settings.getHeight(), settings.isFullscreen());
-	}
-	
-	protected void creanteDisplay(int width, int height, boolean fullscreen) {
-		try {
-			display=DisplaySystem.getDisplaySystem();
-			display.createWindow(width, height, 
-								settings.getDepth(), 
-								settings.getFrequency(), 
-								fullscreen);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
-
-	@Override
-	protected void reinit() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void render(float arg0) {
-		display.getRenderer().clearBuffers();
-		display.getRenderer().draw(scene);
-
-	}
 
 	// aggiornamento
 	@Override
 	protected void update(float interpolation) {
-		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit")
-				|| fight.finished)
-			finished=true;
-		
 		timer.update();
 		
 		if (timer.getTimeInSeconds()-lastTime>UPTIME) {
+			if (fight.finished)
+				finished=true;
+			
 			interpolation=timer.getTimePerFrame();
 			lastTime=timer.getTimeInSeconds();
-		
-			
-			
-			fight.update();
-			
-			if (fight.paused()) {
-				if (!this.paused)
-					pause();
+
+			if (!paused) {
+				fight.update();
+				this.updateObjects();
 			}
-			else if (this.paused)
-				resume();
-			else this.updateObjects();
 			
 			this.updateElements();
-		
 			this.updateCamera();
 			
-			scene.updateGeometricState(interpolation, true);
-			scene.updateRenderState();
+			super.update(interpolation);
 		} //ENDIF
+		
 	}
 	
 	protected void updateCamera() {
@@ -185,25 +150,6 @@ public class GraphicFight extends BaseGame {
 		camera.setTarget(target);
 		camera.update();
 	}
-
-
-	private void resume() {
-		SceneElem notification = elements.getLast();
-		this.scene.detachChild(notification);
-		elements.remove(notification);
-		this.paused = false;
-	}
-
-
-
-	private void pause() {
-		this.paused = true;
-		Notification n = new Notification("Pausa");
-		n.setPosition(HudObject.POSITION_CENTER);
-		this.scene.attachChild(n);
-		this.elements.add(n);
-	}
-
 
 
 	protected void updateObjects() {
@@ -222,7 +168,7 @@ public class GraphicFight extends BaseGame {
 			noMana.setPosition(HudObject.POSITION_BOTTOM);
 			noMana.setExpireTime(3);
 			noMana.loadModel();
-			scene.attachChild(noMana);
+			this.attach(noMana);
 			this.elements.add(noMana);
 		}
 	}
@@ -237,7 +183,7 @@ public class GraphicFight extends BaseGame {
 			sceneElem.update();
 			if (sceneElem.isInGame())
 				newElems.add(sceneElem);
-			else this.scene.detachChild(sceneElem);
+			else this.detach(sceneElem);
 		}
 		
 		this.elements = newElems;
@@ -247,18 +193,65 @@ public class GraphicFight extends BaseGame {
 		countdown.start();
 	}
 	
+	public void resume() {
+		SceneElem notification = elements.getLast();
+		this.detach(notification);
+		elements.remove(notification);
+		this.paused = false;
+	}
+
+
+
+	public void pause() {
+		this.paused = true;
+		Notification n = new Notification("Pausa");
+		n.setPosition(HudObject.POSITION_CENTER);
+		this.attach(n);
+		this.elements.add(n);
+	}
+
+
+
+	public void checkPause() {
+		if (fight.paused()) {
+			if (!this.paused)
+				pause();
+		}
+		else if (this.paused)
+			resume();
+	}
+
+
+
+	public void notifyHostUnreachable() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public void notifyWiimoteDisconnected() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	public void notifyLeaving(int leavingId) {
+		//TODO
+	}
+	
 
 	public class ObjectMap extends HashMap<AbstractObject, GraphicObject> {
 		@Override
 		public GraphicObject put(AbstractObject key, GraphicObject value) {
-			GraphicFight.this.scene.attachChild(value);
+			GraphicFight.this.attach(value);
 			value.loadModel();
 			return super.put(key, value);
 		}
 		
 		@Override
 		public GraphicObject remove(Object key) {
-			GraphicFight.this.scene.detachChild(this.get(key));
+			GraphicFight.this.detach(this.get(key));
 			return super.remove(key);
 		}
 		
@@ -267,5 +260,5 @@ public class GraphicFight extends BaseGame {
 			this.put(obj, go);
 		}
 	}
-	
+
 }

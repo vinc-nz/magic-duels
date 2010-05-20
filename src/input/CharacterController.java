@@ -1,17 +1,17 @@
 package input;
 
-/*
- * INPUT MAGIA
- */
 
+
+import game.Error;
 import core.fight.Fight;
 import core.objects.Spell;
 
 
 
-/*
- * CONTROLLO DEL CHARACTER
- * in base a trigger ricevuti (da input,rete o ia) si occupa di controllare un PlayingCharacter
+/**
+ * Gives the control of a Character
+ * @author spax
+ *
  */
 public class CharacterController {
 	int playerID; // id player
@@ -24,24 +24,21 @@ public class CharacterController {
 	}
 	
 	/**
+	 * gets the id of the controlled Character
 	 * @return the PlayerID
 	 */
 	public int getPlayerID() {
 		return playerID;
 	}
 
-	//riceve il trigger e svolge l'azione
-	public void performAction(String trigger) {
-		int i = trigger.lastIndexOf('>')+1;
-		String name = trigger.substring(i);
-		if (trigger.contains("spell")) {
-			this.castSpell(name);
-		}
-		else if (trigger.contains("move")) {
-			this.move(name);
-		}
-	}
 	
+	
+	
+	
+	/**
+	 * the controlled Character will cast the spell specified by name
+	 * @param spellName the name of the spell to cast
+	 */
 	public void castSpell(String spellName) {
 		if (!spellName.contains("."))
 			spellName = "core.spells." + spellName;
@@ -55,8 +52,8 @@ public class CharacterController {
 	}
 	
 	/**
-	 * lancia una magia
-	 * @param name nome della magia
+	 * the controlled Character will cast the spell specified by class
+	 * @param spell the class of the spell to cast
 	 */
 	public void castSpell(Class<? extends Spell> spell) {
 		fight.prepareSpell(this.playerID, spell);
@@ -65,24 +62,45 @@ public class CharacterController {
 
 	
 	/**
-	 * @param where direzione, usare parametri di Trigger
+	 * moves the Character in the specified direction
+	 * @param direction where to move
 	 */
-	public void move(String name) {
-		fight.moveCharacter(playerID, name);
+	public void move(String direction) {
+		fight.moveCharacter(playerID, direction);
 	}
 	
 	
+	/**
+	 * changes character's current target to the next other character
+	 */
 	public void nextTarget() {
 		fight.nextTarget(playerID);
 	}
-
-	public void switch_pos() {
-		// TODO Auto-generated method stub
-		
-	}
 	
+	
+	/**
+	 * pause the game
+	 */
 	public void pause() {
 		fight.togglePause();
+	}
+
+	
+	/**
+	 * 
+	 * @return the current instance of Fight
+	 */
+	public Fight getFight() {
+		return fight;
+	}
+	
+	
+	/**
+	 * notifies an error
+	 * @param e the type of error occured
+	 */
+	public void notifyError(Error e) {
+		fight.notifyError(e);
 	}
 	
 }

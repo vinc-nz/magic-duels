@@ -1,52 +1,62 @@
 package net;
 
-import input.CharacterController;
+import game.Game;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-import core.fight.Fight;
-
+import wiiMoteInput.PlayerMote;
+import Menu.src.MainMenu;
 
 
-public abstract class NetGame {
+
+public abstract class NetGame extends Game {
 	int localId;
-	int numberOfPlayers;
 	String name;
-	Fight fight;
 	
 	
 	
-	
-	public NetGame(String name, int numberOfPlayers, int localId) {
+	public NetGame(PlayerMote playerMote, MainMenu mainMenu) {
+		super(playerMote, mainMenu);
+		// TODO Auto-generated constructor stub
+		
+	}
+
+
+
+	public void init(String name) throws IOException {
 		this.name = name;
-		this.numberOfPlayers = numberOfPlayers;
-		this.localId = localId;
-		this.fight = new Fight(numberOfPlayers);
-		fight.getPlayer(localId).setName(name);
 	}
 
+	public abstract void forward(String trigger) throws IOException;
 	
+
 	
-	public int getLocalId() {
-		return localId;
+//	@Override
+//	protected void initGame() {
+//		super.initGame();
+//		try {
+//			this.sayReady();
+//			this.waitOthers();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			System.exit(1);
+//		}
+//		this.startFight();
+//	}
+	
+	@Override
+	protected void cleanup() {
+		this.leave();
+		super.cleanup();
 	}
-
-
-
-	public abstract CharacterController getController() throws IOException;
-	public abstract void buildListening() throws IOException;
 	
-
-
-	public Fight getFight() {
-		return fight;
+	public void leave() {
+		try {
+			this.forward(Message.getLeaveMessage(localId));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
-	
-
-	public abstract void sayReady() throws IOException;
-	public abstract void waitOthers() throws IOException;
 	
 }
