@@ -1,12 +1,15 @@
 package Menu.src;
 
+import game.SingleGame;
+
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import wiiMoteInput.PlayerMote;
+
 import Menu.src.lobby.MultiplayerMenu;
 
-import jmegraphic.Game;
 
 public class Mouse extends MouseAdapter{
 	
@@ -18,11 +21,12 @@ public class Mouse extends MouseAdapter{
 	Image exit;
 	int position[];
 	MainPanel mainPanel;
-	Game game;
+	PlayerMote playerMote;
 	MultiplayerMenu multiplayerMenu;
 	MainMenu mainMenu;
 	Options optionsPanel;
 	String sSound;
+	
 	public static String NEWGAME = "newgame";
 	public static String MULTI = "multi";
 	public static String OPT = "opt";
@@ -31,9 +35,9 @@ public class Mouse extends MouseAdapter{
 	
 	
 	public Mouse(int initialPosition[], Image fantasy, Image newGame, Image multiplayer, Image credits, Image options,
-			     Image exit, Game game, MainMenu mainMenu, MainPanel mainPanel ){
+			     Image exit, PlayerMote playerMote, MainMenu mainMenu, MainPanel mainPanel ){
 		
-		this.game = game;
+		this.playerMote = playerMote;
 		this.mainMenu = mainMenu;
 		this.fantasy = fantasy;
 		this.newGame = newGame;
@@ -150,9 +154,10 @@ public class Mouse extends MouseAdapter{
 		
 		if(mainPanel.sNewGame){
 			mainMenu.ok.play();
-			game.initSingleGame();
+			SingleGame singleGame = new SingleGame(playerMote, mainMenu);
 			//mainMenu.setVisible(false);
-			game.start();
+			singleGame.init("player 1", 2);
+			singleGame.start();
 		}
 		
 		if(mainPanel.sMultiplayer){

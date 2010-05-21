@@ -5,7 +5,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
 
-import jmegraphic.Game;
+import wiiMoteInput.PlayerMote;
+
+import game.Game;
 
 class MainPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
@@ -25,16 +27,17 @@ class MainPanel extends JPanel{
 	
 	Game game;
 	MainMenu mainMenu;
+	PlayerMote playerMote;
 	
 	
 	public MainPanel(Image fantasy, Image newGame, Image multiplayer, Image options, 
 			Image credits, Image exit, Image selectNewGame,
 			Image selecMultiplayer, Image selectOptions,
-			Image selectCredits, Image selectExit, Game game, MainMenu mainMenu){
+			Image selectCredits, Image selectExit, PlayerMote playerMote, MainMenu mainMenu){
 	
 		
 		
-		this.game = game;
+		this.playerMote = playerMote;
 		this.mainMenu = mainMenu;
 
 		setOpaque(false);
@@ -62,10 +65,10 @@ class MainPanel extends JPanel{
 		
 		Dimension size = new Dimension(fantasy.getWidth(null), fantasy.getHeight(null));
 
-		this.addMouseListener(new Mouse(position, fantasy, newGame, multiplayer, credits, options, exit, game, 
+		this.addMouseListener(new Mouse(position, fantasy, newGame, multiplayer, credits, options, exit, playerMote, 
 												mainMenu, this));
 		this.addMouseMotionListener(new Mouse(position, fantasy, newGame, multiplayer, credits, 
-											  options, exit, game, mainMenu, this));
+											  options, exit, playerMote, mainMenu, this));
 
 		setPreferredSize(size);
 		setSize(size);
