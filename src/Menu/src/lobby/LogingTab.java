@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import Menu.src.MainMenu;
 
 public class LogingTab extends MultiplayerMenuTabs {
-
+	
 	JTextField user;
 	JPasswordField password;
 	
@@ -85,7 +85,7 @@ public class LogingTab extends MultiplayerMenuTabs {
 				String password = LogingTab.this.password.getText();
 				
 				if(LogingTab.this.mainMenu.lobbyClient.logIn(nome, password))
-					LogingTab.this.mainMenu.switchTo(new Lobby(LogingTab.this.mainMenu.lobbyClient));
+					LogingTab.this.mainMenu.switchTo(new Lobby(LogingTab.this.mainMenu));
 				else
 					System.out.println("NOT LOGGED");
 			}

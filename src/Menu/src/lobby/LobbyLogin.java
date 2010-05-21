@@ -112,7 +112,7 @@ public class LobbyLogin extends JPanel {
 	}
 	
 	public void addLoginButtonListener()
-	{	
+	{
 
 		this.login.addMouseListener(new MouseAdapter() {
 			
@@ -122,7 +122,7 @@ public class LobbyLogin extends JPanel {
 			String nome = LobbyLogin.this.user.getText();
 			String password = LobbyLogin.this.password.getText();
 			if(LobbyLogin.this.mainMenu.lobbyClient.logIn(nome, password))
-				LobbyLogin.this.mainMenu.switchTo(new Lobby(LobbyLogin.this.mainMenu.lobbyClient));
+				LobbyLogin.this.mainMenu.switchTo(new Lobby(LobbyLogin.this.mainMenu));
 			else
 				System.out.println("NOT LOGGED");
 		}

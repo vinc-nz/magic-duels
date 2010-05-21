@@ -8,6 +8,10 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.ClientGame;
+import net.ServerGame;
+import wiiMoteInput.PlayerMote;
+import Menu.src.MainMenu;
 import Menu.src.lobby.Lobby;
 
 public class LobbyClient extends Thread {
@@ -27,6 +31,15 @@ public class LobbyClient extends Thread {
  	// Grafica della Lobby
  	Lobby graphicLobby;
  	
+ 	ServerGame serverGame;
+ 	String name;
+	int humanPlayers;
+	int comPlayers;
+	int port;
+	int result;
+	public static short SERVER_STARTED = 0;
+	public static short SERVER_FAILED = 1;
+	
 	public LobbyClient() {
 		this.onlinePlayer = null;
 		this.hostedGame = null;
@@ -172,7 +185,19 @@ public class LobbyClient extends Thread {
 				
 			else if(message.startsWith(Messages.CHANGESLOTTYPE))
 				this.changeJoinedGameSlotType(message);
-				
+			
+			else if(message.startsWith(Messages.STARTSERVERGAME))
+				this.startServerGame(message);
+			
+			else if(message.equals(Messages.STARTCLIENTGAME))
+				this.startClientGame();
+			
+			else if(message.startsWith(Messages.GAMEKILLED))
+				this.killGame(message);
+			
+			else if(message.startsWith(Messages.PLAYERKICKED))
+				System.out.println("SEI STATO BANNATO!!");
+			
 			System.out.println("RICEVO " + message);
 
 		}
@@ -277,12 +302,92 @@ public class LobbyClient extends Thread {
 		this.graphicLobby.joinAGame();
 	}
 	
-	public void changeJoinedGameSlotType(String message)
+	public void changeJoinedGameSlotType(String msg)
 	{
 		if(this.joinedGame == null) return;
 		
-		this.joinedGame.changeSlotType(message);
+		this.joinedGame.changeSlotType(msg);
 		this.graphicLobby.joinAGame();
+	}
+	
+	public void killGame(String msg)
+	{
+		this.hostedGame = null;
+		this.joinedGame = null;
+		
+		this.graphicLobby.showWarning("La partita è stata distrutta!");
+		this.graphicLobby.multiplayerGame();
+	}
+	
+	public void startServerGame(String msg)
+	{
+		String []parameter = msg.substring(Messages.STARTSERVERGAME.length()).split(";");
+		
+		this.humanPlayers = Integer.parseInt(parameter[0]);
+		this.comPlayers = Integer.parseInt(parameter[1]);
+		
+		PlayerMote playerMote = this.graphicLobby.mainMenu.playMote;
+		MainMenu mainMenu = this.graphicLobby.mainMenu;
+		
+		this.name = this.hostedGame.getGameName();
+		this.port = this.hostedGame.getPorta();
+		
+		this.serverGame = new ServerGame(playerMote, mainMenu);
+		
+		System.out.println(name + " - " + humanPlayers + " - " + comPlayers + " - " + port);
+					
+		Runnable init = new Runnable() {
+			@Override
+			public void run() {	
+				LobbyClient.this.result = LobbyClient.SERVER_STARTED;
+				try {
+					LobbyClient.this.serverGame.init(LobbyClient.this.name, LobbyClient.this.humanPlayers,
+							LobbyClient.this.comPlayers, LobbyClient.this.port);
+					LobbyClient.this.serverGame.start();
+				} catch (IOException e) {
+					LobbyClient.this.result = LobbyClient.SERVER_FAILED;
+				}
+			}
+		};
+		
+		Thread thread = new Thread(init);
+		thread.start();
+		
+		try {
+				Thread.sleep(101);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		
+		if(this.result == LobbyClient.SERVER_STARTED)
+			this.sendMessage(Messages.SERVERGAMESTARTED);
+		else
+			System.out.println("ERRORE SERVER!");
+
+	}
+	
+	public void startClientGame()
+	{
+		PlayerMote playerMote = this.graphicLobby.mainMenu.playMote;
+		MainMenu mainMenu = this.graphicLobby.mainMenu;
+		
+		ClientGame game = new ClientGame(playerMote, mainMenu);
+		
+		String name = this.joinedGame.gameName;
+		String address = this.joinedGame.ip;
+		if(address.startsWith("/")) address = address.substring(1);
+		int port = this.joinedGame.porta;
+		
+		System.out.println(name + " - " + address + " - " + port);
+		
+		try {
+			game.init(name, address, port);
+			game.start();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

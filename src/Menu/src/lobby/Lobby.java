@@ -9,15 +9,20 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import lobby.LobbyClient;
+import Menu.src.MainMenu;
 
 public class Lobby extends JPanel {
 
 	Image background;
 
+	public MainMenu mainMenu;
 	LobbyClient lobbyClient;
 	
 	PlayerListPanel playerListPanel;
@@ -27,9 +32,17 @@ public class Lobby extends JPanel {
 	
 	JPanel multiplayerGame;
 	
-	public Lobby(LobbyClient lobbyClient) {
+	public Lobby(MainMenu mainMenu) {
 		
-		this.lobbyClient = lobbyClient;
+		JDialog dialog = new JDialog(new JFrame(), "lalalala");
+		
+		JOptionPane jOptionPane = new JOptionPane("lalala", JOptionPane.ERROR_MESSAGE);
+		
+		super.add(jOptionPane);
+		
+		this.mainMenu = mainMenu;
+		this.lobbyClient = mainMenu.lobbyClient;
+		
 		this.lobbyClient.setGraphicLobby(this);
 		this.background = new ImageIcon("src/Menu/data/sfida.jpg").getImage();
 		
@@ -60,6 +73,7 @@ public class Lobby extends JPanel {
 		
 		super.validate();
 		super.setVisible(true);
+				
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -85,6 +99,15 @@ public class Lobby extends JPanel {
 	
 	public void refreshGameListPanel() { this.gameListPanel.refreshGameListArePanel(); }
 	
+	public void multiplayerGame()
+	{
+		this.multiplayerGame.removeAll();
+		this.multiplayerGame.setLayout(new FlowLayout());
+		this.multiplayerGame.add(new MultiplayerGamePanel(this));
+		this.multiplayerGame.repaint();
+		this.multiplayerGame.revalidate();		
+	}
+	
 	public void hostAGame() 
 	{ 
 		this.multiplayerGame.removeAll();
@@ -104,5 +127,7 @@ public class Lobby extends JPanel {
 	}
 	
 	public void writeChatMessage(String player, String msg) { this.chatAreaPanel.writeChatMessage(player, msg); }
+	
+    public void showWarning(String warning) { JOptionPane.showMessageDialog(mainMenu, warning, "Magic Duels Game", JOptionPane.WARNING_MESSAGE); }
 	
 }
