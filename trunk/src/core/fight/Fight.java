@@ -3,6 +3,8 @@
  */
 package core.fight;
 
+import ia.Monitor;
+
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -27,10 +29,9 @@ public class Fight {
 	public boolean finished;
 	private boolean paused;
 	
-	public boolean start;
-	public boolean move;
 	Error fightError;
 	
+	Monitor monitor;
 	
 	public Fight(int numberOfPlayers) {
 		players = new Character[numberOfPlayers];
@@ -47,14 +48,13 @@ public class Fight {
 			players[i].target = targets[i];
 		}
 		
-		
 		running = false;
 		finished = false;
-		start = false;
-		move = false;
+	
 		paused = false;
 		fightError = Error.NONE;
 		
+		monitor = new Monitor();
 	}
 	
 	
@@ -100,7 +100,7 @@ public class Fight {
 				if (this.getPlayer(playerId).prepareSpell(s)){
 					this.setSpellParams(playerId, s);
 					
-					start = true;
+					monitor.startSpell();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -110,8 +110,8 @@ public class Fight {
 	}
 	
 	public boolean prepSpeel(int playerId, Class<? extends Spell> spell){
-		if(start){
-			start = false;
+		if(monitor.start()){
+			monitor.startSpellFalse();
 			return true;
 		}
 		return false;
@@ -133,7 +133,7 @@ public class Fight {
 				Method m = Character.class.getMethod(methodName);
 				m.invoke(this.getPlayer(playerId));
 				if(playerId == 2)
-					move = true;
+					monitor.moveCharacter();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -141,8 +141,8 @@ public class Fight {
 	}
 	
 	public boolean isMove(){
-		if(move) {
-			move = false;
+		if(monitor.move()) {
+			monitor.moveCharacterFalse();
 			return true;
 		}
 		return false;

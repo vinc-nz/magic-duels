@@ -53,17 +53,9 @@ public class Ia extends Thread{
 		
 		if(characterController.getFight().prepSpeel(1, Fireball.class)){
 			this.moveSlow();
-		}
-		
-//		try {
-//			sleep(1000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-		
+		}	
 	}
+	
 	
 	@Override
 	public void run() {
@@ -72,7 +64,21 @@ public class Ia extends Thread{
 		
 		while(!characterController.getFight().finished){
 			
-			intelligence();
+			//if(rand.nextInt(10) == 3)
+				//intelligence();
+				this.moveSpeed();
+				//characterController.move("left");
+			//else
+				//rambo();
+				try {
+					sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				characterController.castSpell(FanBalls.class);
+				
+				
 			
 		}
 	}

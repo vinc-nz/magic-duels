@@ -100,9 +100,7 @@ public class InitSingleGame extends JPanel {
 		layout.setConstraints(numberLabel, lim);
 		grid.add(numberLabel);
 		
-		// Create a comboBox that allow to choose fullscreen true or false
 		numberPlayer = new Vector<String>();
-		numberPlayer.add("1");
 		numberPlayer.add("2");
 		numberPlayer.add("3");
 		numberPlayer.add("4");
@@ -130,7 +128,6 @@ public class InitSingleGame extends JPanel {
 		flow.add(buttonCancel);
 		JButton buttonOk = new JButton("OK");
 		flow.add(buttonOk);
-		
 		
 		// cancel return to main panel
 		buttonCancel.addActionListener(
