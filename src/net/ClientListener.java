@@ -30,7 +30,7 @@ public class ClientListener extends NetListener {
 	}
 	
 	@Override
-	public Game getGame() {
+	public NetGame getGame() {
 		return game;
 	}
 

@@ -32,49 +32,13 @@ public class Arena extends SceneElem {
 	public Arena() {
 		super("arena");
 		display = DisplaySystem.getDisplaySystem();
-		this.loadModel();
-		//this.addBoundingBox();
 		this.buildLighting();
-		this.applyZBufferState();
-	}
-
-	@Override
-	public void loadModel() {
-		//this.setupWalls();
 		this.buildSkyBox();
-		//this.buildTerrain();
 		this.setupColumns();
 		this.setupFloor();
 	}
 
-	private void setupWalls() {
-		int bound = World.centerDistance;
-		Quad wallModel = new Quad("wall model", bound*2, bound/2);
-		wallModel.setRenderQueueMode(Renderer.QUEUE_TRANSPARENT);
-		Texture t = TextureManager.loadTexture(
-				this.getClass().getClassLoader().getResource("data/textures/wall.jpg"),
-				Texture.MinificationFilter.Trilinear,
-				Texture.MagnificationFilter.Bilinear);
-		t.setWrap(WrapMode.Repeat);
-		t.setScale(Vector3f.UNIT_XYZ.mult(20));
-		TextureState ts = display.getRenderer().createTextureState();
-		ts.setTexture(t);
-		wallModel.setRenderState(ts);
-
-		for (int i = 0; i < 4; i++) {
-			SharedMesh wall = new SharedMesh(wallModel);
-			this.attachChild(wall);
-			wall.getLocalTranslation().y = bound/4;
-			if (i<2)
-				wall.getLocalTranslation().z = bound*(i==0 ? -1 : 1);
-			else {
-				Quaternion q = new Quaternion();
-				q.fromAngleAxis(FastMath.PI/2, new Vector3f(0, 1, 0));
-				wall.setLocalRotation(q);
-				wall.getLocalTranslation().x = bound*(i==2 ? -1 : 1);
-			}
-		}
-	}
+	
 
 	private void setupFloor() {
 		int bound = World.centerDistance;
@@ -193,11 +157,5 @@ public class Arena extends SceneElem {
 		this.setRenderState(lightState);
 	}
 
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

@@ -4,6 +4,7 @@ package jmegraphic;
  * GRAFICA DEL MAGO
  */
 
+import jmegraphic.gamestate.GraphicFight;
 import utils.ModelLoader;
 
 import com.jme.image.Texture;
@@ -40,9 +41,17 @@ public class GraphicCharacter extends GraphicObject {
 		this.lastTime = 0;
 	}
 	
-	// aggiornamento
-	public void update() {
-		super.update();
+	
+	
+	public Character getCoreCharacter() {
+		return coreCharacter;
+	}
+
+
+
+	@Override
+	public void update(float tpf) {
+		super.update(tpf);
 		
 		if (!preparingSpell && coreCharacter.isPreparingSpell()) {
 			this.preparingSpell = true;
@@ -59,7 +68,7 @@ public class GraphicCharacter extends GraphicObject {
 		
 		this.calculateRotation();
 		
-		this.controller.update(Timer.getTimer().getTimePerFrame());
+		//this.controller.update(tpf);
 		
 	}
 	
@@ -129,6 +138,7 @@ public class GraphicCharacter extends GraphicObject {
 		this.controller=(JointController)model.getController(0);
 		//this.controller.setActive(false);
 		this.setAnimation(STAND);
+		this.controller.setSpeed(0.3f);
 	}
 
 	@Override

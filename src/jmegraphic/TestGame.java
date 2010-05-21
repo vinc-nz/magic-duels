@@ -2,11 +2,12 @@ package jmegraphic;
 
 import input.InputInterface;
 
-public class TestGame extends GraphicFight {
+public class TestGame extends JmeGame {
 	
 	public TestGame() {
-		// TODO Auto-generated constructor stub
+		this.initFight(2);
 	}
+
 
 	@Override
 	protected InputInterface getInputInterface() {
@@ -20,6 +21,16 @@ public class TestGame extends GraphicFight {
 		};
 	}
 	
+	@Override
+	protected void initGame() {
+		super.initGame();
+		this.startFight();
+	}
 	
+	public static void main(String[] args) {
+		TestGame game = new TestGame();
+		game.setConfigShowMode(ConfigShowMode.AlwaysShow);
+		game.start();
+	}
 
 }
