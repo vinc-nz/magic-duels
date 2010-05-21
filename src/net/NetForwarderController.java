@@ -19,6 +19,7 @@ public class NetForwarderController extends NetCharacterController {
 	
 	public NetForwarderController(int id, Fight fight, NetGame game) {
 		super(id,fight);
+		this.game = game;
 	}
 	
 	public void forward(String message) {
