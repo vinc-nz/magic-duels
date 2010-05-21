@@ -3,6 +3,7 @@
  */
 package core.fight;
 
+import game.Event;
 import ia.Monitor;
 
 import java.lang.reflect.Method;
@@ -13,7 +14,6 @@ import core.space.Direction;
 import core.space.Position;
 import core.space.World;
 import core.spells.TargettingSpell;
-import game.Error;
 
 /**
  * @author spax
@@ -29,7 +29,8 @@ public class Fight {
 	public boolean finished;
 	private boolean paused;
 	
-	Error fightError;
+	Event fightEvent;
+
 	
 	Monitor monitor;
 	
@@ -52,7 +53,7 @@ public class Fight {
 		finished = false;
 	
 		paused = false;
-		fightError = Error.NONE;
+		fightEvent = Event.NONE;
 		
 		monitor = new Monitor();
 	}
@@ -60,10 +61,12 @@ public class Fight {
 	
 	private int[] defaultTargetting(int numberOfPlayers) {
 		int[] targetting = new int[numberOfPlayers];
-		int target = 2;
-		for (int i = 0; i < targetting.length; i+=2) {
-			targetting[i] = target + (i%numberOfPlayers);
-			targetting[i+1] = targetting[i] - 1;
+		for (int i = 0; i < targetting.length; i++) {
+			int playerId = i+1;
+			int target = (playerId%2!=0 ? playerId+1 : playerId-1);
+			if (target>numberOfPlayers)
+				target = 1;
+			targetting[i] = target;
 		}
 		return targetting;
 	}
@@ -102,6 +105,7 @@ public class Fight {
 					
 					monitor.startSpell();
 				}
+				else notifyProblem(Event.NO_MANA);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -195,13 +199,13 @@ public class Fight {
 	}
 
 
-	public Error getFightError() {
-		return fightError;
+	public Event getFightProblem() {
+		return fightEvent;
 	}
 
 
-	public synchronized void notifyError(Error fightError) {
-		this.fightError = fightError;
+	public synchronized void notifyProblem(Event fightProblem) {
+		this.fightEvent = fightProblem;
 		notify();
 	}
 	
