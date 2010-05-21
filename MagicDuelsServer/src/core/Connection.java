@@ -17,7 +17,8 @@ public class Connection extends Thread {
 	ObjectInputStream in;
 
 	HostedGame hostedGame;
-		
+	HostedGame joinedGame;
+	
 	public Connection(Socket player, Server server) {
 
 		this.utente = null;
@@ -87,9 +88,18 @@ public class Connection extends Thread {
 				else if(message.startsWith(Messages.JOIN))
 					this.joinGame(message);
 				
+				else if(message.startsWith(Messages.GAMEKILLED))
+					this.server.removeHostedGame(this.hostedGame);
+				
 				else if(message.startsWith(Messages.CHANGESLOTTYPE))
 					this.hostedGame.changeSlotType(message);
+				
+				else if(message.startsWith(Messages.READYTOSTART))
+					this.hostedGame.startServerGame();
 			
+				else if(message.startsWith(Messages.SERVERGAMESTARTED))
+					this.hostedGame.startClientGame();
+				
 			}
 		}
 		
@@ -147,12 +157,10 @@ public class Connection extends Thread {
 	protected void closeConnection()
 	{
 		try {
-		
 			this.in.close();
 			this.out.close();
 			
 			this.player.close();
-			
 		} catch (IOException e) {
 			System.out.println("Errore nella chiusura della connessione");
 		}
@@ -189,13 +197,13 @@ public class Connection extends Thread {
 		
 		if(hostedGame == null) this.sendMessage(Messages.JOINFAILED);
 		
-		if(!hostedGame.joinGame(this)) return;
+		if(!hostedGame.joinGame(this)) this.sendMessage(Messages.JOINFAILED);
 		
 		String message = Messages.JOINOK;
 		message += hostedGame.getSlotMessageInfo();
 	
 		this.sendMessage(message);
-	
+		this.joinedGame = hostedGame;
 	}
 	
 	public void changeSlotState(int slotIndex, String state)
