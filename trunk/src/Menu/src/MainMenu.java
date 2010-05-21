@@ -10,7 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import game.Game;
 import lobby.LobbyClient;
 import wiiMoteInput.PlayerMote;
 
@@ -22,7 +21,7 @@ public class MainMenu extends JFrame {
 	LinkedHashMap<String, DisplayMode> displayModes;
 	
 	public LobbyClient lobbyClient;
-	PlayerMote playMote;
+	public PlayerMote playMote;
 	MP3 sound;
 	MP3 colonna;
 	public MP3 ok;

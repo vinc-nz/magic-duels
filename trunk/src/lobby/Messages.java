@@ -46,6 +46,20 @@ public class Messages {
 	//CHANGESLOTTYPE>SLOTINDEX;SLOTTYPE  (it's the same for server-> and client->server)
 	public static String CHANGESLOTTYPE = "CHANGESLOTTYPE>";
 	
+	public static String PLAYERKICKED = "PLAYERKICKED";
+	
+	//KICKPLAYER>NOMEPLAYER -- IMPLEMENTARE!
+	public static String KICKPLAYER = "KICKPLAYER>";
+	
+	public static String GAMEKILLED = "GAMEKILLED";
+	
+	public static String READYTOSTART = "READYTOSTART";
+	
+	//STARTSERVERGAME>NUMPLAYER;NUMIA
+	public static String STARTSERVERGAME = "STARTSERVERGAME>";
+	public static String SERVERGAMESTARTED = "SERVERGAMESTARTED";
+	public static String STARTCLIENTGAME = "STARTCLIENTGAME";
+	
 	public static String OPEN = "Aperto";
 	public static String CLOSED = "Chiuso";
 	public static String IA = "Computer";
