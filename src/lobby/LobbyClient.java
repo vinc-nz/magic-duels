@@ -8,8 +8,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.swing.internal.plaf.synth.resources.synth;
-
 import Menu.src.lobby.Lobby;
 
 public class LobbyClient extends Thread {
@@ -24,12 +22,15 @@ public class LobbyClient extends Thread {
  	List<HostedGameInfo> hostedGameList;
  	
  	LobbyHostedGame hostedGame;
+ 	LobbyJoinedGame joinedGame;
  	
  	// Grafica della Lobby
  	Lobby graphicLobby;
  	
 	public LobbyClient() {
 		this.onlinePlayer = null;
+		this.hostedGame = null;
+		this.joinedGame = null;
 	}
 	
 	public void setGraphicLobby(Lobby graphicLobby) {
@@ -46,6 +47,10 @@ public class LobbyClient extends Thread {
 
 	public LobbyHostedGame getHostedGame() {
 		return hostedGame;
+	}
+	
+	public LobbyJoinedGame getJoinedGame() {
+		return joinedGame;
 	}
 
 	public boolean connect(String ip, int port)
@@ -156,11 +161,17 @@ public class LobbyClient extends Thread {
 			else if(message.startsWith(Messages.CHAT))
 				this.writeChatMessage(message);
 			
+			else if(message.startsWith(Messages.JOINOK))
+				this.joinGame(message);
+				
 			else if(message.equals(Messages.CREATEOK))
-				this.graphicLobby.initHostedGamePanel();
+				this.graphicLobby.hostAGame();
 			
 			else if(message.equals(Messages.CREATEFAILED))
 				System.out.println("NON CREATA");
+				
+			else if(message.startsWith(Messages.CHANGESLOTTYPE))
+				this.changeJoinedGameSlotType(message);
 				
 			System.out.println("RICEVO " + message);
 
@@ -191,6 +202,7 @@ public class LobbyClient extends Thread {
 	public void setGameList(String message)
 	{
 		this.hostedGameList = LobbyClient.createGameList(message);
+		this.graphicLobby.refreshGameListPanel();
 	}
 	
 	public boolean newUser(String utente, String password, String mail)
@@ -239,10 +251,38 @@ public class LobbyClient extends Thread {
 		msg += gameName + ";";
 		msg += String.valueOf(numSlots) + ";";
 		msg += String.valueOf(numPorta) + ";";
+
+		this.hostedGame = new LobbyHostedGame(this, gameName, numPorta, numSlots);
+
+		this.sendMessage(msg);		
+	}
+	
+	public void tryJoiningGame(String gameName, String ip, int porta)
+	{
+		this.joinedGame = new LobbyJoinedGame(gameName, ip, porta);
+
+		String msg = Messages.JOIN;
+		msg += gameName;
 		
 		this.sendMessage(msg);
+	}
+	
+	public void joinGame(String msg)
+	{
+		String []parameter = msg.substring(Messages.JOINOK.length()).split(";");
 		
-		this.hostedGame = new LobbyHostedGame(this, gameName, numPorta, numSlots);
+		for (int i = 0; i < parameter.length; i++)
+			this.joinedGame.addSlot(parameter[i]);
+		
+		this.graphicLobby.joinAGame();
+	}
+	
+	public void changeJoinedGameSlotType(String message)
+	{
+		if(this.joinedGame == null) return;
+		
+		this.joinedGame.changeSlotType(message);
+		this.graphicLobby.joinAGame();
 	}
 	
 }
