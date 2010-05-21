@@ -1,5 +1,6 @@
 package game;
 
+import ia.Ia;
 import input.CharacterController;
 import wiiMoteInput.PlayerMote;
 import Menu.src.MainMenu;
@@ -13,6 +14,11 @@ public class SingleGame extends Game {
 	
 	public void init(String name, int numberOfPlayers) {
 		super.initFight(numberOfPlayers);
+		
+		for(int i=1; i<=numberOfPlayers; i++){
+			new Ia(new CharacterController(i+1, this.getFight())).start();
+		}
+		
 		this.name = name;
 	}
 	

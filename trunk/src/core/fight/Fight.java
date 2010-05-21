@@ -19,7 +19,7 @@ import game.Error;
  */
 public class Fight {
 	
-	static final int MANA_INCREASE_FACTOR = 500;
+	static final int MANA_INCREASE_FACTOR = 10;
 	
 	Character[] players;
 	
@@ -27,6 +27,8 @@ public class Fight {
 	public boolean finished;
 	private boolean paused;
 	
+	public boolean start;
+	public boolean move;
 	Error fightError;
 	
 	
@@ -48,6 +50,8 @@ public class Fight {
 		
 		running = false;
 		finished = false;
+		start = false;
+		move = false;
 		paused = false;
 		fightError = Error.NONE;
 		
@@ -93,26 +97,33 @@ public class Fight {
 		if (isActive() && !this.getPlayer(playerId).isPreparingSpell()) {
 			try {
 				Spell s = (Spell) spell.newInstance();
-				if (this.getPlayer(playerId).prepareSpell(s))
+				if (this.getPlayer(playerId).prepareSpell(s)){
 					this.setSpellParams(playerId, s);
+					
+					start = true;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		
+	}
+	
+	public boolean prepSpeel(int playerId, Class<? extends Spell> spell){
+		if(start){
+			start = false;
+			return true;
+		}
+		return false;
 	}
 	
 	private void setSpellParams(int playerId, Spell s) {
-		
-		
 		if (s instanceof TargettingSpell) {
 			Character enemy = this.getEnemy(this.getPlayer(playerId));
 			((TargettingSpell) s).setTarget(enemy.getPosition());
 		}
 		
 	}
-
-
-	
 	
 	public void moveCharacter(int playerId, String where) {
 		
@@ -121,10 +132,20 @@ public class Fight {
 			try {
 				Method m = Character.class.getMethod(methodName);
 				m.invoke(this.getPlayer(playerId));
+				if(playerId == 2)
+					move = true;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public boolean isMove(){
+		if(move) {
+			move = false;
+			return true;
+		}
+		return false;
 	}
 	
 	public void nextTarget(int playerId) {

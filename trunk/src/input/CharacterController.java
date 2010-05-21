@@ -1,12 +1,9 @@
 package input;
-
-
-
 import game.Error;
 import core.fight.Fight;
 import core.objects.Spell;
-
-
+import core.spells.FanBalls;
+import core.spells.Fireball;
 
 /**
  * Gives the control of a Character
@@ -30,10 +27,6 @@ public class CharacterController {
 	public int getPlayerID() {
 		return playerID;
 	}
-
-	
-	
-	
 	
 	/**
 	 * the controlled Character will cast the spell specified by name
@@ -60,7 +53,6 @@ public class CharacterController {
 	}
 	
 
-	
 	/**
 	 * moves the Character in the specified direction
 	 * @param direction where to move

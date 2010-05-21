@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import jmegraphic.Game;
+import game.Game;
 import lobby.LobbyClient;
 import wiiMoteInput.PlayerMote;
 
@@ -68,7 +68,7 @@ public class MainMenu extends JFrame {
 		sound = new MP3("src/Menu/data/Click.mp3");
 		colonna = new MP3("src/Menu/data/colonna.mp3");
 		ok = new MP3("src/Menu/data/ok.mp3");
-		colonna.play();
+		//colonna.play();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -84,7 +84,7 @@ public class MainMenu extends JFrame {
 				new ImageIcon("src/Menu/data/imageOptionsS.png").getImage(),
 				new ImageIcon("src/Menu/data/imageCreditsS.png").getImage(),
 				new ImageIcon("src/Menu/data/imageExitS.png").getImage(),
-				new Game(playMote,this), this);
+				playMote, this);
 	    
 		switchTo( panel );
 		//size = Toolkit.getDefaultToolkit().getScreenSize();
