@@ -4,11 +4,13 @@ public class HostedGameSlot {
 	
 	String type;
 	Connection human;
+	String iaName;
 	
 	public HostedGameSlot() {
 	
 		this.type = Messages.OPEN;
 		this.human = null;
+		this.iaName = "Firefox";
 		
 	}
 	
@@ -29,22 +31,17 @@ public class HostedGameSlot {
 		this.human = null;
 	}
 	
-	/*
-	public void leaveSlot()
+	public boolean isJoinable(){ return this.type.equals(Messages.OPEN); }
+	
+	public boolean isHuman() { return this.type.equals(Messages.HUMAN); }
+	
+	public String getPlayerName()
 	{
-		this.type = Messages.OPEN;
-		this.human = null;
-	}
-
-	public void closeSlot()
-	{
-		this.type = Messages.CLOSED;
-		this.human = null;
+		if(this.type.equals(Messages.HUMAN))
+			return this.human.utente.getNome();
+		else if(this.type.equals(Messages.IA))
+			return this.iaName;
+		else return this.type;
 	}
 	
-	public void iaSlot()
-	{
-		this.type = Messages.IA;
-		this.human = null;
-	}*/
 }

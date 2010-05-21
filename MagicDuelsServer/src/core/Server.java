@@ -6,13 +6,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Server extends Thread{
 
 	ServerSocket serverSocket;
-	List<Connection> players;
+	//List<Connection> players;
+	HashMap<String, Connection> players;
 	HashMap<String, HostedGame> hostedGames;
 	
 	public Server(int porta) {
@@ -24,7 +23,8 @@ public class Server extends Thread{
 			System.out.println("Impossibile aprire una connessione!");
 		}
 		
-		this.players = new LinkedList<Connection>();
+		//this.players = new LinkedList<Connection>();
+		this.players = new HashMap<String, Connection>();
 		this.hostedGames = new HashMap<String, HostedGame>();
 		
 		this.start();
@@ -32,9 +32,9 @@ public class Server extends Thread{
 	
 	public void sendChatMessage(String sender, String msg)
 	{	
-		for (Iterator iterator = this.players.iterator(); iterator.hasNext();) 
+		for (Iterator iterator = this.players.keySet().iterator(); iterator.hasNext();) 
 		{
-			Connection connection = (Connection) iterator.next();	
+			Connection connection = this.players.get(iterator.next());	
 			connection.sendMessage(Messages.CHAT + sender.length() + ";" + sender + msg);
 			
 		}	
@@ -42,7 +42,12 @@ public class Server extends Thread{
 
 	public void removePlayer(Connection player)
 	{
-		this.players.remove(player);
+		if(player.hostedGame != null)
+			this.hostedGames.remove(player.hostedGame.gameName);
+		
+		this.players.remove(player.utente.getNome());
+		
+		// BISOGNA AVVISARE GLI ALTRI DELLA NUOVA LISTA DI GAMES E DI PLAYERS
 	}
 	
 	@Override
@@ -56,7 +61,7 @@ public class Server extends Thread{
 				System.out.println("ATTENDO NUOVA CONNESSIONE");
 				connection = this.serverSocket.accept();
 				System.out.println("NEW CONNECTION: " + connection.getLocalAddress());
-				this.players.add(new Connection(connection, this));
+				this.players.put(connection.getLocalAddress().toString(), new Connection(connection, this));
 
 			} catch (IOException e) {
 				System.out.println("Impossibile accettare la connessione!");
@@ -67,12 +72,12 @@ public class Server extends Thread{
 	
 	public static String getClientList(Server server)
 	{
-		List<Connection> clients = server.players;
+		HashMap<String, Connection> clients = server.players;
 		
 		String clientList = Messages.CLIENTLIST;
 		
-		for (Iterator iterator = clients.iterator(); iterator.hasNext();)
-			clientList = clientList + ((Connection)iterator.next()).utente.getNome() + ";";
+		for (Iterator iterator = clients.keySet().iterator(); iterator.hasNext();)
+			clientList = clientList + clients.get(iterator.next()).utente.getNome() + ";";
 			
 		return clientList;
 	}
@@ -89,7 +94,7 @@ public class Server extends Thread{
 		HostedGame game;
 		for (Iterator iterator = games.keySet().iterator(); iterator.hasNext();)
 		{
-			game = (HostedGame)iterator.next();
+			game = games.get(iterator.next());
 			
 			gameList = gameList + game.getHost().utente.getNome() + ";";
 			gameList = gameList + game.getGameName() + ";";

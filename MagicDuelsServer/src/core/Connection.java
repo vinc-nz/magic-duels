@@ -17,7 +17,7 @@ public class Connection extends Thread {
 	ObjectInputStream in;
 
 	HostedGame hostedGame;
-	
+		
 	public Connection(Socket player, Server server) {
 
 		this.utente = null;
@@ -26,7 +26,7 @@ public class Connection extends Thread {
 		this.server = server;
 		
 		this.hostedGame = null;
-		
+				
 		try {
 			
 			this.out = new ObjectOutputStream(player.getOutputStream());
@@ -70,7 +70,7 @@ public class Connection extends Thread {
 		{
 			this.initLobby();
 			
-			while(!message.equals(Messages.CLOSE))
+			while(!message.equals(Messages.CLOSE) && !message.equals(Messages.KILL))
 			{				
 				message = this.readMessage();
 				System.out.println("client>" + message);
@@ -78,21 +78,25 @@ public class Connection extends Thread {
 				if (message.equals(Messages.CLOSE))
 					this.sendMessage(Messages.CLOSE);
 			
-				if(message.startsWith(Messages.CHAT))
+				else if(message.startsWith(Messages.CHAT))
 					this.server.sendChatMessage(this.utente.getNome(), message.substring(Messages.CHAT.length()));
 				
-				if(message.startsWith(Messages.CREATE))
+				else if(message.startsWith(Messages.CREATE))
 					this.newGame(message);
 				
-				if(message.startsWith(Messages.CHANGESLOTTYPE))
-					System.out.println("CHANGE SLOT STATE");
+				else if(message.startsWith(Messages.JOIN))
+					this.joinGame(message);
+				
+				else if(message.startsWith(Messages.CHANGESLOTTYPE))
+					this.hostedGame.changeSlotType(message);
 			
 			}
 		}
 		
-		this.sendMessage(Messages.CLOSE);
 		this.closeConnection();
 		this.server.removePlayer(this);
+		
+		System.out.println("FINE THREAD " +  this.utente.getNome());
 	}
 
 	public void login(String msg)
@@ -103,8 +107,11 @@ public class Connection extends Thread {
 		if(this.utente == null)
 			this.sendMessage(Messages.LOGINFAILED);
 		else
+		{
+			this.server.players.remove(this.player.getLocalAddress());
+			this.server.players.put(utente.getNome(), this);
 			this.sendMessage(Messages.LOGINOK);
-
+		}
 	}
 	
 	public void sendMessage(String msg)
@@ -134,7 +141,7 @@ public class Connection extends Thread {
 			System.out.println("Classe non trovata!");
 		}
 		
-		return null;
+		return Messages.KILL;
 	}
 	
 	protected void closeConnection()
@@ -172,6 +179,23 @@ public class Connection extends Thread {
 		this.server.hostedGames.put(this.hostedGame.gameName, this.hostedGame);
 		
 		this.sendMessage(Messages.CREATEOK);
+	}
+	
+	public void joinGame(String msg)
+	{
+		String gameName = msg.substring(Messages.JOIN.length());
+		
+		HostedGame hostedGame = this.server.hostedGames.get(gameName);
+		
+		if(hostedGame == null) this.sendMessage(Messages.JOINFAILED);
+		
+		if(!hostedGame.joinGame(this)) return;
+		
+		String message = Messages.JOINOK;
+		message += hostedGame.getSlotMessageInfo();
+	
+		this.sendMessage(message);
+	
 	}
 	
 	public void changeSlotState(int slotIndex, String state)

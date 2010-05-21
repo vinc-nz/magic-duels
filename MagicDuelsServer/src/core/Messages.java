@@ -4,7 +4,8 @@ public class Messages {
 
 	public static String WELCOME = "WLC";	
 	public static String CLOSE = "BYE";
-	
+	public static String KILL = "KILL";
+
 	public static String CHAT = "CHAT>";
 	
 	// NEWUSER>NOMEUTENTE;PASSWORD;MAIL
@@ -33,7 +34,13 @@ public class Messages {
 	public static String CREATEOK = "CREATEOK";
 	public static String CREATEFAILED = "CREATEFAILED";
 	
+	//JOIN>GAMENAME
 	public static String JOIN = "JOIN>";
+	
+	//JOINOK>NUMSLOT;TIPOSLOT1;SLOTCONTEMT1;TIPOSLOT2;SLOTCONTEMT2;ECC
+	public static String JOINOK = "JOINOK>";
+	public static String JOINFAILED = "JOINFAILED";
+	
 	public static String LEAVE = "LEAVE";
 	
 	//CHANGESLOTTYPE>SLOTINDEX;SLOTTYPE  (it's the same for server-> and client->server)
