@@ -1,7 +1,5 @@
 package Menu.src;
 
-import game.SingleGame;
-
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -109,8 +107,7 @@ public class Mouse extends MouseAdapter{
 					mainPanel.sOptions = false;
 					sSound = null;
 					mainPanel.repaint();
-				}
-				
+				}		
 		
 		if(e.getX() >= position[6] && e.getX() <= position[6]*2 
 			     && e.getY() >= position[7] && e.getY() <= position[7]+position[1]){
@@ -170,16 +167,12 @@ public class Mouse extends MouseAdapter{
 				mainMenu.ok.play();
 				//mainMenu.setVisible(false);
 				mainMenu.switchTo(this.initSingleGame);
-//				singleGame.init("player 1", 2);
-//				singleGame.start();
 			}
 		}
 		
 		if(mainPanel.sMultiplayer){
-
 			mainMenu.ok.play();
 			mainMenu.switchTo(this.multiplayerMenu);
-
 		}
 		
 		if(mainPanel.sOptions){
