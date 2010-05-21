@@ -10,9 +10,9 @@ public class HostedGame {
 	int porta;
 	
 	String gameName;
-
 	int numSlots;
-	int freeSlots;
+	int numHumanPlayers;
+	int numIaPlayers;
 	
 	List<HostedGameSlot> slots;
 	
@@ -22,7 +22,8 @@ public class HostedGame {
 		this.porta = porta;
 		this.gameName = gameName;
 		this.numSlots = numSlots;
-		this.freeSlots = numSlots;
+		this.numHumanPlayers = 0;
+		this.numIaPlayers = 0;
 		this.slots = new ArrayList<HostedGameSlot>();
 		
 		for (int i = 0; i < numSlots; i++)
@@ -35,7 +36,6 @@ public class HostedGame {
 	
 	public synchronized boolean joinGame(Connection player)
 	{
-		if(this.freeSlots == 0) return false;
 		
 		for (Iterator iterator = this.slots.iterator(); iterator.hasNext();) {
 			HostedGameSlot slot = (HostedGameSlot) iterator.next();
@@ -43,6 +43,10 @@ public class HostedGame {
 			if(slot.isJoinable())
 			{
 				slot.joinSlot(player);
+				this.numHumanPlayers++;
+				
+				System.out.println("NUMERO UMANI: " + this.numHumanPlayers);
+				
 				return true;
 			}
 			
@@ -61,11 +65,21 @@ public class HostedGame {
 		
 	}
 	
-	public void changeSlotType(String msg)
+	public synchronized void changeSlotType(String msg)
 	{
 		String []parameter = msg.substring(Messages.CHANGESLOTTYPE.length()).split(";");
+				
+		HostedGameSlot slot = this.slots.get(Integer.parseInt(parameter[0]));
 		
-		this.slots.get(Integer.parseInt(parameter[0])).changeSlotState(parameter[1]);
+		if(slot.type.equals(parameter[1])) return;
+		
+		if(slot.isHuman()) this.numHumanPlayers--;
+		if(slot.isIA()) this.numIaPlayers--;
+		
+		if(parameter[1].equals(Messages.IA)) this.numIaPlayers++;
+			
+		slot.changeSlotState(parameter[1]);
+		
 		this.sendAll(msg);
 	}
 	
@@ -76,6 +90,25 @@ public class HostedGame {
 			if(slot.isHuman())
 				slot.human.sendMessage(msg);
 		}
+	}
+	
+	public void startServerGame()
+	{
+		String message = Messages.STARTSERVERGAME;
+		message += String.valueOf(this.numHumanPlayers) + ";";
+		message += String.valueOf(this.numIaPlayers);
+		
+		this.host.sendMessage(message);
+	}
+	
+	public void startClientGame()
+	{
+		for (Iterator iterator = this.slots.iterator(); iterator.hasNext();) {
+			HostedGameSlot slot = (HostedGameSlot) iterator.next();
+			
+			if(slot.isHuman() && !slot.human.equals(this.host))
+				slot.human.sendMessage(Messages.STARTCLIENTGAME);		
+		}	
 	}
 	
 	public Connection getHost() {

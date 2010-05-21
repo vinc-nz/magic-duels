@@ -5,7 +5,7 @@ public class Messages {
 	public static String WELCOME = "WLC";	
 	public static String CLOSE = "BYE";
 	public static String KILL = "KILL";
-
+	
 	public static String CHAT = "CHAT>";
 	
 	// NEWUSER>NOMEUTENTE;PASSWORD;MAIL
@@ -45,6 +45,20 @@ public class Messages {
 	
 	//CHANGESLOTTYPE>SLOTINDEX;SLOTTYPE  (it's the same for server-> and client->server)
 	public static String CHANGESLOTTYPE = "CHANGESLOTTYPE>";
+	
+	public static String PLAYERKICKED = "PLAYERKICKED";
+	
+	//KICKPLAYER>NOMEPLAYER -- IMPLEMENTARE!
+	public static String KICKPLAYER = "KICKPLAYER>";
+	
+	public static String GAMEKILLED = "GAMEKILLED";
+	
+	public static String READYTOSTART = "READYTOSTART";
+	
+	//STARTSERVERGAME>NUMPLAYER;NUMIA
+	public static String STARTSERVERGAME = "STARTSERVERGAME>";
+	public static String SERVERGAMESTARTED = "SERVERGAMESTARTED";
+	public static String STARTCLIENTGAME = "STARTCLIENTGAME";
 	
 	public static String OPEN = "Aperto";
 	public static String CLOSED = "Chiuso";

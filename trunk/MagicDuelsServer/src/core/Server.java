@@ -40,14 +40,28 @@ public class Server extends Thread{
 		}	
 	}
 
-	public void removePlayer(Connection player)
+	public synchronized void removePlayer(Connection player)
 	{
-		if(player.hostedGame != null)
-			this.hostedGames.remove(player.hostedGame.gameName);
-		
+		this.removeHostedGame(player.hostedGame);
 		this.players.remove(player.utente.getNome());
 		
 		// BISOGNA AVVISARE GLI ALTRI DELLA NUOVA LISTA DI GAMES E DI PLAYERS
+	}
+	
+	public void removeHostedGame(HostedGame hostedGame)
+	{
+		if(hostedGame != null)
+		{
+			for (Iterator iterator = this.hostedGames.keySet().iterator(); iterator.hasNext();) {
+				HostedGame host = this.hostedGames.get(iterator.next());
+				for (Iterator iterator2 = host.slots.iterator(); iterator2.hasNext();) {
+					HostedGameSlot slot = (HostedGameSlot) iterator2.next();
+					if(slot.isHuman())
+						slot.human.sendMessage(Messages.GAMEKILLED);
+				}
+			}
+			this.hostedGames.remove(hostedGame.gameName);
+		}		
 	}
 	
 	@Override
@@ -60,7 +74,7 @@ public class Server extends Thread{
 			try {
 				System.out.println("ATTENDO NUOVA CONNESSIONE");
 				connection = this.serverSocket.accept();
-				System.out.println("NEW CONNECTION: " + connection.getLocalAddress());
+				System.out.println("NEW CONNECTION: " + connection.getInetAddress());
 				this.players.put(connection.getLocalAddress().toString(), new Connection(connection, this));
 
 			} catch (IOException e) {
@@ -98,7 +112,7 @@ public class Server extends Thread{
 			
 			gameList = gameList + game.getHost().utente.getNome() + ";";
 			gameList = gameList + game.getGameName() + ";";
-			gameList = gameList + game.getHost().player.getLocalAddress() + ";";
+			gameList = gameList + game.getHost().player.getInetAddress() + ";";
 			gameList = gameList + game.getPorta() + ";";
 		}
 		

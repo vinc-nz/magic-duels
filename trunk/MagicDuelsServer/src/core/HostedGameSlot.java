@@ -34,6 +34,7 @@ public class HostedGameSlot {
 	public boolean isJoinable(){ return this.type.equals(Messages.OPEN); }
 	
 	public boolean isHuman() { return this.type.equals(Messages.HUMAN); }
+	public boolean isIA() { return this.type.equals(Messages.IA); }
 	
 	public String getPlayerName()
 	{
