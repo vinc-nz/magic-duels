@@ -1,0 +1,5 @@
+package game;
+
+public enum Event {
+	NONE, HOST_UNREACHABLE, WIIMOTE_DISCONNECTED, NO_MANA, CHARACTER_DEAD, UNKNOW
+}

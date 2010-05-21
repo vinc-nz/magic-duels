@@ -1,34 +1,35 @@
 package jmegraphic;
 
 import core.fight.Fight;
-import game.Error;
+import game.Event;
 
 public class FightStateChecker extends Thread {
 	
-	GraphicFight graphicFight;
-	Fight coreFight;
+	JmeGame game;
+	Fight fight;
 
-	public FightStateChecker(GraphicFight graphicFight) {
+	public FightStateChecker(JmeGame game) {
 		super();
-		this.graphicFight = graphicFight;
-		this.coreFight = graphicFight.fight;
+		this.game = game;
+		this.fight = game.fight;
 	}
 	
 	@Override
 	public void run() {
-		while (coreFight.running) {
-			coreFight.checkState();
-			graphicFight.checkPause();
-			this.checkErrors();
+		while (fight.running) {
+			fight.checkState();
+			game.checkPause();
+			this.checkEvents();
 		}
 	}
 
-	private void checkErrors() {
-		Error e = coreFight.getFightError();
-		if (e==Error.HOST_UNREACHABLE)
-			graphicFight.notifyHostUnreachable();
-		else if (e==Error.WIIMOTE_DISCONNECTED)
-			graphicFight.notifyWiimoteDisconnected();
+	private void checkEvents() {
+		Event e = fight.getFightProblem();
+		if (e==Event.WIIMOTE_DISCONNECTED)
+			game.showMessage("Wiimote disconnesso");
+		else if (e==Event.NO_MANA)
+			game.showNotification("No mana!");
+		
 	}
 
 }

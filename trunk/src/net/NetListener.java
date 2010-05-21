@@ -1,7 +1,5 @@
 package net;
 
-import game.Game;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +35,7 @@ public abstract class NetListener extends Thread {
 		}
 	}
 	
-	public abstract Game getGame();
+	public abstract NetGame getGame();
 	
 
 	protected void performAction(String message) {

@@ -1,6 +1,5 @@
 package jmegraphic.hud;
 
-import jmegraphic.GraphicObject;
 import jmegraphic.SceneElem;
 
 import com.jme.renderer.Renderer;
@@ -26,6 +25,7 @@ public abstract class HudObject extends SceneElem {
 	public HudObject(String name) {
 		super(name);
 		this.setRenderQueueMode(Renderer.QUEUE_ORTHO);
+		this.setLightCombineMode(LightCombineMode.Off);
 		this.display = DisplaySystem.getDisplaySystem();
 		this.width = 0;
 		this.height = 0;

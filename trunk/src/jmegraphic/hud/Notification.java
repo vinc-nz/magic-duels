@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import com.jme.renderer.ColorRGBA;
-import com.jme.util.Timer;
 import com.jmex.angelfont.BitmapFont;
 import com.jmex.angelfont.BitmapFontLoader;
 import com.jmex.angelfont.BitmapText;
@@ -16,16 +15,14 @@ import com.jmex.angelfont.BitmapText;
 public class Notification extends HudObject {
 	BitmapText graphicText;
 	String text;
-	float expireTime;
 
 	public Notification(String text) {
 		super(text);
 		this.text = text;
-        this.expireTime = -1;
+		this.loadModel();
 	}
 	
-	@Override
-	public void loadModel() {
+	private void loadModel() {
 		URL fntFile = this.getClass().getClassLoader().getResource("data/font/Dalelands.fnt");
 		URL texFile = this.getClass().getClassLoader().getResource("data/font/Dalelands.tga");
 		BitmapFont fnt;
@@ -52,10 +49,6 @@ public class Notification extends HudObject {
         this.attachChild(graphicText);
 	}
 	
-	public void setExpireTime(float time) {
-		expireTime = time + Timer.getTimer().getTimeInSeconds();
-	}
-	
 	public void setText(String text) {
 		this.text = text;
 	}
@@ -65,21 +58,13 @@ public class Notification extends HudObject {
 	}
 
 	@Override
-	public void update() {
+	public void update(float tpf) {
+		super.update(tpf);
 		graphicText.setText(text);
 		graphicText.update();
 		this.width = graphicText.getLineWidth()*BORDER_OFFSET;
 		graphicText.getLocalTranslation().x = -width/2;
-		if (this.toRemove())
-			this.destroy();
-	}
-	
-	
-	public boolean toRemove() {
-		if (expireTime == -1)
-			return false;
-		float currentTime = Timer.getTimer().getTimeInSeconds();
-		return (currentTime>=expireTime);
+		
 	}
 
 }

@@ -16,12 +16,11 @@ public abstract class GraphicObject extends SceneElem {
 	AbstractObject object;
 	boolean moving;
 	
-	
 	public GraphicObject() {
 		super();
 	}
 	
-	
+	public abstract void loadModel();
 	
 	public GraphicObject(AbstractObject object) {
 		super(object.getName());
@@ -44,7 +43,8 @@ public abstract class GraphicObject extends SceneElem {
 	
 	
 	@Override
-	public void update() {
+	public void update(float tpf) {
+		super.update(tpf);
 		Vector3f position = new Vector3f();
 		position.x = this.object.getPosition().getX();
 		position.z = this.object.getPosition().getY();
@@ -74,9 +74,8 @@ public abstract class GraphicObject extends SceneElem {
 		return moving;
 	}
 	
-	@Override
 	public boolean isInGame() {
-		return super.isInGame() && this.object.isInGame();
+		return this.object.isInGame();
 	}
 	
 	//ruota all'oggetto in modo che sia rivolto verso le coordinate di point

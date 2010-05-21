@@ -2,7 +2,6 @@ package jmegraphic;
 
 import com.jme.bounding.BoundingBox;
 import com.jme.scene.Node;
-import com.jme.scene.Spatial;
 import com.jme.scene.state.BlendState;
 import com.jme.scene.state.CullState;
 import com.jme.scene.state.ZBufferState;
@@ -10,8 +9,6 @@ import com.jme.scene.state.CullState.Face;
 import com.jme.system.DisplaySystem;
 
 public abstract class SceneElem extends Node {
-	
-	boolean inGame = true;
 	
 	public SceneElem() {
 		// TODO Auto-generated constructor stub
@@ -21,23 +18,13 @@ public abstract class SceneElem extends Node {
 		super(name);
 	}
 	
-	public abstract void update();
-	
-	public abstract void loadModel();
-	
-	public void destroy() {
-		this.inGame = false;
+	public void update(float tpf) {
+		this.updateRenderState();
+		this.updateGeometricState(tpf, true);
 	}
 	
+	//public abstract void loadModel();
 	
-	
-	public boolean isInGame() {
-		return inGame;
-	}
-
-	public void setInGame(boolean inGame) {
-		this.inGame = inGame;
-	}
 
 	public void addBoundingBox() {
 		this.setModelBound(new BoundingBox());

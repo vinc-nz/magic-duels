@@ -1,7 +1,5 @@
 package net;
 
-import game.Game;
-
 import java.io.InputStream;
 
 
@@ -28,7 +26,7 @@ public class ServerListener extends NetListener {
 	}
 	
 	@Override
-	public Game getGame() {
+	public NetGame getGame() {
 		return game;
 	}
 }

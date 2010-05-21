@@ -3,6 +3,7 @@ package jmegraphic.spells;
 import java.io.IOException;
 import java.net.URL;
 
+import jmegraphic.GraphicObject;
 import utils.ExplosionFactory;
 
 import com.jme.math.Vector3f;
@@ -10,7 +11,6 @@ import com.jme.util.export.binary.BinaryImporter;
 import com.jmex.effects.particles.ParticleMesh;
 
 import core.objects.AbstractObject;
-import jmegraphic.GraphicObject;
 
 public class Fireball extends GraphicObject {
 	
@@ -49,9 +49,9 @@ public class Fireball extends GraphicObject {
 	}
 	
 	@Override
-	public void update() {
+	public void update(float tpf) {
 		
-		super.update();
+		super.update(tpf);
 		
 		if (!this.getObject().isInGame())
 			this.explode();

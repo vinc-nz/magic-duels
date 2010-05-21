@@ -2,12 +2,12 @@ package game;
 
 import input.CharacterController;
 import input.InputInterface;
-import jmegraphic.GraphicFight;
+import jmegraphic.JmeGame;
 import wiiMoteInput.PlayerMote;
 import Menu.src.MainMenu;
 
 
-public abstract class Game extends GraphicFight {
+public abstract class Game extends JmeGame {
 	PlayerMote playerMote = null;
 	MainMenu mainMenu = null;
 

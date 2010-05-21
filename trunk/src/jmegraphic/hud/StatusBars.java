@@ -45,17 +45,12 @@ public class StatusBars extends HudObject {
 	}
 	
 	protected void setupName() {
-		characterName.loadModel();
 		characterName.setLocalScale(0.5f);
 		characterName.setColour(ColorRGBA.black);
 		characterName.getLocalTranslation().y-=lifeBar.getHeight()/4;
 	}
 
-	@Override
-	public void loadModel() {
-		
-		
-	}
+	
 	
 	protected void setupManaBar() {
 		manaBar.setMinimum(0);
@@ -83,11 +78,12 @@ public class StatusBars extends HudObject {
 	}
 
 	@Override
-	public void update() {
+	public void update(float tpf) {
+		super.update(tpf);
 		manaBar.setValue(coreCharacter.getMana());
 		lifeBar.setValue(coreCharacter.getLife());
 		characterName.setText(coreCharacter.getName());
-		characterName.update();
+		characterName.update(tpf);
 	}
 
 }
