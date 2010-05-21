@@ -26,6 +26,7 @@ public class MainMenu extends JFrame {
 	MP3 sound;
 	MP3 colonna;
 	public MP3 ok;
+	MP3 error;
 	
 	public MainPanel panel;
 	public int WIDTH;
@@ -68,6 +69,7 @@ public class MainMenu extends JFrame {
 		sound = new MP3("src/Menu/data/Click.mp3");
 		colonna = new MP3("src/Menu/data/colonna.mp3");
 		ok = new MP3("src/Menu/data/ok.mp3");
+		error = new MP3("src/Menu/data/Error.mp3");
 		//colonna.play();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

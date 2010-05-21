@@ -6,6 +6,9 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import wiiMoteInput.PlayerMote;
 
 import Menu.src.lobby.MultiplayerMenu;
@@ -21,6 +24,7 @@ public class Mouse extends MouseAdapter{
 	Image exit;
 	int position[];
 	MainPanel mainPanel;
+	InitSingleGame initSingleGame;
 	PlayerMote playerMote;
 	MultiplayerMenu multiplayerMenu;
 	MainMenu mainMenu;
@@ -52,6 +56,8 @@ public class Mouse extends MouseAdapter{
 		
 		this.optionsPanel = new Options(this.mainMenu, this.mainPanel);
 		this.multiplayerMenu = new MultiplayerMenu(this.mainMenu);
+		
+		this.initSingleGame = new InitSingleGame(this.mainMenu, this.mainPanel, this.playerMote);
 	}
 	
 	public void mouseMoved(MouseEvent e){
@@ -153,11 +159,20 @@ public class Mouse extends MouseAdapter{
 		}
 		
 		if(mainPanel.sNewGame){
-			mainMenu.ok.play();
-			SingleGame singleGame = new SingleGame(playerMote, mainMenu);
-			//mainMenu.setVisible(false);
-			singleGame.init("player 1", 2);
-			singleGame.start();
+			if( mainMenu.playMote.getMote() == null){
+				mainMenu.error.play();
+				 String message = "                 Wiimote not connected\n" +
+				 		"Please go to options and connect the Wiimote\n";
+				    JOptionPane.showMessageDialog(new JFrame(), message, "Error",
+				        JOptionPane.ERROR_MESSAGE);
+				  }
+			else{
+				mainMenu.ok.play();
+				//mainMenu.setVisible(false);
+				mainMenu.switchTo(this.initSingleGame);
+//				singleGame.init("player 1", 2);
+//				singleGame.start();
+			}
 		}
 		
 		if(mainPanel.sMultiplayer){
