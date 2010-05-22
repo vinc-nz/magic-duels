@@ -5,8 +5,8 @@ import input.CharacterController;
 
 public class NetCharacterController extends CharacterController {
 
-	public NetCharacterController(int playerID, Fight fight) {
-		super(playerID, fight);
+	public NetCharacterController(int playerID) {
+		super(playerID);
 		// TODO Auto-generated constructor stub
 	}
 	

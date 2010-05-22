@@ -23,7 +23,9 @@ public class GraphicCharacter extends GraphicObject {
 	static final short STAND=0;		//
 	static final short WALK=1;		//animazioni
 	static final short ATTACK=2;	//
+	static final short DIE = 3;
 	static final float ANIMATION_UPTIME = 0.5f;
+	
 	
 	Character coreCharacter; //parte logica corrispondente
 	JointController controller;		//per le animazioni
@@ -64,7 +66,9 @@ public class GraphicCharacter extends GraphicObject {
 		else if (pointOfAnimation(ATTACK, 0.95f)) {
 			coreCharacter.castSpell();
 			this.preparingSpell = false;
-		}
+		} 
+		else if (pointOfAnimation(DIE, 1))
+			controller.setActive(false);
 		
 		this.calculateRotation();
 		
@@ -88,6 +92,9 @@ public class GraphicCharacter extends GraphicObject {
 			controller.setTimes(112, 126);
 			break;
 
+		case DIE:
+			controller.setTimes(230,251);
+			break;
 		default:
 			break;
 		}
@@ -158,6 +165,12 @@ public class GraphicCharacter extends GraphicObject {
 			this.setAnimation(STAND);
 			lastTime = 0;
 		}
+	}
+
+
+
+	public void die() {
+		this.setAnimation(DIE);
 	}
 	
 }

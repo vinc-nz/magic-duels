@@ -14,10 +14,10 @@ public class CharacterController {
 	int playerID; // id player
 	Fight fight; // partita
 	
-	public CharacterController(int playerID, Fight fight) {
+	public CharacterController(int playerID) {
 		super();
 		this.playerID = playerID;
-		this.fight = fight;
+		this.fight = Fight.getInstance();
 	}
 	
 	/**

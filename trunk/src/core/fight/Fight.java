@@ -23,6 +23,8 @@ public class Fight {
 	
 	static final int MANA_INCREASE_FACTOR = 10;
 	
+	static Fight instance = null;
+	
 	Character[] players;
 	
 	public boolean running;
@@ -31,9 +33,28 @@ public class Fight {
 	
 	Event fightEvent;
 
-	
 	Monitor monitor;
 	
+	
+	public static Fight create(int numberOfPlayers) {
+		instance = new Fight(numberOfPlayers);
+		return instance;
+	}
+	
+	
+	
+	public static Fight getInstance() {
+		return instance;
+	}
+
+
+
+	public static void setInstance(Fight instance) {
+		Fight.instance = instance;
+	}
+
+
+
 	public Fight(int numberOfPlayers) {
 		players = new Character[numberOfPlayers];
 		
@@ -105,7 +126,6 @@ public class Fight {
 					
 					monitor.startSpell();
 				}
-				else notifyProblem(Event.NO_MANA);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -156,7 +176,7 @@ public class Fight {
 		if (isActive()) {
 			Character player = this.getPlayer(playerId);
 			player.target = player.target%numberOfPlayers()+1;
-			if (player.target == playerId)
+			if (player.target == playerId || !player.isInGame())
 				this.nextTarget(playerId);
 		}
 	}
@@ -199,7 +219,7 @@ public class Fight {
 	}
 
 
-	public Event getFightProblem() {
+	public Event getFightEvent() {
 		return fightEvent;
 	}
 
@@ -229,5 +249,7 @@ public class Fight {
 		}
 		
 	}
+	
+	
 
 }

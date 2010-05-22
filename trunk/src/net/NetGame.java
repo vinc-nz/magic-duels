@@ -60,7 +60,9 @@ public abstract class NetGame extends Game {
 	}
 	
 	public void notifyLeaving(int leavingId) {
-		this.showMessage(getFight().getPlayer(leavingId).getName()+" ha abbandonato la partita");
+		String leaveMessage = 
+			getFight().getPlayer(leavingId).getName()+" ha abbandonato la partita";
+		this.showMessage(leaveMessage,true);
 	}
 	
 }

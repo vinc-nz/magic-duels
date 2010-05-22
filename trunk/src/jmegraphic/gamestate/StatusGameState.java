@@ -1,7 +1,7 @@
 package jmegraphic.gamestate;
 
+import jmegraphic.JmeGame;
 import jmegraphic.hud.HudObject;
-import jmegraphic.hud.Notification;
 import jmegraphic.hud.StatusBars;
 
 import com.jmex.game.state.BasicGameState;
@@ -14,11 +14,12 @@ public class StatusGameState extends BasicGameState {
 	Character player;
 	StatusBars playerBars;
 	StatusBars enemyBar;
-	Notification noMana;
+	JmeGame game;
 	
-	public StatusGameState(int playerId, Fight fight) {
+	public StatusGameState(int playerId, JmeGame game) {
 		super("status");
-		this.fight = fight;
+		this.game = game;
+		this.fight = game.getFight();
 		this.player = fight.getPlayer(playerId);
 		
 		playerBars = new StatusBars(player,true,true,false);
@@ -29,7 +30,6 @@ public class StatusGameState extends BasicGameState {
 		enemyBar.setPosition(HudObject.POSITION_UPPER_RIGHT);
 		getRootNode().attachChild(enemyBar);
 		
-		
 	}
 	
 	@Override
@@ -38,6 +38,9 @@ public class StatusGameState extends BasicGameState {
 		playerBars.update(tpf);
 		enemyBar.setCoreCharacter(fight.getEnemy(player));
 		enemyBar.update(tpf);
+		
+		if (player.notEnoughMana())
+			game.showNotification("No mana");
 	}
 	
 	

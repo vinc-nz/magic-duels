@@ -3,6 +3,10 @@
  */
 package core.fight;
 
+import game.Event;
+
+import java.util.concurrent.Callable;
+
 import core.objects.AbstractObject;
 import core.objects.MovingObject;
 import core.objects.Spell;
@@ -20,6 +24,7 @@ public class Character extends MovingObject {
 	boolean enoughMana = true;
 	
 	Spell preparedSpell = null;
+	Callable<Void> deathEvent = null;
 	
 	String name;
 
@@ -32,6 +37,15 @@ public class Character extends MovingObject {
 		this.target = 1;
 		this.setRadius(25);
 		this.materialize();
+		
+		this.deathEvent = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				Fight.getInstance().notifyProblem(Event.CHARACTER_DEAD);
+				return null;
+			}
+		};
 	}
 
 	
@@ -66,6 +80,16 @@ public class Character extends MovingObject {
 
 	public void applyDamage(int points) {
 		life -= points;
+		if (life<=0) {
+			destroy();
+			if (deathEvent!=null)
+				try {
+					deathEvent.call();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 	}
 	
 	
@@ -147,7 +171,14 @@ public class Character extends MovingObject {
 
 	public void setName(String name) {
 		this.name = name;
-		
 	}
+
+
+
+	public void atDeath(Callable<Void> deathEvent) {
+		this.deathEvent = deathEvent;
+	}
+	
+	
 
 }

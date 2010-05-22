@@ -18,7 +18,7 @@ public class NetForwarderController extends NetCharacterController {
 	
 	
 	public NetForwarderController(int id, Fight fight, NetGame game) {
-		super(id,fight);
+		super(id);
 		this.game = game;
 	}
 	

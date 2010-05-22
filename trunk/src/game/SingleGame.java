@@ -16,7 +16,7 @@ public class SingleGame extends Game {
 		super.initFight(numberOfPlayers);
 		
 		for(int i=1; i<=numberOfPlayers; i++){
-			new Ia(new CharacterController(i+1, this.getFight())).start();
+			new Ia(new CharacterController(i+1)).start();
 		}
 		
 		this.name = name;
@@ -24,7 +24,7 @@ public class SingleGame extends Game {
 	
 	@Override
 	protected CharacterController buildCharacterController() {
-		return new CharacterController(1, this.getFight());
+		return new CharacterController(1);
 	}
 	
 	@Override

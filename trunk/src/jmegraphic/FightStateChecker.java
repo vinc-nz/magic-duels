@@ -16,7 +16,7 @@ public class FightStateChecker extends Thread {
 	
 	@Override
 	public void run() {
-		while (fight.running) {
+		while (!fight.finished) {
 			fight.checkState();
 			game.checkPause();
 			this.checkEvents();
@@ -24,12 +24,9 @@ public class FightStateChecker extends Thread {
 	}
 
 	private void checkEvents() {
-		Event e = fight.getFightProblem();
+		Event e = fight.getFightEvent();
 		if (e==Event.WIIMOTE_DISCONNECTED)
-			game.showMessage("Wiimote disconnesso");
-		else if (e==Event.NO_MANA)
-			game.showNotification("No mana!");
-		
+			game.showMessage("Wiimote disconnesso",true);
 	}
 
 }
