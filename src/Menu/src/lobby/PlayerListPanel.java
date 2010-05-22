@@ -18,13 +18,13 @@ public class PlayerListPanel extends JScrollPane {
 	public PlayerListPanel(Lobby graphicLobby) {
 		
 		super();
-		
+		super.setOpaque(false);
+		super.getViewport().setOpaque(false);
 		this.graphicLobby = graphicLobby;
 		
 		this.refreshPlayerList();
 		
 		super.setPreferredSize(new Dimension(100, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
-		super.setBackground(Color.green);
 		super.repaint();
 		super.revalidate();
 	}
@@ -43,7 +43,7 @@ public class PlayerListPanel extends JScrollPane {
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
-		list.setBackground(Color.green);
+		list.setOpaque(false);
 		
 		list.repaint();
 		list.revalidate();

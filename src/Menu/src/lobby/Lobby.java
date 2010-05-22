@@ -8,12 +8,12 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import lobby.LobbyClient;
 import Menu.src.MainMenu;
@@ -34,17 +34,11 @@ public class Lobby extends JPanel {
 	
 	public Lobby(MainMenu mainMenu) {
 		
-		JDialog dialog = new JDialog(new JFrame(), "lalalala");
-		
-		JOptionPane jOptionPane = new JOptionPane("lalala", JOptionPane.ERROR_MESSAGE);
-		
-		super.add(jOptionPane);
-		
 		this.mainMenu = mainMenu;
 		this.lobbyClient = mainMenu.lobbyClient;
 		
 		this.lobbyClient.setGraphicLobby(this);
-		this.background = new ImageIcon("src/Menu/data/sfida.jpg").getImage();
+		this.background = new ImageIcon("src/Menu/data/lala.jpg").getImage();
 		
 		super.setLayout(new BorderLayout());
 		super.add(this.getTopPanel(), BorderLayout.NORTH);
@@ -55,18 +49,28 @@ public class Lobby extends JPanel {
 		this.chatAreaPanel = new ChatAreaPanel();
 		this.writeChatAreaPanel = new WriteChatAreaPanel(this);
 		
-		this.multiplayerGame = new JPanel(new FlowLayout()); //new MultiplayerGamePanel(this);
+		this.multiplayerGame = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		this.multiplayerGame.setOpaque(false);
+		
 		this.multiplayerGame.add(new MultiplayerGamePanel(this));
 		
 		JPanel centerPanel = new JPanel(new GridLayout(1, 2));
+		centerPanel.setOpaque(false);
 		
 		JPanel rightPanel = new JPanel(new GridLayout(2, 1));
+		
+		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
+		
+		rightPanel.setBorder(compound);
+		rightPanel.setOpaque(false);
+	
 		rightPanel.add(this.gameListPanel);
 		rightPanel.add(this.multiplayerGame);
 		
 		centerPanel.add(this.chatAreaPanel);
 		centerPanel.add(rightPanel);
-		
 		super.add(centerPanel, BorderLayout.CENTER);
 		super.add(this.playerListPanel, BorderLayout.EAST);
 		super.add(this.writeChatAreaPanel, BorderLayout.SOUTH);
@@ -82,17 +86,21 @@ public class Lobby extends JPanel {
 
 	public JPanel getTopPanel()
 	{
-		JPanel pane = new JPanel();
+		JPanel pane = new JPanel(){
+			public void paintComponent(Graphics g) {
+				g.drawImage( new ImageIcon("src/Menu/data/lala2.gif").getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+			}			
+		};
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	
-		int textWidth = (int) screenSize.getWidth() / 5 * 4;
-		int textHeight = (int) screenSize.getHeight() / 5 * 1;
+
+		int textWidth = (int) screenSize.getWidth();
+		int textHeight = (int) screenSize.getHeight() / 6 * 1;
 		
 		pane.setPreferredSize(new Dimension(textWidth, textHeight));
 		pane.setOpaque(false);
 
-		JLabel titolo = new JLabel("WELCOME TO THE LOBBY!");
+		JLabel titolo = new JLabel("WELCOME TO THE LOBBY!");		
 		
 		return pane;
 	}
@@ -102,8 +110,9 @@ public class Lobby extends JPanel {
 	public void multiplayerGame()
 	{
 		this.multiplayerGame.removeAll();
-		this.multiplayerGame.setLayout(new FlowLayout());
+		this.multiplayerGame.setLayout(new FlowLayout(FlowLayout.CENTER));
 		this.multiplayerGame.add(new MultiplayerGamePanel(this));
+		this.multiplayerGame.setOpaque(false);
 		this.multiplayerGame.repaint();
 		this.multiplayerGame.revalidate();		
 	}

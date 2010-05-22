@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import wiiMoteInput.PlayerMote;
 
+import Menu.src.lobby.Lobby;
 import Menu.src.lobby.MultiplayerMenu;
 
 
@@ -172,7 +173,7 @@ public class Mouse extends MouseAdapter{
 		
 		if(mainPanel.sMultiplayer){
 			mainMenu.ok.play();
-			mainMenu.switchTo(this.multiplayerMenu);
+			mainMenu.switchTo(new Lobby(mainMenu));
 		}
 		
 		if(mainPanel.sOptions){

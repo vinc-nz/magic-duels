@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
 
 public class WriteChatAreaPanel extends JPanel {
 
@@ -19,21 +20,25 @@ public class WriteChatAreaPanel extends JPanel {
 	public WriteChatAreaPanel(Lobby lobby) {
 
 		super();
-		super.setBackground(Color.red);
+		super.setOpaque(false);
 		super.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(), 150));
+		
+		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
+		
+		super.setBorder(compound);
 		
 		this.graphicLobby = lobby;
 		this.initWriteChatAreaPanel();
 	
 	}
 	
-	
 	public void initWriteChatAreaPanel()
-	{
-		
+	{	
 		this.chatArea = new JTextArea();
-		this.chatArea.setBackground(Color.red);
-		this.chatArea.setBorder(BorderFactory.createLineBorder(Color.blue));
+		this.chatArea.setOpaque(false);
+
 		this.chatArea.setPreferredSize(new Dimension(super.getPreferredSize()));
 		
 		this.chatArea.addKeyListener(new KeyListener() {

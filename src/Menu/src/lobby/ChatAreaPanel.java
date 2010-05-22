@@ -2,11 +2,14 @@ package Menu.src.lobby;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 
+import javax.swing.BorderFactory;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneLayout;
+import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -22,7 +25,9 @@ public class ChatAreaPanel extends JScrollPane {
 	public ChatAreaPanel() {
 	
 		super();
-		super.setBackground(Color.blue);
+		super.setLayout(new ScrollPaneLayout());
+		super.setOpaque(false);
+		super.getViewport().setOpaque(false);
 		super.setPreferredSize(new Dimension(400, 400));
 		this.initChatAreaPanel();
 		
@@ -33,23 +38,23 @@ public class ChatAreaPanel extends JScrollPane {
 	
 	public void initChatAreaPanel()
 	{
-		/*
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int chatWidth = (int) screenSize.getWidth() / 5 * 4;
-		int chatHeight = (int) screenSize.getHeight() / 5 * 3;
-		 */
+
+		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
 		
 		JTextPane editorPane = new JTextPane();
-		editorPane.setBackground(Color.blue);
 		editorPane.setEditable(false);
 		editorPane.setPreferredSize(new Dimension(400, 400));
-		editorPane.setVisible(true);
+		editorPane.setOpaque(false);
+		editorPane.setBorder(compound);
 		
 		this.chat = editorPane.getStyledDocument();
 		
 	    Style def = StyleContext.getDefaultStyleContext().getStyle( StyleContext.DEFAULT_STYLE );
 	    Style welcomeMessage = this.chat.addStyle( "welcome", def );
 	    StyleConstants.setSuperscript( welcomeMessage, true );
+	    StyleConstants.setForeground(welcomeMessage, Color.black);
 	    StyleConstants.setFontSize( welcomeMessage, 35 );
 	    StyleConstants.setBold( welcomeMessage, true );
 		try {
@@ -60,7 +65,6 @@ public class ChatAreaPanel extends JScrollPane {
 		}
 		
 		//super.setLayout(new FlowLayout());
-		super.setLayout(new ScrollPaneLayout());
 		super.getViewport().add(editorPane);
 		
 		//this.chatAreaScrollPane.setAutoscrolls(true);
@@ -98,5 +102,10 @@ public class ChatAreaPanel extends JScrollPane {
 	    StyleConstants.setSuperscript( this.playerChatMessageStyle, true );
 	    StyleConstants.setFontSize( this.playerChatMessageStyle, 25 );
 	    StyleConstants.setBold( this.playerChatMessageStyle, true );
+	}
+	
+	@Override
+	public void paintComponents(Graphics g) {
+		super.paintComponents(g);
 	}
 }
