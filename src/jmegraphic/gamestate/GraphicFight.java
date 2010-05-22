@@ -5,12 +5,13 @@ package jmegraphic.gamestate;
  */
 
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 
 import jmegraphic.Arena;
 import jmegraphic.CustomCamera;
 import jmegraphic.GraphicCharacter;
 import jmegraphic.GraphicObject;
-
+import jmegraphic.JmeGame;
 import utils.ExplosionFactory;
 
 import com.jme.scene.Spatial;
@@ -24,6 +25,7 @@ import core.space.World;
 
 
 public class GraphicFight extends BasicGameState {
+	JmeGame game;
 	Fight fight; // parita
 	CustomCamera camera; // camera
 	
@@ -36,9 +38,10 @@ public class GraphicFight extends BasicGameState {
 	
 	Arena arena;
 	
-	public GraphicFight(Fight fight) {
+	public GraphicFight(JmeGame game) {
 		super("GraphicFight");
-		this.fight = fight;
+		this.game = game;
+		this.fight = game.getFight();
 		//uptime = new CountdownTimer();
 		objects = new ObjectMap();
 	}
@@ -49,6 +52,7 @@ public class GraphicFight extends BasicGameState {
 	public void initGame(int playerId) {
 		camera = new CustomCamera();
 		
+		
 		for (int i=1;i<=fight.numberOfPlayers();i++) {
 			Character player = fight.getPlayer(i);
 			GraphicCharacter graphicCharacter = new GraphicCharacter(player);
@@ -56,6 +60,16 @@ public class GraphicFight extends BasicGameState {
 			if (i==playerId) {
 				focused = graphicCharacter;
 				camera.setFocused(focused);
+				player.atDeath(new Callable<Void>() {
+					
+					@Override
+					public Void call() throws Exception {
+						game.showMessage("sei stato sconfitto", false);
+						fight.end();
+						focused.die();
+						return null;
+					}
+				});
 			}
 		}
 	    
@@ -135,5 +149,7 @@ public class GraphicFight extends BasicGameState {
 			this.put(obj, go);
 		}
 	}
+	
+	
 
 }

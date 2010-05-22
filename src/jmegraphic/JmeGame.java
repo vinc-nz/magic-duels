@@ -40,7 +40,7 @@ public abstract class JmeGame extends BaseGame {
 	protected abstract InputInterface getInputInterface();
 	
 	public void initFight(int numberOfPlayers) {
-		this.fight = new Fight(numberOfPlayers);
+		this.fight = Fight.create(numberOfPlayers);
 	}
 
 	public Fight getFight() {
@@ -58,15 +58,16 @@ public abstract class JmeGame extends BaseGame {
 		
 		input = getInputInterface();
 		
-		fightState = new GraphicFight(fight);
+		fightState = new GraphicFight(this);
 		fightState.initGame(input.getPlayerID());
 		stateManager.attachChild(fightState);
 		
-		status = new StatusGameState(input.getPlayerID(), fight);
+		status = new StatusGameState(input.getPlayerID(), this);
 		stateManager.attachChild(status);
 		
 		notificationState = new TimedGameState("notification");
 		stateManager.attachChild(notificationState);
+		
 	}
 	
 	public void startFight() {
@@ -75,6 +76,7 @@ public abstract class JmeGame extends BaseGame {
 		CountdownState count = new CountdownState(fight, 3);
 		stateManager.attachChild(count);
 		count.setActive(true);
+		new FightStateChecker(this).start();
 	}
 
 	@Override
@@ -110,8 +112,7 @@ public abstract class JmeGame extends BaseGame {
 
 	@Override
 	protected void update(float interpolation) {
-		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit")
-				|| fight.finished)
+		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit"))
 			this.finish();
 			
 
@@ -147,19 +148,20 @@ public abstract class JmeGame extends BaseGame {
 			fightState.setActive(true);
 		}
 		else if (fightState.isActive() && fight.paused()) {
-			this.showMessage("pausa");
+			this.showMessage("pausa",true);
 			fightState.setActive(false);
 		}
 	}
 	
-	public void showMessage(String text) {
+	public void showMessage(String text, boolean stopFight) {
 		Notification notification = new Notification(text);
 		notification.setPosition(HudObject.POSITION_CENTER);
 		BasicGameState state = new BasicGameState("message");
 		state.getRootNode().attachChild(notification);
 		stateManager.attachChild(state);
 		state.setActive(true);
-		fightState.setActive(false);
+		if (stopFight)
+			fightState.setActive(false);
 	}
 	
 	public void showNotification(String text) {
