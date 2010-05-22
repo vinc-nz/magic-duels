@@ -3,11 +3,11 @@
  */
 package core.fight;
 
-import game.Event;
 import ia.Monitor;
 
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.concurrent.Callable;
 
 import core.objects.Spell;
 import core.space.Direction;
@@ -20,29 +20,29 @@ import core.spells.TargettingSpell;
  *
  */
 public class Fight {
-	
+
 	static final int MANA_INCREASE_FACTOR = 10;
-	
+
 	static Fight instance = null;
-	
+
 	Character[] players;
-	
+
 	public boolean running;
 	public boolean finished;
 	private boolean paused;
-	
-	Event fightEvent;
+
+	Callable<Void> togglePause;
 
 	Monitor monitor;
-	
-	
+
+
 	public static Fight create(int numberOfPlayers) {
 		instance = new Fight(numberOfPlayers);
 		return instance;
 	}
-	
-	
-	
+
+
+
 	public static Fight getInstance() {
 		return instance;
 	}
@@ -57,29 +57,27 @@ public class Fight {
 
 	public Fight(int numberOfPlayers) {
 		players = new Character[numberOfPlayers];
-		
+
 		Position[] positions = this.dispose(numberOfPlayers);
-		
+
 		int targets[] = this.defaultTargetting(numberOfPlayers);
-		
+
 		for (int i = 0; i < players.length; i++) {
 			String name = "Player" + Integer.toString(i+1);
 			players[i] = new Character(name);
-			players[i].setId(i+1);
 			players[i].setPosition(positions[i]);
 			players[i].target = targets[i];
 		}
-		
+
 		running = false;
 		finished = false;
-	
+
 		paused = false;
-		fightEvent = Event.NONE;
-		
+
 		monitor = new Monitor();
 	}
-	
-	
+
+
 	private int[] defaultTargetting(int numberOfPlayers) {
 		int[] targetting = new int[numberOfPlayers];
 		for (int i = 0; i < targetting.length; i++) {
@@ -111,28 +109,28 @@ public class Fight {
 	public Character getPlayer(int id) {
 		return players[id-1];
 	}
-	
+
 	public Character getEnemy(Character character) {
 		return this.getPlayer(character.target);
 	}
-	
-	
+
+
 	public void prepareSpell(int playerId, Class<? extends Spell> spell) {
-		if (isActive() && !this.getPlayer(playerId).isPreparingSpell()) {
+		if (isActive() && this.getPlayer(playerId).isAvailable()) {
 			try {
 				Spell s = (Spell) spell.newInstance();
 				if (this.getPlayer(playerId).prepareSpell(s)){
 					this.setSpellParams(playerId, s);
-					
+
 					monitor.startSpell();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	
+
 	public boolean prepSpeel(int playerId, Class<? extends Spell> spell){
 		if(monitor.start()){
 			monitor.startSpellFalse();
@@ -140,18 +138,18 @@ public class Fight {
 		}
 		return false;
 	}
-	
+
 	private void setSpellParams(int playerId, Spell s) {
 		if (s instanceof TargettingSpell) {
 			Character enemy = this.getEnemy(this.getPlayer(playerId));
 			((TargettingSpell) s).setTarget(enemy.getPosition());
 		}
-		
+
 	}
-	
+
 	public void moveCharacter(int playerId, String where) {
-		
-		if (isActive() && !this.getPlayer(playerId).isPreparingSpell()) {
+
+		if (isActive() && this.getPlayer(playerId).isAvailable()) {
 			String methodName = "move" + where.substring(0, 1).toUpperCase() + where.substring(1);
 			try {
 				Method m = Character.class.getMethod(methodName);
@@ -163,7 +161,7 @@ public class Fight {
 			}
 		}
 	}
-	
+
 	public boolean isMove(){
 		if(monitor.move()) {
 			monitor.moveCharacterFalse();
@@ -171,7 +169,7 @@ public class Fight {
 		}
 		return false;
 	}
-	
+
 	public void nextTarget(int playerId) {
 		if (isActive()) {
 			Character player = this.getPlayer(playerId);
@@ -180,22 +178,25 @@ public class Fight {
 				this.nextTarget(playerId);
 		}
 	}
-	
+
 	public void start() {
 		running = true; 
 	}
-	
+
 	public void end() {
 		finished = true;
 		running = false;
 	}
-	
+
 	public void update() {
-		if (isActive()) {
-			World.checkCollisions();
-			boolean increaseMana = new Date().getTime() % MANA_INCREASE_FACTOR==0;
-			
-			for (int i = 0; i < players.length; i++) {
+		if (allDead())
+			end();
+
+		World.checkCollisions();
+		boolean increaseMana = new Date().getTime() % MANA_INCREASE_FACTOR==0;
+
+		for (int i = 0; i < players.length; i++) {
+			if (!players[i].isDead()) {
 				int target = players[i].target;
 				players[i].lookAt(this.getPlayer(target));
 				if (increaseMana) 
@@ -203,7 +204,25 @@ public class Fight {
 			}
 		}
 	}
-	
+
+	private boolean allDead() {
+		int alives = 0;
+		int winnerId = 0;
+		for (int i = 0; i < players.length; i++) {
+			if (!players[i].isDead()) {
+				alives++;
+				winnerId = i+1;
+			}
+		}
+		if (alives==1) {
+			getPlayer(winnerId).win();
+			return true;
+		}
+		return false;
+	}
+
+
+
 	public int numberOfPlayers() {
 		return players.length;
 	}
@@ -212,32 +231,25 @@ public class Fight {
 	public boolean paused() {
 		return paused;
 	}
-	
-	public synchronized void togglePause() {
+
+	public void togglePause() {
 		paused = !paused;
-		notify();
+		if (togglePause!=null)
+			try {
+				togglePause.call();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 
-	public Event getFightEvent() {
-		return fightEvent;
+	public void setPauseToggling(Callable<Void> togglePause) {
+		this.togglePause = togglePause;
 	}
 
 
-	public synchronized void notifyProblem(Event fightProblem) {
-		this.fightEvent = fightProblem;
-		notify();
-	}
-	
-	public synchronized void checkState() {
-		try {
-			wait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+
 	public boolean isActive() {
 		return running && !paused;
 	}
@@ -247,9 +259,9 @@ public class Fight {
 		for (int i = 0; i < players.length; i++) {
 			players[i].setName(names[i]);
 		}
-		
+
 	}
-	
-	
+
+
 
 }

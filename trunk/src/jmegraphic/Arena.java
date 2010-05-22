@@ -5,15 +5,11 @@ import java.net.URL;
 import com.jme.image.Texture;
 import com.jme.image.Texture.WrapMode;
 import com.jme.light.DirectionalLight;
-import com.jme.math.FastMath;
-import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
-import com.jme.renderer.Renderer;
 import com.jme.scene.SharedMesh;
 import com.jme.scene.Skybox;
 import com.jme.scene.shape.Box;
-import com.jme.scene.shape.Quad;
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.TextureState;
 import com.jme.system.DisplaySystem;
@@ -26,6 +22,10 @@ import core.space.World;
  *  ENVIRONMENT
  */
 public class Arena extends SceneElem {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	DisplaySystem display;
 
 

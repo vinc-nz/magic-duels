@@ -1,7 +1,5 @@
 package net;
 
-import game.Event;
-
 import java.io.IOException;
 
 import core.fight.Fight;
@@ -26,7 +24,7 @@ public class NetForwarderController extends NetCharacterController {
 		try {
 			game.forward(message);
 		} catch (IOException e) {
-			this.notifyError(Event.HOST_UNREACHABLE);
+			game.notifyHostUnreachable();
 		};
 	}
 	
