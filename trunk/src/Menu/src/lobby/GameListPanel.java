@@ -1,11 +1,14 @@
 package Menu.src.lobby;
 
+import java.awt.Graphics;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JViewport;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -24,6 +27,9 @@ public class GameListPanel extends JScrollPane {
 	public GameListPanel(Lobby graphicLobby) {
 		
 		super();
+		super.setOpaque(false);
+		super.getViewport().setOpaque(false);
+		super.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
 		
 		this.graphicLobby = graphicLobby;
 	}
@@ -50,6 +56,7 @@ public class GameListPanel extends JScrollPane {
 		
 		this.gameTableModel.setColumnIdentifiers(header);
 		this.gameTable = new JTable(this.gameTableModel);
+		this.gameTable.setOpaque(false);
 		
 		this.refreshGameListArePanel();
 		
@@ -109,7 +116,7 @@ public class GameListPanel extends JScrollPane {
 		super.setViewportView(this.gameTable);
 
 		this.repaint();
-		this.revalidate();
+		this.revalidate();		
 	}
-
+	
 }
