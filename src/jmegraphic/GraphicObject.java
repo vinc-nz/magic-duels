@@ -13,6 +13,10 @@ import core.objects.MovingObject;
 
 public abstract class GraphicObject extends SceneElem {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	AbstractObject object;
 	boolean moving;
 	

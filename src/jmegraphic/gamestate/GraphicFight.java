@@ -70,7 +70,15 @@ public class GraphicFight extends BasicGameState {
 						return null;
 					}
 				});
-			}
+				player.atVictory(new Callable<Void>() {
+
+					@Override
+					public Void call() throws Exception {
+						game.showMessage("Vittoria!", false);
+						return null;
+					}
+				});
+			} else new EnemyDeath(player);
 		}
 	    
 		ExplosionFactory.warmup();
@@ -131,6 +139,8 @@ public class GraphicFight extends BasicGameState {
 	
 
 	public class ObjectMap extends HashMap<AbstractObject, GraphicObject> {
+		private static final long serialVersionUID = 1L;
+
 		@Override
 		public GraphicObject put(AbstractObject key, GraphicObject value) {
 			GraphicFight.this.attach(value);
@@ -148,6 +158,24 @@ public class GraphicFight extends BasicGameState {
 			GraphicObject go = GraphicObject.fromObject(obj);
 			this.put(obj, go);
 		}
+	}
+	
+	public class EnemyDeath implements Callable<Void> {
+		Character enemy;
+		
+		public EnemyDeath(Character enemy) {
+			super();
+			this.enemy = enemy;
+			enemy.atDeath(this);
+		}
+
+		@Override
+		public Void call() throws Exception {
+			game.showNotification(enemy.getName()+"è stato sconfitto");
+			((GraphicCharacter) objects.get(enemy)).die();
+			return null;
+		}
+
 	}
 	
 	

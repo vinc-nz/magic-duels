@@ -64,5 +64,11 @@ public abstract class NetGame extends Game {
 			getFight().getPlayer(leavingId).getName()+" ha abbandonato la partita";
 		this.showMessage(leaveMessage,true);
 	}
+
+
+
+	public void notifyHostUnreachable() {
+		this.showMessage("problema di connessione", true);
+	}
 	
 }

@@ -1,9 +1,6 @@
 package input;
-import game.Event;
 import core.fight.Fight;
 import core.objects.Spell;
-import core.spells.FanBalls;
-import core.spells.Fireball;
 
 /**
  * Gives the control of a Character
@@ -87,12 +84,6 @@ public class CharacterController {
 	}
 	
 	
-	/**
-	 * notifies an error
-	 * @param e the type of error occured
-	 */
-	public void notifyError(Event e) {
-		fight.notifyProblem(e);
-	}
+	
 	
 }

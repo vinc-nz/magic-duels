@@ -1,7 +1,5 @@
 package net;
 
-import game.Game;
-
 import java.io.InputStream;
 
 

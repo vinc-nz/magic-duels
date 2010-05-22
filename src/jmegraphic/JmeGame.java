@@ -1,5 +1,7 @@
 package jmegraphic;
 
+import java.util.concurrent.Callable;
+
 import input.InputInterface;
 import jmegraphic.gamestate.CountdownState;
 import jmegraphic.gamestate.GraphicFight;
@@ -41,6 +43,14 @@ public abstract class JmeGame extends BaseGame {
 	
 	public void initFight(int numberOfPlayers) {
 		this.fight = Fight.create(numberOfPlayers);
+		this.fight.setPauseToggling(new Callable<Void>() {
+			
+			@Override
+			public Void call() throws Exception {
+				checkPause();
+				return null;
+			}
+		});
 	}
 
 	public Fight getFight() {
@@ -76,7 +86,6 @@ public abstract class JmeGame extends BaseGame {
 		CountdownState count = new CountdownState(fight, 3);
 		stateManager.attachChild(count);
 		count.setActive(true);
-		new FightStateChecker(this).start();
 	}
 
 	@Override

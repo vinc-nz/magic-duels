@@ -15,8 +15,8 @@ public class SingleGame extends Game {
 	public void init(String name, int numberOfPlayers) {
 		super.initFight(numberOfPlayers);
 		
-		for(int i=1; i<=numberOfPlayers; i++){
-			new Ia(new CharacterController(i+1)).start();
+		for(int i=2; i<=numberOfPlayers; i++){
+			new Ia(new CharacterController(i)).start();
 		}
 		
 		this.name = name;

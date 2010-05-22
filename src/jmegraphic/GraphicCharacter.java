@@ -20,6 +20,10 @@ import core.fight.Character;
 
 public class GraphicCharacter extends GraphicObject {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	static final short STAND=0;		//
 	static final short WALK=1;		//animazioni
 	static final short ATTACK=2;	//

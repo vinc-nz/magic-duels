@@ -3,8 +3,6 @@
  */
 package core.fight;
 
-import game.Event;
-
 import java.util.concurrent.Callable;
 
 import core.objects.AbstractObject;
@@ -16,8 +14,6 @@ import core.objects.Spell;
  *
  */
 public class Character extends MovingObject { 
-	
-	int id;
 	int life;
 	int mana;
 	int target;
@@ -25,6 +21,7 @@ public class Character extends MovingObject {
 	
 	Spell preparedSpell = null;
 	Callable<Void> deathEvent = null;
+	Callable<Void> winEvent = null;
 	
 	String name;
 
@@ -37,30 +34,7 @@ public class Character extends MovingObject {
 		this.target = 1;
 		this.setRadius(25);
 		this.materialize();
-		
-		this.deathEvent = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				Fight.getInstance().notifyProblem(Event.CHARACTER_DEAD);
-				return null;
-			}
-		};
 	}
-
-	
-	
-	public int getId() {
-		return id;
-	}
-
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
 
 	public int getLife() {
 		if (life>0)
@@ -77,11 +51,16 @@ public class Character extends MovingObject {
 	public boolean isPreparingSpell() {
 		return preparedSpell!=null;
 	}
+	
+	
+	
+	public boolean isAvailable() {
+		return life>0 && !isPreparingSpell();
+	}
 
 	public void applyDamage(int points) {
 		life -= points;
 		if (life<=0) {
-			destroy();
 			if (deathEvent!=null)
 				try {
 					deathEvent.call();
@@ -92,10 +71,6 @@ public class Character extends MovingObject {
 		}
 	}
 	
-	
-	public boolean inDead() {
-		return life<=0;
-	}
 	
 	
 	public boolean prepareSpell(Spell s) {
@@ -120,9 +95,6 @@ public class Character extends MovingObject {
 		return false;
 	}
 
-	public void setNotEnoughMana(boolean notEnoughMana) {
-		this.enoughMana = notEnoughMana;
-	}
 
 	public void castSpell() {
 		if (preparedSpell!=null) {
@@ -177,6 +149,26 @@ public class Character extends MovingObject {
 
 	public void atDeath(Callable<Void> deathEvent) {
 		this.deathEvent = deathEvent;
+	}
+	
+	
+	
+	public void atVictory(Callable<Void> winEvent) {
+		this.winEvent = winEvent;
+	}
+
+	public void win() {
+		if (winEvent!=null)
+			try {
+				winEvent.call();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+
+	public boolean isDead() {
+		return life<=0;
 	}
 	
 	

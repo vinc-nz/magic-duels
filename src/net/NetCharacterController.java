@@ -1,6 +1,5 @@
 package net;
 
-import core.fight.Fight;
 import input.CharacterController;
 
 public class NetCharacterController extends CharacterController {

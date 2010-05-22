@@ -10,6 +10,12 @@ import com.jme.system.DisplaySystem;
 
 public abstract class SceneElem extends Node {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	public SceneElem() {
 		// TODO Auto-generated constructor stub
 	}
