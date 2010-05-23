@@ -47,7 +47,7 @@ public class SigningTab extends MultiplayerMenuTabs {
 				if(SigningTab.this.mainMenu.lobbyClient.connect(ip, port))
 					SigningTab.this.checkPanel();
 				else
-					System.out.println("NON CONNESSO");
+					SigningTab.super.showWarning("Connessione Fallita!");
 			}
 				
 			});
@@ -88,9 +88,9 @@ public class SigningTab extends MultiplayerMenuTabs {
 			public void mouseClicked(MouseEvent e) {
 
 				if(SigningTab.this.mainMenu.lobbyClient.newUser(SigningTab.this.user.getText(), SigningTab.this.password.getText(), SigningTab.this.mail.getText()))
-					System.out.println("ISCRITTO!");
+					SigningTab.super.showWarning("Iscrizione Effettuata con Successo!");
 				else
-					System.out.println("NON ISCRITTO!");
+					SigningTab.super.showWarning("Iscrizione Fallita!");
 			}
 				
 			});

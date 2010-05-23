@@ -16,7 +16,8 @@ public class SlotComboBox extends JComboBox {
 	public SlotComboBox(LobbyHostedGame hostedGame, int index) {
 		
 		super(new String[] {Messages.OPEN, Messages.CLOSED, Messages.IA});
-
+		super.setOpaque(false);
+		
 		this.hostedGame = hostedGame;
 		this.index = index;
 

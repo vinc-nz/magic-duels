@@ -47,7 +47,7 @@ public class LogingTab extends MultiplayerMenuTabs {
 				if(LogingTab.this.mainMenu.lobbyClient.connect(ip, port))
 					LogingTab.this.checkPanel();
 				else
-					System.out.println("NON CONNESSO");
+					LogingTab.super.showWarning("Connessione Fallita!");
 			}
 				
 			});
@@ -87,10 +87,10 @@ public class LogingTab extends MultiplayerMenuTabs {
 				if(LogingTab.this.mainMenu.lobbyClient.logIn(nome, password))
 					LogingTab.this.mainMenu.switchTo(new Lobby(LogingTab.this.mainMenu));
 				else
-					System.out.println("NOT LOGGED");
+					LogingTab.super.showWarning("Login Fallito!");
 			}
 				
-			});
+		});
 		
 		super.add(centerPanel, BorderLayout.CENTER);
 		super.add(this.login, BorderLayout.SOUTH);

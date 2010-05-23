@@ -30,7 +30,9 @@ public class Lobby extends JPanel {
 	ChatAreaPanel chatAreaPanel;
 	WriteChatAreaPanel writeChatAreaPanel;
 	
-	JPanel multiplayerGame;
+	public JPanel centerPanel;
+	public JPanel rightPanel;
+	public JPanel multiplayerGame;
 	
 	public Lobby(MainMenu mainMenu) {
 		
@@ -45,7 +47,7 @@ public class Lobby extends JPanel {
 		
 		this.playerListPanel = new PlayerListPanel(this);
 		this.gameListPanel = new GameListPanel(this);
-		
+				
 		this.chatAreaPanel = new ChatAreaPanel();
 		this.writeChatAreaPanel = new WriteChatAreaPanel(this);
 		
@@ -54,24 +56,24 @@ public class Lobby extends JPanel {
 		
 		this.multiplayerGame.add(new MultiplayerGamePanel(this));
 		
-		JPanel centerPanel = new JPanel(new GridLayout(1, 2));
-		centerPanel.setOpaque(false);
+		this.centerPanel = new JPanel(new GridLayout(1, 2));
+		this.centerPanel.setOpaque(false);
 		
-		JPanel rightPanel = new JPanel(new GridLayout(2, 1));
+		this.rightPanel = new JPanel(new GridLayout(2, 1));
 		
 		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
 		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
 		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
 		
-		rightPanel.setBorder(compound);
-		rightPanel.setOpaque(false);
+		this.rightPanel.setBorder(compound);
+		this.rightPanel.setOpaque(false);
 	
-		rightPanel.add(this.gameListPanel);
-		rightPanel.add(this.multiplayerGame);
+		this.rightPanel.add(this.gameListPanel);
+		this.rightPanel.add(this.multiplayerGame);
 		
-		centerPanel.add(this.chatAreaPanel);
-		centerPanel.add(rightPanel);
-		super.add(centerPanel, BorderLayout.CENTER);
+		this.centerPanel.add(this.chatAreaPanel);
+		this.centerPanel.add(this.rightPanel);
+		super.add(this.centerPanel, BorderLayout.CENTER);
 		super.add(this.playerListPanel, BorderLayout.EAST);
 		super.add(this.writeChatAreaPanel, BorderLayout.SOUTH);
 		
@@ -105,6 +107,7 @@ public class Lobby extends JPanel {
 		return pane;
 	}
 	
+	public void refreshPlayerListPanel() { this.playerListPanel.refreshPlayerList(); }
 	public void refreshGameListPanel() { this.gameListPanel.refreshGameListArePanel(); }
 	
 	public void multiplayerGame()
@@ -119,11 +122,18 @@ public class Lobby extends JPanel {
 	
 	public void hostAGame() 
 	{ 
+		this.rightPanel.removeAll();
+		this.rightPanel.setLayout(new GridLayout(1, 1));
+		this.rightPanel.add(new HostedGamePanel(this));
+		this.rightPanel.repaint();
+		this.rightPanel.revalidate();
+		/*
 		this.multiplayerGame.removeAll();
 		this.multiplayerGame.setLayout(new FlowLayout());
 		this.multiplayerGame.add(new HostedGamePanel(this));
 		this.multiplayerGame.repaint();
 		this.multiplayerGame.revalidate();
+		*/
 	}
 
 	public void joinAGame()

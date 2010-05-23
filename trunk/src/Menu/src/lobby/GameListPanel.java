@@ -1,10 +1,12 @@
 package Menu.src.lobby;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,14 +32,15 @@ public class GameListPanel extends JScrollPane {
 		super.setOpaque(false);
 		super.getViewport().setOpaque(false);
 		super.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
+		super.setBorder(BorderFactory.createEmptyBorder(40, 5, 5, 5));
 		
 		this.graphicLobby = graphicLobby;
+		
+		this.initGameListArePanel();
 	}
 
 	public void initGameListArePanel()
 	{
-		if(this.gameTable != null)
-			return;
 		
 		Vector<String> header = new Vector<String>();
 		
@@ -58,23 +61,7 @@ public class GameListPanel extends JScrollPane {
 		this.gameTable = new JTable(this.gameTableModel);
 		this.gameTable.setOpaque(false);
 		
-		this.refreshGameListArePanel();
-		
-		super.setViewportView(this.gameTable);
-
-	}
-
-	public void refreshGameListArePanel()
-	{
-		
-		if(this.gameTable == null)
-			this.initGameListArePanel();
-			
 		this.gameTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//this.gameTable.setRowSelectionAllowed(true);
-		//this.gameTable.setColumnSelectionAllowed(false);
-		//this.gameTable.setCellSelectionEnabled(false);
-		
 		this.gameTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		
 			@Override
@@ -93,6 +80,13 @@ public class GameListPanel extends JScrollPane {
 		        }
 			}
 		});
+		
+		this.refreshGameListArePanel();
+		
+	}
+
+	public void refreshGameListArePanel()
+	{
 
 		List<HostedGameInfo> gameList = this.graphicLobby.lobbyClient.getHostedGameList();
 		
@@ -117,6 +111,14 @@ public class GameListPanel extends JScrollPane {
 
 		this.repaint();
 		this.revalidate();		
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		
+		Image img = new ImageIcon("src/Menu/data/lala3.gif").getImage(); 
+		
+		g.drawImage(img , super.getSize().width / 5, 0, img.getWidth(null), img.getHeight(null), null);
 	}
 	
 }
