@@ -28,6 +28,8 @@ public class Messages {
 	// GAMELIST>NOMEGAME1;IP1;PORTA1;NOMEGAME2;IP2;PORTA2;ECC
 	public static String GAMELIST = "GAMELIST>";
 	
+	public static String REFRESHLIST = "REFRESHLIST";
+	
 	//CREATE>NOMEGAME;NUMPLAYERS;NUMPORTA
 	public static String CREATE = "CREATE>";
 	
