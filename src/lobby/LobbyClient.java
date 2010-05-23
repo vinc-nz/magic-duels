@@ -20,8 +20,6 @@ public class LobbyClient extends Thread {
 	ObjectOutputStream out;
  	ObjectInputStream in;
  	
- 	OnlinePlayer onlinePlayer;
- 	
  	List<String> players;
  	List<HostedGameInfo> hostedGameList;
  	
@@ -41,7 +39,6 @@ public class LobbyClient extends Thread {
 	public static short SERVER_FAILED = 1;
 	
 	public LobbyClient() {
-		this.onlinePlayer = null;
 		this.hostedGame = null;
 		this.joinedGame = null;
 	}
@@ -131,7 +128,6 @@ public class LobbyClient extends Thread {
 		this.sendMessage(Messages.LOGIN + nome + ";" + password);
 		if(this.readMessage().equals(Messages.LOGINOK))
 		{
-			this.onlinePlayer = new OnlinePlayer(nome);
 			this.start();
 			return true;
 		} else {
@@ -156,9 +152,16 @@ public class LobbyClient extends Thread {
 	@Override
 	public void run() {
 		
+		while(this.graphicLobby == null ||this.graphicLobby.multiplayerGame == null)
+			try {
+				Thread.sleep(501);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		
 		String message = null;
 		
-		this.sendMessage(Messages.LOBBYSTARTED);
+		this.sendMessage(Messages.REFRESHLIST);
 		
 		while(message == null || !message.equals(Messages.CLOSE))
 		{					
@@ -222,6 +225,7 @@ public class LobbyClient extends Thread {
 	public void setClientList(String message)
 	{
 		this.players = LobbyClient.createClientList(message);
+		this.graphicLobby.refreshPlayerListPanel();
 	}
 	
 	public void setGameList(String message)
@@ -270,6 +274,11 @@ public class LobbyClient extends Thread {
 		return gameList;
 	}
 	
+	public void requestListRefresh()
+	{
+		this.sendMessage(Messages.REFRESHLIST);
+	}
+	
 	public void createGame(String gameName, int numSlots, int numPorta)
 	{
 		String msg = Messages.CREATE;
@@ -279,7 +288,7 @@ public class LobbyClient extends Thread {
 
 		this.hostedGame = new LobbyHostedGame(this, gameName, numPorta, numSlots);
 
-		this.sendMessage(msg);		
+		this.sendMessage(msg);
 	}
 	
 	public void tryJoiningGame(String gameName, String ip, int porta)

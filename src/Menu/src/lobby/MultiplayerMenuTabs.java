@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -24,8 +25,8 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 	
 	JButton connect;
 	
-	public MultiplayerMenuTabs(MainMenu mainMenu) {
-	
+	public MultiplayerMenuTabs(MainMenu mainMenu)
+	{
 		this.mainMenu = mainMenu;
 		
 		this.serverIp_ = new JLabel("IP Server:");
@@ -36,9 +37,10 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 		
 		this.connect = new JButton("Connettiti al Server!");
 		
-		this.checkPanel();
-				
+		this.checkPanel();		
 	}
+	
+	public void showWarning(String warning) { JOptionPane.showMessageDialog(mainMenu, warning, "Magic Duels Game", JOptionPane.WARNING_MESSAGE); }
 	
 	public abstract void checkPanel();
 

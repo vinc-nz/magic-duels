@@ -3,16 +3,12 @@ package Menu.src.lobby;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -35,13 +31,11 @@ public class MultiplayerGamePanel extends JPanel{
 	public MultiplayerGamePanel(Lobby graphicLobby) {
 		super(new FlowLayout(FlowLayout.CENTER));
 		super.setOpaque(false);
-		super.setBorder(BorderFactory.createEmptyBorder(30, 5, 5, 5));
 		
 		this.graphicLobby = graphicLobby;
 
 		this.newGameName = new JTextField();
 		this.newGamePortNumber = new JTextField();
-		this.newGameName.setDo
 		String []slots = {"1", "2", "3", "4", "5", "6", "7", "8"};
 		this.newGameSlotNumber = new JComboBox(slots);
 		
@@ -55,9 +49,15 @@ public class MultiplayerGamePanel extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 
 				String gameName = MultiplayerGamePanel.this.newGameName.getText();
-				int numSlot = Integer.parseInt((String)MultiplayerGamePanel.this.newGameSlotNumber.getSelectedItem());
-				int numPorta = Integer.parseInt(MultiplayerGamePanel.this.newGamePortNumber.getText());
-				MultiplayerGamePanel.this.graphicLobby.lobbyClient.createGame(gameName, numSlot, numPorta);
+				if(gameName.trim().equals("")){ MultiplayerGamePanel.this.graphicLobby.showWarning("Non hai inserito un nome per la partita!"); return; }
+				try{
+					int numSlot = Integer.parseInt((String)MultiplayerGamePanel.this.newGameSlotNumber.getSelectedItem());
+					int numPorta = Integer.parseInt(MultiplayerGamePanel.this.newGamePortNumber.getText());
+					MultiplayerGamePanel.this.graphicLobby.lobbyClient.createGame(gameName, numSlot, numPorta);
+				} catch (NumberFormatException exp) {
+					MultiplayerGamePanel.this.graphicLobby.showWarning("Il Numero porta non è valido!"); return;
+				}
+				
 			}
 				
 		});
@@ -84,7 +84,7 @@ public class MultiplayerGamePanel extends JPanel{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				MultiplayerGamePanel.this.graphicLobby.lobbyClient.requestListRefresh();																
 			}
 				
 		});
@@ -99,8 +99,8 @@ public class MultiplayerGamePanel extends JPanel{
 		this.newGamePortNumber.setOpaque(false);
 		
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 5, 5, 5);
+		c.fill = GridBagConstraints.BOTH;
+		//c.insets = new Insets(5, 5, 5, 5);
 		c.ipadx = 5;
 		c.ipady = 5;
 		
@@ -113,7 +113,7 @@ public class MultiplayerGamePanel extends JPanel{
 		panel.add(this.joinGame, c);
 		
 		c.gridx = 2;
-		c.gridy = 0;		
+		c.gridy = 0;
 		panel.add(this.refreshLists, c);
 		
 		c.gridx = 0;
@@ -140,14 +140,6 @@ public class MultiplayerGamePanel extends JPanel{
 		borderTitle.setTitleFont( new Font("Arial", Font.BOLD, 18));
 		
 		return borderTitle;
-	}
-	
-	@Override
-	public void paintComponent(Graphics g) {
-		
-		Image img = new ImageIcon("src/Menu/data/lala3.gif").getImage(); 
-		
-		g.drawImage(img , 0, 0, img.getWidth(null), img.getHeight(null), null);
 	}
 	
 }

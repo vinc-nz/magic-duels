@@ -60,7 +60,6 @@ public class ChatAreaPanel extends JScrollPane {
 		try {
 			this.chat.insertString( 0, "Benvenuto su Magic Duels Online!!\n", welcomeMessage );
 		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -96,11 +95,13 @@ public class ChatAreaPanel extends JScrollPane {
 	    this.chatMessageStyle = this.chat.addStyle( "chatMessage", def );
 	    StyleConstants.setSuperscript( this.chatMessageStyle, true );
 	    StyleConstants.setFontSize( this.chatMessageStyle, 25 );
+	    StyleConstants.setForeground(this.chatMessageStyle, Color.black);
 	    StyleConstants.setBold( this.chatMessageStyle, false );
 	    
 	    this.playerChatMessageStyle = this.chat.addStyle( "playerChatMessageStyle", def );
 	    StyleConstants.setSuperscript( this.playerChatMessageStyle, true );
 	    StyleConstants.setFontSize( this.playerChatMessageStyle, 25 );
+	    StyleConstants.setForeground(this.playerChatMessageStyle, Color.black);
 	    StyleConstants.setBold( this.playerChatMessageStyle, true );
 	}
 	

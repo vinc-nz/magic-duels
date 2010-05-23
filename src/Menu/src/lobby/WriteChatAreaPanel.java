@@ -40,7 +40,7 @@ public class WriteChatAreaPanel extends JPanel {
 		this.chatArea.setOpaque(false);
 
 		this.chatArea.setPreferredSize(new Dimension(super.getPreferredSize()));
-		
+
 		this.chatArea.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent arg0) {}		
