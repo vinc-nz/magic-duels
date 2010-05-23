@@ -58,7 +58,7 @@ public class Connection extends Thread {
 				login(message);
 			
 			if(message.startsWith(Messages.NEWUSER))
-				if(Server.newUser(message, this.player.getLocalAddress()))
+				if(Server.newUser(message, this.player.getInetAddress()))
 					this.sendMessage(Messages.NEWUSEROK);
 				else
 					this.sendMessage(Messages.NEWUSERFAILED);
@@ -69,7 +69,6 @@ public class Connection extends Thread {
 		
 		if(this.utente != null)
 		{
-			this.initLobby();
 			
 			while(!message.equals(Messages.CLOSE) && !message.equals(Messages.KILL))
 			{				
@@ -81,6 +80,9 @@ public class Connection extends Thread {
 			
 				else if(message.startsWith(Messages.CHAT))
 					this.server.sendChatMessage(this.utente.getNome(), message.substring(Messages.CHAT.length()));
+				
+				else if(message.equals(Messages.REFRESHLIST))
+					this.initLobby();
 				
 				else if(message.startsWith(Messages.CREATE))
 					this.newGame(message);
@@ -113,12 +115,21 @@ public class Connection extends Thread {
 	{
 		String []logInfo = (msg.substring(Messages.LOGIN.length())).split(";");
 		
+		if(this.server.isLogged(logInfo[0]))
+		{
+			this.sendMessage(Messages.LOGINFAILED);
+			return;
+		}
+		
 		this.utente = DBFunctions.logIn(logInfo[0], logInfo[1], this.player.getInetAddress());
 		if(this.utente == null)
 			this.sendMessage(Messages.LOGINFAILED);
 		else
 		{
-			this.server.players.remove(this.player.getLocalAddress());
+			this.server.players.remove(this.player.getInetAddress().toString());
+			
+			// TODO: controllare l'utente è già loggato
+			
 			this.server.players.put(utente.getNome(), this);
 			this.sendMessage(Messages.LOGINOK);
 		}
@@ -169,11 +180,8 @@ public class Connection extends Thread {
 	
 	public void initLobby()
 	{
-		if(this.readMessage().equals(Messages.LOBBYSTARTED))
-		{
-			this.sendMessage(Server.getClientList(this.server));
-			this.sendMessage(Server.getGameList(this.server));
-		}
+		this.sendMessage(Server.getClientList(this.server));
+		this.sendMessage(Server.getGameList(this.server));
 	}
 
 	public void newGame(String msg)

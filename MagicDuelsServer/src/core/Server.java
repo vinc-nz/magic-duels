@@ -4,17 +4,17 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class Server extends Thread{
 
 	ServerSocket serverSocket;
-	//List<Connection> players;
 	HashMap<String, Connection> players;
 	HashMap<String, HostedGame> hostedGames;
 	
-	public Server(int porta) {
+	public Server(int porta) throws UnknownHostException {
 	
 		try {
 			this.serverSocket = new ServerSocket(porta);
@@ -23,7 +23,8 @@ public class Server extends Thread{
 			System.out.println("Impossibile aprire una connessione!");
 		}
 		
-		//this.players = new LinkedList<Connection>();
+		System.out.println("ADDRESS: " + InetAddress.getLocalHost().getHostAddress());
+		
 		this.players = new HashMap<String, Connection>();
 		this.hostedGames = new HashMap<String, HostedGame>();
 		
@@ -36,7 +37,6 @@ public class Server extends Thread{
 		{
 			Connection connection = this.players.get(iterator.next());	
 			connection.sendMessage(Messages.CHAT + sender.length() + ";" + sender + msg);
-			
 		}	
 	}
 
@@ -45,7 +45,7 @@ public class Server extends Thread{
 		this.removeHostedGame(player.hostedGame);
 		this.players.remove(player.utente.getNome());
 		
-		// BISOGNA AVVISARE GLI ALTRI DELLA NUOVA LISTA DI GAMES E DI PLAYERS
+		this.refreshLists();
 	}
 	
 	public void removeHostedGame(HostedGame hostedGame)
@@ -61,6 +61,9 @@ public class Server extends Thread{
 				}
 			}
 			this.hostedGames.remove(hostedGame.gameName);
+		
+			this.refreshGameList();
+
 		}		
 	}
 	
@@ -75,7 +78,7 @@ public class Server extends Thread{
 				System.out.println("ATTENDO NUOVA CONNESSIONE");
 				connection = this.serverSocket.accept();
 				System.out.println("NEW CONNECTION: " + connection.getInetAddress());
-				this.players.put(connection.getLocalAddress().toString(), new Connection(connection, this));
+				this.players.put(connection.getInetAddress().toString(), new Connection(connection, this));
 
 			} catch (IOException e) {
 				System.out.println("Impossibile accettare la connessione!");
@@ -83,6 +86,36 @@ public class Server extends Thread{
 			
 		}
 	}
+
+	public void refreshLists()
+	{
+		for (Iterator iterator = this.players.keySet().iterator(); iterator.hasNext();)
+		{
+			Connection conn = this.players.get((String) iterator.next());
+			conn.sendMessage(Server.getClientList(this));
+			conn.sendMessage(Server.getGameList(this));
+		}
+	}
+	
+	public void refreshGameList()
+	{
+		for (Iterator iterator = this.players.keySet().iterator(); iterator.hasNext();)
+		{
+			Connection conn = this.players.get((String) iterator.next());
+			conn.sendMessage(Server.getGameList(this));
+		}	
+	}
+	
+	public void refreshClientList()
+	{
+		for (Iterator iterator = this.players.keySet().iterator(); iterator.hasNext();)
+		{
+			Connection conn = this.players.get((String) iterator.next());
+			conn.sendMessage(Server.getClientList(this));
+		}	
+	}
+	
+	public boolean isLogged(String nomeUtente){ return this.players.containsKey(nomeUtente); }
 	
 	public static String getClientList(Server server)
 	{
