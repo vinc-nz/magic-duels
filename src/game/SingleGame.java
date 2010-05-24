@@ -27,11 +27,11 @@ public class SingleGame extends Game {
 		return new CharacterController(1);
 	}
 	
+	
 	@Override
-	protected void initGame() {
-		super.initGame();
+	public void startFight() {
 		this.getFight().getPlayer(1).setName(name);
-		this.startFight();
+		super.startFight();
 	}
 
 }
