@@ -34,7 +34,7 @@ public class HostedGame {
 	
 	// TODO: aggiunta/rimozione giocatore : syncronized
 	
-	public synchronized boolean joinGame(Connection player)
+	public synchronized int joinGame(Connection player)
 	{
 		
 		for (Iterator iterator = this.slots.iterator(); iterator.hasNext();) {
@@ -47,11 +47,42 @@ public class HostedGame {
 				
 				System.out.println("NUMERO UMANI: " + this.numHumanPlayers);
 				
-				return true;
+				return slots.indexOf(slot);
 			}
 			
 		}
-		return false;
+		return -1;
+	}
+	
+	public synchronized void leaveGame(String playerName)
+	{
+		int slotIndex = -1;
+		
+		for (Iterator iterator = this.slots.iterator(); iterator.hasNext();)
+		{
+			HostedGameSlot slot = (HostedGameSlot) iterator.next();
+			if(slot.isHuman())
+				if(slot.human.utente.getNome().equals(playerName))
+				{
+					slot.changeSlotState(Messages.OPEN);
+					slotIndex = this.slots.indexOf(slot);
+					break;
+				}
+		}
+		
+		if(slotIndex != -1)
+		{
+			String message = Messages.CHANGESLOTTYPE;
+			message += String.valueOf(slotIndex) + ";";
+			message += Messages.OPEN;
+
+			for (Iterator iterator = this.slots.iterator(); iterator.hasNext();)
+			{
+				HostedGameSlot slot = (HostedGameSlot) iterator.next();
+				if(slot.isHuman())
+					slot.human.sendMessage(message);
+			}
+		}		
 	}
 	
 	public String getSlotMessageInfo()
@@ -73,7 +104,12 @@ public class HostedGame {
 		
 		if(slot.type.equals(parameter[1])) return;
 		
-		if(slot.isHuman()) this.numHumanPlayers--;
+		if(slot.isHuman())
+		{
+			slot.human.sendMessage(Messages.PLAYERKICKED);
+			this.numHumanPlayers--;
+		}
+		
 		if(slot.isIA()) this.numIaPlayers--;
 		
 		if(parameter[1].equals(Messages.IA)) this.numIaPlayers++;
