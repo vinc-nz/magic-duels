@@ -2,8 +2,8 @@ package lobby;
 
 public class LobbyHostedGameSlot {
 	
-	String type;
-	String human;
+	public String type;
+	public String human;
 	
 	public LobbyHostedGameSlot() {
 	

@@ -91,12 +91,18 @@ public class MultiplayerGamePanel extends JPanel{
 		
 		this.newGameName.setBorder(MultiplayerGamePanel.createTitledBorder("Nome Partita"));
 		this.newGameName.setOpaque(false);
+		this.newGameName.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		this.newGameName.setForeground(Color.BLACK);
 		
 		this.newGameSlotNumber.setBorder(MultiplayerGamePanel.createTitledBorder("Numero Giocatori"));
 		this.newGameSlotNumber.setOpaque(false);
+		this.newGameSlotNumber.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		this.newGameSlotNumber.setForeground(Color.BLACK);
 		
 		this.newGamePortNumber.setBorder(MultiplayerGamePanel.createTitledBorder("Numero Porta"));
 		this.newGamePortNumber.setOpaque(false);
+		this.newGamePortNumber.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		this.newGamePortNumber.setForeground(Color.BLACK);
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;

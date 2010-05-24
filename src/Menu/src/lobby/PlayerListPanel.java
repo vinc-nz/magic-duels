@@ -20,11 +20,12 @@ public class PlayerListPanel extends JScrollPane {
 		super();
 		super.setOpaque(false);
 		super.getViewport().setOpaque(false);
-		this.graphicLobby = graphicLobby;
+		super.setBorder(LobbyBorderFactory.createPanelBorder());
+		super.setPreferredSize(new Dimension(100, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
 		
+		this.graphicLobby = graphicLobby;
 		this.refreshPlayerList();
 		
-		super.setPreferredSize(new Dimension(100, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
 		super.repaint();
 		super.revalidate();
 	}

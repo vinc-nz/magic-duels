@@ -29,6 +29,8 @@ public class ChatAreaPanel extends JScrollPane {
 		super.setOpaque(false);
 		super.getViewport().setOpaque(false);
 		super.setPreferredSize(new Dimension(400, 400));
+		super.setBorder(LobbyBorderFactory.createPanelBorder());
+
 		this.initChatAreaPanel();
 		
 		super.repaint();
@@ -38,16 +40,12 @@ public class ChatAreaPanel extends JScrollPane {
 	
 	public void initChatAreaPanel()
 	{
-
-		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
-		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
-		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
 		
 		JTextPane editorPane = new JTextPane();
 		editorPane.setEditable(false);
 		editorPane.setPreferredSize(new Dimension(400, 400));
 		editorPane.setOpaque(false);
-		editorPane.setBorder(compound);
+		editorPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 30, 10));
 		
 		this.chat = editorPane.getStyledDocument();
 		
@@ -82,6 +80,8 @@ public class ChatAreaPanel extends JScrollPane {
 			
 			JScrollBar scrollBar = super.getVerticalScrollBar();
 			scrollBar.setValue(scrollBar.getMaximum());
+			scrollBar.revalidate();
+			scrollBar.repaint();
 
 		} catch (BadLocationException e) {
 			e.printStackTrace();
@@ -94,13 +94,15 @@ public class ChatAreaPanel extends JScrollPane {
 		
 	    this.chatMessageStyle = this.chat.addStyle( "chatMessage", def );
 	    StyleConstants.setSuperscript( this.chatMessageStyle, true );
-	    StyleConstants.setFontSize( this.chatMessageStyle, 25 );
+	    StyleConstants.setFontFamily(this.chatMessageStyle, "Comic Sans MS");
+	    StyleConstants.setFontSize( this.chatMessageStyle, 30 );
 	    StyleConstants.setForeground(this.chatMessageStyle, Color.black);
 	    StyleConstants.setBold( this.chatMessageStyle, false );
 	    
 	    this.playerChatMessageStyle = this.chat.addStyle( "playerChatMessageStyle", def );
 	    StyleConstants.setSuperscript( this.playerChatMessageStyle, true );
-	    StyleConstants.setFontSize( this.playerChatMessageStyle, 25 );
+	    StyleConstants.setFontFamily(this.playerChatMessageStyle, "Comic Sans MS");
+	    StyleConstants.setFontSize( this.playerChatMessageStyle, 30 );
 	    StyleConstants.setForeground(this.playerChatMessageStyle, Color.black);
 	    StyleConstants.setBold( this.playerChatMessageStyle, true );
 	}

@@ -16,6 +16,8 @@ import Menu.src.lobby.Lobby;
 
 public class LobbyClient extends Thread {
 	
+	String playerName;
+	
 	Socket connection;
 	ObjectOutputStream out;
  	ObjectInputStream in;
@@ -23,8 +25,8 @@ public class LobbyClient extends Thread {
  	List<String> players;
  	List<HostedGameInfo> hostedGameList;
  	
- 	LobbyHostedGame hostedGame;
- 	LobbyJoinedGame joinedGame;
+ 	public LobbyHostedGame hostedGame;
+ 	public LobbyJoinedGame joinedGame;
  	
  	// Grafica della Lobby
  	Lobby graphicLobby;
@@ -128,6 +130,7 @@ public class LobbyClient extends Thread {
 		this.sendMessage(Messages.LOGIN + nome + ";" + password);
 		if(this.readMessage().equals(Messages.LOGINOK))
 		{
+			this.playerName = nome;
 			this.start();
 			return true;
 		} else {
@@ -168,6 +171,8 @@ public class LobbyClient extends Thread {
 			
 			message = this.readMessage();
 			
+			System.out.println("RICEVO " + message);
+			
 			if(message.startsWith(Messages.CLIENTLIST))
 				this.setClientList(message);
 			
@@ -178,14 +183,17 @@ public class LobbyClient extends Thread {
 				this.writeChatMessage(message);
 			
 			else if(message.startsWith(Messages.JOINOK))
-				this.joinGame(message);
-				
+				if(this.hostedGame == null)
+					this.joinGame(message);
+				else
+					this.joinSlot(message);
+			
 			else if(message.equals(Messages.CREATEOK))
 				this.graphicLobby.hostAGame();
 			
 			else if(message.equals(Messages.CREATEFAILED))
-				System.out.println("NON CREATA");
-				
+				this.hostedGame = null;
+
 			else if(message.startsWith(Messages.CHANGESLOTTYPE))
 				this.changeJoinedGameSlotType(message);
 			
@@ -199,10 +207,8 @@ public class LobbyClient extends Thread {
 				this.killGame(message);
 			
 			else if(message.startsWith(Messages.PLAYERKICKED))
-				System.out.println("SEI STATO BANNATO!!");
+				this.playerKicked();
 			
-			System.out.println("RICEVO " + message);
-
 		}
 		
 		this.closeConnection();
@@ -281,13 +287,15 @@ public class LobbyClient extends Thread {
 	
 	public void createGame(String gameName, int numSlots, int numPorta)
 	{
+		this.hostedGame = new LobbyHostedGame(this, gameName, numPorta, numSlots);
+		
 		String msg = Messages.CREATE;
 		msg += gameName + ";";
 		msg += String.valueOf(numSlots) + ";";
 		msg += String.valueOf(numPorta) + ";";
 
-		this.hostedGame = new LobbyHostedGame(this, gameName, numPorta, numSlots);
-
+		System.out.println("HOSTED GAME CREATO");
+		
 		this.sendMessage(msg);
 	}
 	
@@ -317,6 +325,24 @@ public class LobbyClient extends Thread {
 		
 		this.joinedGame.changeSlotType(msg);
 		this.graphicLobby.joinAGame();
+	}
+	
+	public void joinSlot(String msg)
+	{
+		String []parameter = msg.substring(Messages.JOINOK.length()).split(";");
+
+		this.hostedGame.joinSlot(Integer.parseInt(parameter[0]), parameter[1]);
+	}
+	
+	public void leaveSlot()
+	{
+		this.sendMessage(Messages.LEAVESLOT);
+	}
+	
+	public void playerKicked()
+	{
+		this.graphicLobby.showWarning("Sei Stato Cacciato dalla Partita!");
+		this.graphicLobby.multiplayerGame();
 	}
 	
 	public void killGame(String msg)
