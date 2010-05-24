@@ -64,20 +64,20 @@ public class Ia extends Thread{
 		
 		while(!characterController.getFight().finished){
 			
-			//if(rand.nextInt(10) == 3)
-				//intelligence();
-				this.moveSpeed();
+			if(rand.nextInt(10) == 3)
+				intelligence();
+				//this.moveSpeed();
 				//characterController.move("left");
-			//else
-				//rambo();
-				try {
-					sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				characterController.castSpell(FanBalls.class);
-				
+			else
+				rambo();
+//				try {
+//					sleep(2000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				characterController.castSpell(FanBalls.class);
+//				
 				
 			
 		}

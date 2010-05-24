@@ -34,6 +34,11 @@ public class ClientGame extends NetGame {
 		this.buildListening();
 	}
 	
+	@Override
+	public int getLoadingSteps() {
+		return super.getLoadingSteps() + 2;
+	}
+	
 	private int waitResponse() throws IOException {
 		InputStreamReader reader = new InputStreamReader(channel.getInputStream());
 		BufferedReader in = new BufferedReader(reader);
@@ -95,17 +100,19 @@ public class ClientGame extends NetGame {
 		out.writeBytes(trigger+"\n");
 	}
 	
+	
 	@Override
-	protected void initGame() {
-		super.initGame();
+	public void startFight() {
 		try {
 			this.sayReady();
+			this.getLoading().increment("waiting for other players");
 			this.waitServer();
+			this.getLoading().increment();
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		this.startFight();
+		super.startFight();
 	}
 	
 	

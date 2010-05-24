@@ -3,7 +3,6 @@ package jmegraphic;
 import com.jme.math.FastMath;
 import com.jme.math.Vector3f;
 import com.jme.renderer.Camera;
-import com.jme.renderer.Renderer;
 import com.jme.system.DisplaySystem;
 
 
@@ -16,21 +15,13 @@ public class CustomCamera {
 	
 	GraphicCharacter focused;  //il personaggio da inquadrare
 	GraphicObject target;		//avversario
-	Renderer renderer;
+	
 	
 	static final float DISTANCE = 300;
 	
 	
 	public CustomCamera() {
-		DisplaySystem display = DisplaySystem.getDisplaySystem();
-		this.renderer = display.getRenderer();
-		camera = renderer.createCamera(display.getWidth(), 
-													display.getHeight());
-		float ratio = (float)display.getWidth()/(float)display.getHeight();
-		camera.setFrustumPerspective(45.0f, ratio, 1, 5000);
-		camera.update();
-		
-		renderer.setCamera(camera);
+		camera = DisplaySystem.getDisplaySystem().getRenderer().getCamera();
 	}
 	
 	
