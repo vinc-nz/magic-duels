@@ -21,9 +21,12 @@ public abstract class Game extends JmeGame {
 
 	@Override
 	protected void initSystem() {
-		if (mainMenu!=null)
-			this.creanteDisplay(mainMenu.WIDTH, mainMenu.HEIGHT, mainMenu.fullscreen);
-		else super.initSystem();
+		if (mainMenu!=null) {
+			settings.setWidth(mainMenu.WIDTH);
+			settings.setHeight(mainMenu.HEIGHT);
+			settings.setFullscreen(mainMenu.fullscreen);
+		}
+		super.initSystem();
 	}
 	
 

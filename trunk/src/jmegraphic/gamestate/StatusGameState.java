@@ -21,7 +21,10 @@ public class StatusGameState extends BasicGameState {
 		this.game = game;
 		this.fight = game.getFight();
 		this.player = fight.getPlayer(playerId);
-		
+
+	}
+	
+	public void init() {
 		playerBars = new StatusBars(player,true,true,false);
 		playerBars.setPosition(HudObject.POSITION_BOTTOM_LEFT);
 		getRootNode().attachChild(playerBars);
@@ -29,7 +32,6 @@ public class StatusGameState extends BasicGameState {
 		enemyBar = new StatusBars(fight.getEnemy(player), true, false, true);
 		enemyBar.setPosition(HudObject.POSITION_UPPER_RIGHT);
 		getRootNode().attachChild(enemyBar);
-		
 	}
 	
 	@Override

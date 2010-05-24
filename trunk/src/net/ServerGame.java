@@ -25,7 +25,10 @@ public class ServerGame extends NetGame {
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	@Override
+	public int getLoadingSteps() {
+		return super.getLoadingSteps() + 2;
+	}
 	
 
 	public void init(String name, int humanPlayers, int comPlayers, int port)
@@ -123,17 +126,19 @@ public class ServerGame extends NetGame {
 		}
 	}
 	
+	
 	@Override
-	protected void initGame() {
-		super.initGame();
+	public void startFight() {
 		try {
+			this.getLoading().increment("waiting for other players");
 			this.waitClients();
+			this.getLoading().increment();
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
 		this.getFight().setNames(names);
-		this.startFight();
+		super.startFight();
 	}
 
 

@@ -21,12 +21,6 @@ public class TestGame extends JmeGame {
 		};
 	}
 	
-	@Override
-	protected void initGame() {
-		super.initGame();
-		this.startFight();
-	}
-	
 	public static void main(String[] args) {
 		TestGame game = new TestGame();
 		game.setConfigShowMode(ConfigShowMode.AlwaysShow);

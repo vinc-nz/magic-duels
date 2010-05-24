@@ -15,6 +15,7 @@ import jmegraphic.JmeGame;
 import utils.ExplosionFactory;
 
 import com.jme.scene.Spatial;
+import com.jme.util.GameTaskQueueManager;
 import com.jmex.game.state.BasicGameState;
 
 import core.fight.Character;
@@ -46,14 +47,16 @@ public class GraphicFight extends BasicGameState {
 		objects = new ObjectMap();
 	}
 	
-	
+	public int getLoadingSteps() {
+		return fight.numberOfPlayers() + 3;
+	}
 	
 
 	public void initGame(int playerId) {
 		camera = new CustomCamera();
 		
-		
 		for (int i=1;i<=fight.numberOfPlayers();i++) {
+			game.getLoading().increment("loading players");
 			Character player = fight.getPlayer(i);
 			GraphicCharacter graphicCharacter = new GraphicCharacter(player);
 			this.objects.put(player, graphicCharacter);
@@ -80,13 +83,26 @@ public class GraphicFight extends BasicGameState {
 				});
 			} else new EnemyDeath(player);
 		}
+		game.getLoading().increment("initializing particle system");
 	    
 		ExplosionFactory.warmup();
 		
-		arena = new Arena();
-		this.attach(arena);
-		arena.update(0);
+		GameTaskQueueManager.getManager().update(new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				game.getLoading().increment("building environment");
+				arena = new Arena();
+				attach(arena);
+				arena.update(0);
+				game.getLoading().increment();
+				return null;
+			}
+		});
+		
 		//uptime.start(UPTIME);
+		
+		this.setActive(true);
 	}
 
 	
@@ -112,6 +128,8 @@ public class GraphicFight extends BasicGameState {
 	protected void updateCamera() {
 		Character enemy = fight.getEnemy(focused.getCoreCharacter());
 		GraphicObject target = objects.get(enemy);
+//		GameState camera = GameStateManager.getInstance().getChild("camera");
+//		((ThirdPersonCameraGameState) camera).lookAt(target);
 		camera.setTarget(target);
 		camera.update();
 	}
