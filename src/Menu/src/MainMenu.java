@@ -62,7 +62,7 @@ public class MainMenu extends JFrame {
 		WIDTH = dm.getWidth();
 		HEIGHT = dm.getHeight();
 		
-		//fullscreen( displayModes.get( WIDTH + "x" + HEIGHT ) );
+		fullscreen( displayModes.get( WIDTH + "x" + HEIGHT ) );
 		
 		this.lobbyClient = new LobbyClient();
 		this.playMote = new PlayerMote();
@@ -71,7 +71,7 @@ public class MainMenu extends JFrame {
 		colonna = new MP3("src/Menu/data/colonna.mp3");
 		ok = new MP3("src/Menu/data/ok.mp3");
 		error = new MP3("src/Menu/data/Error.mp3");
-		//colonna.play();
+		colonna.play();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -90,9 +90,9 @@ public class MainMenu extends JFrame {
 				playMote, this);
 	    
 		switchTo( panel );
-		size = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(size);
-		setSize(size);
+//		size = Toolkit.getDefaultToolkit().getScreenSize();
+//		setPreferredSize(size);
+//		setSize(size);
 		setVisible(true);
 	}
 

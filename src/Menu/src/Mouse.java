@@ -1,9 +1,12 @@
 package Menu.src;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -161,6 +164,7 @@ public class Mouse extends MouseAdapter{
 				mainMenu.error.play();
 				 String message = "                 Wiimote not connected\n" +
 				 		"Please go to options and connect the Wiimote\n";
+
 				    JOptionPane.showMessageDialog(new JFrame(), message, "Error",
 				        JOptionPane.ERROR_MESSAGE);
 				  }
