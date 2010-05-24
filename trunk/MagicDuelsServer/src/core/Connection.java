@@ -13,6 +13,7 @@ public class Connection extends Thread {
 	
 	Socket player;
 	Server server;
+	
 	ObjectOutputStream out;
 	ObjectInputStream in;
 
@@ -90,6 +91,9 @@ public class Connection extends Thread {
 				else if(message.startsWith(Messages.JOIN))
 					this.joinGame(message);
 				
+				else if(message.equals(Messages.LEAVESLOT))
+					this.leaveSlot();
+				
 				else if(message.startsWith(Messages.GAMEKILLED))
 					this.server.removeHostedGame(this.hostedGame);
 				
@@ -158,6 +162,7 @@ public class Connection extends Thread {
 			
 		} catch(IOException e) {
 			System.out.println("Errore durante la ricezione del messaggio");
+			return Messages.KILL;
 		} catch (ClassNotFoundException e) {
 			System.out.println("Classe non trovata!");
 		}
@@ -202,21 +207,25 @@ public class Connection extends Thread {
 		String gameName = msg.substring(Messages.JOIN.length());
 		
 		HostedGame hostedGame = this.server.hostedGames.get(gameName);
-		
 		if(hostedGame == null) this.sendMessage(Messages.JOINFAILED);
-		
-		if(!hostedGame.joinGame(this)) this.sendMessage(Messages.JOINFAILED);
+		int slotIndex = hostedGame.joinGame(this); 
+		if(slotIndex == -1) this.sendMessage(Messages.JOINFAILED);
 		
 		String message = Messages.JOINOK;
 		message += hostedGame.getSlotMessageInfo();
-	
 		this.sendMessage(message);
+
+		message = Messages.JOINOK;
+		message += slotIndex + ";";
+		message += this.utente.getNome() + ";";
+		hostedGame.host.sendMessage(message);
+		
 		this.joinedGame = hostedGame;
 	}
 	
-	public void changeSlotState(int slotIndex, String state)
+	public void leaveSlot()
 	{
-		this.hostedGame.slots.get(slotIndex).changeSlotState(state);
+		this.joinedGame.leaveGame(this.utente.getNome());
 	}
 	
 }
