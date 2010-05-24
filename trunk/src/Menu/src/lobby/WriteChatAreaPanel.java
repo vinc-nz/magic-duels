@@ -2,32 +2,28 @@ package Menu.src.lobby;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.border.Border;
+import javax.swing.JTextField;
 
 public class WriteChatAreaPanel extends JPanel {
 
 	Lobby graphicLobby;
 	
-	JTextArea chatArea;
+	JTextField chatArea;
 	
 	public WriteChatAreaPanel(Lobby lobby) {
 
-		super();
+		super(new FlowLayout(FlowLayout.CENTER));
 		super.setOpaque(false);
-		super.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(), 150));
-		
-		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
-		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
-		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
-		
-		super.setBorder(compound);
+		super.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(), 150));		
+		super.setBorder(LobbyBorderFactory.createPanelBorder());
 		
 		this.graphicLobby = lobby;
 		this.initWriteChatAreaPanel();
@@ -36,10 +32,14 @@ public class WriteChatAreaPanel extends JPanel {
 	
 	public void initWriteChatAreaPanel()
 	{	
-		this.chatArea = new JTextArea();
+		this.chatArea = new JTextField();
 		this.chatArea.setOpaque(false);
-
-		this.chatArea.setPreferredSize(new Dimension(super.getPreferredSize()));
+		this.chatArea.setBorder(BorderFactory.createEmptyBorder(0, 5, 20, 5));
+		
+		this.chatArea.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
+		this.chatArea.setForeground(Color.BLACK);
+		
+		this.chatArea.setPreferredSize(new Dimension((int)super.getPreferredSize().getWidth(), 100));
 
 		this.chatArea.addKeyListener(new KeyListener() {
 			@Override
@@ -54,7 +54,9 @@ public class WriteChatAreaPanel extends JPanel {
 					if(!WriteChatAreaPanel.this.chatArea.getText().trim().equals(""))
 						WriteChatAreaPanel.this.graphicLobby.lobbyClient.sendChatMessage(WriteChatAreaPanel.this.chatArea.getText());
 					
-					WriteChatAreaPanel.this.chatArea.setText(null);		
+					WriteChatAreaPanel.this.chatArea.setText(null);
+					
+					WriteChatAreaPanel.this.chatArea.requestFocus();
 				}
 			}
 		});

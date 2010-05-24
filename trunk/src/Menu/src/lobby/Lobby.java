@@ -8,12 +8,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import lobby.LobbyClient;
 import Menu.src.MainMenu;
@@ -61,11 +59,7 @@ public class Lobby extends JPanel {
 		
 		this.rightPanel = new JPanel(new GridLayout(2, 1));
 		
-		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
-		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
-		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
-		
-		this.rightPanel.setBorder(compound);
+		this.rightPanel.setBorder(LobbyBorderFactory.createPanelBorder());
 		this.rightPanel.setOpaque(false);
 	
 		this.rightPanel.add(this.gameListPanel);
@@ -111,13 +105,20 @@ public class Lobby extends JPanel {
 	public void refreshGameListPanel() { this.gameListPanel.refreshGameListArePanel(); }
 	
 	public void multiplayerGame()
-	{
+	{/*
 		this.multiplayerGame.removeAll();
 		this.multiplayerGame.setLayout(new FlowLayout(FlowLayout.CENTER));
 		this.multiplayerGame.add(new MultiplayerGamePanel(this));
 		this.multiplayerGame.setOpaque(false);
 		this.multiplayerGame.repaint();
-		this.multiplayerGame.revalidate();		
+		this.multiplayerGame.revalidate();
+		*/
+		this.rightPanel.removeAll();
+		this.rightPanel.setLayout(new GridLayout(2, 2));		
+		this.rightPanel.add(this.gameListPanel);
+		this.rightPanel.add(this.multiplayerGame);
+		this.rightPanel.repaint();
+		this.rightPanel.revalidate();
 	}
 	
 	public void hostAGame() 
@@ -138,11 +139,18 @@ public class Lobby extends JPanel {
 
 	public void joinAGame()
 	{
+		this.rightPanel.removeAll();
+		this.rightPanel.setLayout(new GridLayout(1, 1));
+		this.rightPanel.add(new JoinedGamePanel(this));
+		this.rightPanel.repaint();
+		this.rightPanel.revalidate();
+		
+		/*
 		this.multiplayerGame.removeAll();
 		this.multiplayerGame.setLayout(new FlowLayout());
 		this.multiplayerGame.add(new JoinedGamePanel(this));
 		this.multiplayerGame.repaint();
-		this.multiplayerGame.revalidate();
+		this.multiplayerGame.revalidate();*/
 	}
 	
 	public void writeChatMessage(String player, String msg) { this.chatAreaPanel.writeChatMessage(player, msg); }

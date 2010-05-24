@@ -26,10 +26,17 @@ public class LobbyHostedGame {
 		
 		for (int i = 0; i < numSlots; i++)
 			this.slots.add(new LobbyHostedGameSlot());
-		
+	
+		this.slots.get(0).joinSlot(this.lobbyClient.playerName);
 	}
 
 	// TODO: aggiunta/rimozione giocatore : syncronized
+	
+	public void joinSlot(int slotIndex, String playerName)
+	{
+		if(this.slots.get(slotIndex).joinSlot(playerName))
+			this.lobbyClient.graphicLobby.hostAGame();
+	}
 	
 	public void changeSlotState(int slotIndex, String state)
 	{
@@ -61,4 +68,9 @@ public class LobbyHostedGame {
 		return slots;
 	}	
 
+	public LobbyHostedGameSlot getSlot(int index)
+	{
+		return this.slots.get(index);
+	}
+	
 }

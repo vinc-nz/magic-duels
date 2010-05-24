@@ -1,20 +1,16 @@
 package Menu.src.lobby;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 
 import lobby.LobbyJoinedGame;
 
@@ -22,6 +18,8 @@ public class JoinedGamePanel extends JPanel {
 
 	Lobby graphicLobby;
 
+	JButton back;
+	
 	public JoinedGamePanel(Lobby graphicLobby) {
 		
 		super(new FlowLayout(FlowLayout.CENTER));
@@ -48,10 +46,10 @@ public class JoinedGamePanel extends JPanel {
 			giocatore = i + 1;
 			
 			player = new JLabel(slots.get(i));
-			player.setBorder(JoinedGamePanel.createTitledBorder("Giocatore " + giocatore));
+			player.setBorder(LobbyBorderFactory.createTitledBorder("Giocatore " + giocatore));
 			player.setPreferredSize(new Dimension(200, 50));
 			player.setOpaque(false);
-
+			
 			panel.add(player, c);
 
 			if(c.gridx % 2 == 0)
@@ -63,20 +61,23 @@ public class JoinedGamePanel extends JPanel {
 			}			
 		}
 		
+		back = new JButton("Esci dalla Partita");
+		back.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JoinedGamePanel.this.graphicLobby.lobbyClient.joinedGame = null;
+				JoinedGamePanel.this.graphicLobby.lobbyClient.leaveSlot();
+				JoinedGamePanel.this.graphicLobby.multiplayerGame();
+			}
+		});
+		
+		panel.add(back, c);
+		
 		super.add(panel);
 		super.repaint();
 		super.revalidate();
 		
-	}
-	
-	public static Border createTitledBorder(String title)
-	{
-		Border border = BorderFactory.createLineBorder(Color.blue, 2);
-		TitledBorder borderTitle = BorderFactory.createTitledBorder(border, title);
-		borderTitle.setTitleColor(Color.black);
-		borderTitle.setTitleFont( new Font("Arial", Font.BOLD, 18));
-		
-		return borderTitle;
 	}
 	
 }
