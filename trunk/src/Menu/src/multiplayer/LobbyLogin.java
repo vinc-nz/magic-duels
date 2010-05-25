@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -13,6 +13,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Menu.src.MainMenu;
+import Menu.src.multiplayer.lobby.Lobby;
 
 public class LobbyLogin extends JPanel {
 

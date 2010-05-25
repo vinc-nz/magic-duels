@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer.lobby;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,6 +11,8 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import Menu.src.multiplayer.LobbyUtilsFactory;
+
 public class PlayerListPanel extends JScrollPane {
 
 	Lobby graphicLobby;
@@ -20,7 +22,7 @@ public class PlayerListPanel extends JScrollPane {
 		super();
 		super.setOpaque(false);
 		super.getViewport().setOpaque(false);
-		super.setBorder(LobbyBorderFactory.createPanelBorder());
+		super.setBorder(LobbyUtilsFactory.createPanelBorder());
 		super.setPreferredSize(new Dimension(100, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
 		
 		this.graphicLobby = graphicLobby;

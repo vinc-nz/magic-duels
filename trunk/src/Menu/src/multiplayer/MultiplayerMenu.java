@@ -1,6 +1,6 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer;
 
-import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -32,6 +32,8 @@ public class MultiplayerMenu extends JPanel {
 	
 	public MultiplayerMenu(final MainMenu mainMenu) {
 		
+		super.setLayout(new FlowLayout(FlowLayout.CENTER));
+		
 		this.mainMenu = mainMenu;
 		
 		this.background = new ImageIcon("src/Menu/data/sfida.jpg").getImage();
@@ -40,7 +42,7 @@ public class MultiplayerMenu extends JPanel {
 		this.signingTab = new SigningTab(this.mainMenu);
 		this.directConnectionServerTab = new DirectConnectionServerTab(this.mainMenu);
 		
-		this.tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+		this.tabbedPane = new MultiplayerMenuTabbedPane();
 		this.tabbedPane.addTab(MultiplayerMenu.LOGIN, this.logingTab);
 		this.tabbedPane.addTab(MultiplayerMenu.NEWACCOUNT, this.signingTab);
 		this.tabbedPane.addTab(MultiplayerMenu.DIRECTCONNECTION, this.directConnectionServerTab);
@@ -76,10 +78,10 @@ public class MultiplayerMenu extends JPanel {
 		    }
 		);
 		
-		this.tabbedPane.setPreferredSize(new Dimension(500, 130));
 		super.add(this.tabbedPane);
 
-		setVisible(true);
+		super.setOpaque(false);
+		super.setVisible(true);
 	}
 	
 	public void paintComponent(Graphics g) {

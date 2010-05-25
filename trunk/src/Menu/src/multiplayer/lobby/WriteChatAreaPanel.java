@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer.lobby;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +12,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Menu.src.multiplayer.LobbyUtilsFactory;
+
 public class WriteChatAreaPanel extends JPanel {
 
 	Lobby graphicLobby;
@@ -23,7 +25,7 @@ public class WriteChatAreaPanel extends JPanel {
 		super(new FlowLayout(FlowLayout.CENTER));
 		super.setOpaque(false);
 		super.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(), 150));		
-		super.setBorder(LobbyBorderFactory.createPanelBorder());
+		super.setBorder(LobbyUtilsFactory.createPanelBorder());
 		
 		this.graphicLobby = lobby;
 		this.initWriteChatAreaPanel();

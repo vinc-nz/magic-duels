@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer.lobby;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import Menu.src.multiplayer.LobbyUtilsFactory;
 
 import lobby.LobbyJoinedGame;
 
@@ -46,7 +48,7 @@ public class JoinedGamePanel extends JPanel {
 			giocatore = i + 1;
 			
 			player = new JLabel(slots.get(i));
-			player.setBorder(LobbyBorderFactory.createTitledBorder("Giocatore " + giocatore));
+			player.setBorder(LobbyUtilsFactory.createTitledBorder("Giocatore " + giocatore));
 			player.setPreferredSize(new Dimension(200, 50));
 			player.setOpaque(false);
 			

@@ -12,7 +12,7 @@ import net.ClientGame;
 import net.ServerGame;
 import wiiMoteInput.PlayerMote;
 import Menu.src.MainMenu;
-import Menu.src.lobby.Lobby;
+import Menu.src.multiplayer.lobby.Lobby;
 
 public class LobbyClient extends Thread {
 	

@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer.lobby;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import lobby.LobbyClient;
 import Menu.src.MainMenu;
+import Menu.src.multiplayer.LobbyUtilsFactory;
 
 public class Lobby extends JPanel {
 
@@ -59,7 +60,7 @@ public class Lobby extends JPanel {
 		
 		this.rightPanel = new JPanel(new GridLayout(2, 1));
 		
-		this.rightPanel.setBorder(LobbyBorderFactory.createPanelBorder());
+		this.rightPanel.setBorder(LobbyUtilsFactory.createPanelBorder());
 		this.rightPanel.setOpaque(false);
 	
 		this.rightPanel.add(this.gameListPanel);

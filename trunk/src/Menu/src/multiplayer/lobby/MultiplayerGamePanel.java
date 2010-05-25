@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer.lobby;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+
+import Menu.src.multiplayer.LobbyUtilsFactory;
 
 public class MultiplayerGamePanel extends JPanel{
 	
@@ -36,7 +38,7 @@ public class MultiplayerGamePanel extends JPanel{
 
 		this.newGameName = new JTextField();
 		this.newGamePortNumber = new JTextField();
-		String []slots = {"1", "2", "3", "4", "5", "6", "7", "8"};
+		String []slots = {"2", "3", "4", "5", "6", "7", "8"};
 		this.newGameSlotNumber = new JComboBox(slots);
 		
 		JPanel panel = new JPanel(new GridBagLayout());
@@ -89,17 +91,17 @@ public class MultiplayerGamePanel extends JPanel{
 				
 		});
 		
-		this.newGameName.setBorder(MultiplayerGamePanel.createTitledBorder("Nome Partita"));
+		this.newGameName.setBorder(LobbyUtilsFactory.createTitledBorder("Nome Partita"));
 		this.newGameName.setOpaque(false);
 		this.newGameName.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		this.newGameName.setForeground(Color.BLACK);
 		
-		this.newGameSlotNumber.setBorder(MultiplayerGamePanel.createTitledBorder("Numero Giocatori"));
+		this.newGameSlotNumber.setBorder(LobbyUtilsFactory.createTitledBorder("Numero Giocatori"));
 		this.newGameSlotNumber.setOpaque(false);
 		this.newGameSlotNumber.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
 		this.newGameSlotNumber.setForeground(Color.BLACK);
 		
-		this.newGamePortNumber.setBorder(MultiplayerGamePanel.createTitledBorder("Numero Porta"));
+		this.newGamePortNumber.setBorder(LobbyUtilsFactory.createTitledBorder("Numero Porta"));
 		this.newGamePortNumber.setOpaque(false);
 		this.newGamePortNumber.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		this.newGamePortNumber.setForeground(Color.BLACK);
@@ -136,16 +138,6 @@ public class MultiplayerGamePanel extends JPanel{
 		panel.add(this.newGamePortNumber, c);
 				
 		super.add(panel);
-	}
-	
-	public static Border createTitledBorder(String title)
-	{
-		Border border = BorderFactory.createLineBorder(Color.blue, 2);
-		TitledBorder borderTitle = BorderFactory.createTitledBorder(border, title);
-		borderTitle.setTitleColor(Color.black);
-		borderTitle.setTitleFont( new Font("Arial", Font.BOLD, 18));
-		
-		return borderTitle;
 	}
 	
 }

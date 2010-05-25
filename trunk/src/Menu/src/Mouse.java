@@ -12,8 +12,8 @@ import javax.swing.JOptionPane;
 
 import wiiMoteInput.PlayerMote;
 
-import Menu.src.lobby.Lobby;
-import Menu.src.lobby.MultiplayerMenu;
+import Menu.src.multiplayer.MultiplayerMenu;
+import Menu.src.multiplayer.lobby.Lobby;
 
 
 public class Mouse extends MouseAdapter{

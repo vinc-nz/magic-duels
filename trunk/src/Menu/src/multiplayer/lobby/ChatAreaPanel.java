@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer.lobby;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,6 +16,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
+import Menu.src.multiplayer.LobbyUtilsFactory;
+
 public class ChatAreaPanel extends JScrollPane {
 
 	StyledDocument chat;
@@ -29,7 +31,7 @@ public class ChatAreaPanel extends JScrollPane {
 		super.setOpaque(false);
 		super.getViewport().setOpaque(false);
 		super.setPreferredSize(new Dimension(400, 400));
-		super.setBorder(LobbyBorderFactory.createPanelBorder());
+		super.setBorder(LobbyUtilsFactory.createPanelBorder());
 
 		this.initChatAreaPanel();
 		

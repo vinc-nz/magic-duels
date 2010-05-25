@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer.lobby;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import Menu.src.multiplayer.LobbyUtilsFactory;
 
 import lobby.LobbyHostedGame;
 import lobby.Messages;
@@ -65,7 +67,7 @@ public class HostedGamePanel extends JPanel {
 		{
 			giocatore = i + 1;
 			slot = new SlotComboBox(hostedGame, i, hostedGame.getSlot(i));
-			slot.setBorder(LobbyBorderFactory.createTitledBorder("Giocatore " + giocatore));
+			slot.setBorder(LobbyUtilsFactory.createTitledBorder("Giocatore " + giocatore));
 			slots.add(slot);
 			panel.add(slot, c);
 			

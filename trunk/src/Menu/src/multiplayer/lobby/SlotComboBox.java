@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer.lobby;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

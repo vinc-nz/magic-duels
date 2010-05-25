@@ -104,6 +104,7 @@ public abstract class JmeGame extends BaseGame {
 					startFight();
 			}
 		};
+		
 		stateManager.attachChild(loading);
 		loading.setActive(true);
 

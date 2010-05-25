@@ -1,4 +1,4 @@
-package Menu.src.lobby;
+package Menu.src.multiplayer;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -23,7 +23,9 @@ public class DirectConnectionServerTab extends MultiplayerMenuTabs {
 		super(mainMenu);
 		
 		this.numPlayers = new JTextField();
+		this.numPlayers.setOpaque(false);
 		this.porta = new JTextField();
+		this.porta.setOpaque(false);
 		
 		this.create = new JButton("Crea Partita");
 		
@@ -53,6 +55,7 @@ public class DirectConnectionServerTab extends MultiplayerMenuTabs {
 		super.add(centerPanel, BorderLayout.CENTER);
 		super.add(this.create, BorderLayout.SOUTH);
 		
+		super.setOpaque(false);
 		super.repaint();
 		super.revalidate();
 		
