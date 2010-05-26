@@ -1,15 +1,9 @@
 package Menu.src.multiplayer;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -21,11 +15,6 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 
 	MainMenu mainMenu;
 	
-	/*
-	JLabel serverIp_;
-	JLabel serverPort_;
-	*/
-	
 	JTextField serverIp;
 	JTextField serverPort;
 	
@@ -34,17 +23,15 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 	public MultiplayerMenuTabs(MainMenu mainMenu)
 	{
 		super.setOpaque(false);
+		super.setLayout(new GridBagLayout());
 		super.setBorder(LobbyUtilsFactory.createPanelBorder());
+
 		this.mainMenu = mainMenu;
-		/*
-		this.serverIp_ = new JLabel("IP Server:");
-		this.serverIp_.setOpaque(false);
-		this.serverPort_ = new JLabel("Porta Server:");
-		this.serverPort_.setOpaque(false);
-		*/
+		
 		this.serverIp = new JTextField("127.0.0.1");
-		this.serverIp.setPreferredSize(new Dimension((int)super.getSize().getWidth()/3*2, 50));
 		LobbyUtilsFactory.setLobbyTextFieldParameters(this.serverIp, "IP Server:");
+			
+		//System.out.println("SIZE " + (int)this.mainMenu.panel.mouseAdapter.multiplayerMenu.getSize().getWidth());
 		
 		this.serverPort = new JTextField("7000");
 		LobbyUtilsFactory.setLobbyTextFieldParameters(this.serverPort, "Porta Server:");

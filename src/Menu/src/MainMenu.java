@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import java.util.LinkedHashMap;
 
 import javax.swing.ImageIcon;
