@@ -1,20 +1,14 @@
 package Menu.src;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import wiiMoteInput.PlayerMote;
-
 import Menu.src.multiplayer.MultiplayerMenu;
-import Menu.src.multiplayer.lobby.Lobby;
-
 
 public class Mouse extends MouseAdapter{
 	
@@ -24,11 +18,15 @@ public class Mouse extends MouseAdapter{
 	Image credits;
 	Image options;
 	Image exit;
+	
 	int position[];
+	
 	MainPanel mainPanel;
 	InitSingleGame initSingleGame;
 	PlayerMote playerMote;
-	MultiplayerMenu multiplayerMenu;
+	
+	public MultiplayerMenu multiplayerMenu;
+	
 	MainMenu mainMenu;
 	Options optionsPanel;
 	String sSound;

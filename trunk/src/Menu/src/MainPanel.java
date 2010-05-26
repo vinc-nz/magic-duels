@@ -3,14 +3,15 @@ package Menu.src;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+
 import javax.swing.JPanel;
 
 import wiiMoteInput.PlayerMote;
 
 import game.Game;
 
-class MainPanel extends JPanel{
-	private static final long serialVersionUID = 1L;
+public class MainPanel extends JPanel{
 	
 	public Image fantasy, newGame, multiplayer, options, credits, exit,
 			     selectNewGame, selecMultiplayer, selectOptions, selectCredits, selectExit;
@@ -25,11 +26,12 @@ class MainPanel extends JPanel{
 	final int IMAGE_WIDTH = 211;
 	final int IMAGE_HEIGTH = 122;
 	
+	public Mouse mouseAdapter;
+	
 	Game game;
 	MainMenu mainMenu;
 	PlayerMote playerMote;
-	
-	
+		
 	public MainPanel(Image fantasy, Image newGame, Image multiplayer, Image options, 
 			Image credits, Image exit, Image selectNewGame,
 			Image selecMultiplayer, Image selectOptions,
@@ -65,8 +67,10 @@ class MainPanel extends JPanel{
 		
 		Dimension size = new Dimension(fantasy.getWidth(null), fantasy.getHeight(null));
 
-		this.addMouseListener(new Mouse(position, fantasy, newGame, multiplayer, credits, options, exit, playerMote, 
-												mainMenu, this));
+		this.mouseAdapter = new Mouse(position, fantasy, newGame, multiplayer, credits, options, exit, playerMote, 
+				mainMenu, this);
+		
+		this.addMouseListener(this.mouseAdapter);
 		this.addMouseMotionListener(new Mouse(position, fantasy, newGame, multiplayer, credits, 
 											  options, exit, playerMote, mainMenu, this));
 

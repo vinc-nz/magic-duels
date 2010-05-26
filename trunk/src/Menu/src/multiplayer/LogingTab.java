@@ -37,7 +37,6 @@ public class LogingTab extends MultiplayerMenuTabs {
 	public void connecting()
 	{
 		super.removeAll();
-		super.setLayout(new GridBagLayout());
 		
 		this.connect.addMouseListener(new MouseAdapter() {
 			
@@ -56,7 +55,10 @@ public class LogingTab extends MultiplayerMenuTabs {
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(10, 10, 10, 10);
+		c.anchor =  GridBagConstraints.CENTER;
+		c.insets = new Insets(10, 20, 10, 20);
+		//c.ipadx = 10;
+		//c.ipady = 10;
 		c.gridx = 0;
 		
 		//super.add(this.serverIp_);

@@ -334,8 +334,7 @@ public class LobbyClient extends Thread {
 	{
 		int slotIndex = Integer.parseInt(msg.substring(Messages.SLOTLEFT.length()));
 		
-		this.hostedGame.changeSlotState(slotIndex, Messages.OPEN);
-		
+		this.hostedGame.changeSlotState(slotIndex, Messages.OPEN);	
 		this.graphicLobby.hostAGame();
 	}
 	
@@ -409,8 +408,8 @@ public class LobbyClient extends Thread {
 		if(this.result == LobbyClient.SERVER_STARTED)
 			this.sendMessage(Messages.SERVERGAMESTARTED);
 		else
-			System.out.println("ERRORE SERVER!");
-
+			this.graphicLobby.showWarning("Attenzione!\nSembra vi sia un errore che impedisca l'inizio della partita!");
+			
 	}
 	
 	public void startClientGame()

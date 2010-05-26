@@ -1,5 +1,7 @@
 package Menu.src.multiplayer.lobby;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Iterator;
@@ -60,6 +62,11 @@ public class GameListPanel extends JScrollPane {
 		
 		this.gameTableModel.setColumnIdentifiers(header);
 		this.gameTable = new JTable(this.gameTableModel);
+		this.gameTable.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		this.gameTable.setForeground(Color.black);
+		this.gameTable.setGridColor(Color.black);
+		this.gameTable.setShowGrid(false);
+		
 		this.gameTable.setOpaque(false);
 		
 		this.gameTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

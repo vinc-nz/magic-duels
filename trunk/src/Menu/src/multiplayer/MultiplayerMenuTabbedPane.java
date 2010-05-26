@@ -19,7 +19,7 @@ public class MultiplayerMenuTabbedPane extends JTabbedPane {
 		super.setBorder(LobbyUtilsFactory.createPanelBorder());
 		super.setPreferredSize(new Dimension(600, 500));
 		
-		this.background = new ImageIcon("src/Menu/data/sfida.jpg").getImage();
+		this.background = new ImageIcon("src/Menu/data/lala.jpg").getImage();
 		
 	}
 	
