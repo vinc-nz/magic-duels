@@ -102,7 +102,8 @@ public class ClientGame extends NetGame {
 	
 	
 	@Override
-	public void startFight() {
+	public void initScene() {
+		super.initScene();
 		try {
 			this.sayReady();
 			this.getLoading().increment("waiting for other players");
@@ -112,7 +113,6 @@ public class ClientGame extends NetGame {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		super.startFight();
 	}
 	
 	

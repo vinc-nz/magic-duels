@@ -128,7 +128,8 @@ public class ServerGame extends NetGame {
 	
 	
 	@Override
-	public void startFight() {
+	public void initScene() {
+		super.initScene();
 		try {
 			this.getLoading().increment("waiting for other players");
 			this.waitClients();
@@ -138,7 +139,6 @@ public class ServerGame extends NetGame {
 			System.exit(1);
 		}
 		this.getFight().setNames(names);
-		super.startFight();
 	}
 
 
