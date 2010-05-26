@@ -11,8 +11,11 @@ import java.util.Iterator;
 public class Server extends Thread{
 
 	ServerSocket serverSocket;
+	
 	HashMap<String, Connection> players;
 	HashMap<String, HostedGame> hostedGames;
+	
+	ListRefreshingThread listRefreshingThread;
 	
 	public Server(int porta) throws UnknownHostException {
 	
@@ -29,6 +32,9 @@ public class Server extends Thread{
 		this.hostedGames = new HashMap<String, HostedGame>();
 		
 		this.start();
+		
+		this.listRefreshingThread = new ListRefreshingThread(this);
+		this.listRefreshingThread.start();
 	}
 	
 	public void sendChatMessage(String sender, String msg)
