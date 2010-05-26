@@ -163,12 +163,14 @@ public class Connection extends Thread {
 			
 		} catch(IOException e) {
 			System.out.println("Errore durante la ricezione del messaggio");
-			return Messages.KILL;
+			this.closeConnection();
+			this.server.removePlayer(this);
 		} catch (ClassNotFoundException e) {
 			System.out.println("Classe non trovata!");
-			return Messages.KILL;
+			this.closeConnection();
+			this.server.removePlayer(this);
 		}
-		
+		return Messages.KILL;		
 	}
 	
 	protected void closeConnection()
@@ -176,7 +178,6 @@ public class Connection extends Thread {
 		try {
 			this.in.close();
 			this.out.close();
-			
 			this.player.close();
 		} catch (IOException e) {
 			System.out.println("Errore nella chiusura della connessione");
@@ -209,7 +210,7 @@ public class Connection extends Thread {
 		
 		HostedGame hostedGame = this.server.hostedGames.get(gameName);
 		if(hostedGame == null){ this.sendMessage(Messages.JOINFAILED); return; }
-		int slotIndex = hostedGame.joinGame(this); 
+		int slotIndex = hostedGame.joinGame(this);
 		if(slotIndex == -1){ this.sendMessage(Messages.JOINFAILED); return; }
 		
 		String message = Messages.JOINOK;
@@ -221,13 +222,14 @@ public class Connection extends Thread {
 		message += this.utente.getNome() + ";";
 		hostedGame.host.sendMessage(message);
 		
-		for (Iterator iterator = this.hostedGame.slots.iterator(); iterator.hasNext();) {
+		for (Iterator iterator = hostedGame.slots.iterator(); iterator.hasNext();) {
 			HostedGameSlot slot = (HostedGameSlot) iterator.next();
 			
 			if(slot.isHuman())
 			{
 				message = Messages.CHANGESLOTTYPE;
-				message += String.valueOf(this.hostedGame.slots.indexOf(slot)) + ";";
+				//message += String.valueOf(hostedGame.slots.indexOf(slot)) + ";";
+				message += String.valueOf(slotIndex) + ";";
 				message += this.utente.getNome();
 				
 				slot.human.sendMessage(message);

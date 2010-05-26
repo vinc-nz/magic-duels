@@ -66,6 +66,8 @@ public class HostedGame {
 				{
 					slot.changeSlotState(Messages.OPEN);
 					slotIndex = this.slots.indexOf(slot);
+					
+					System.out.println(playerName + " lascia lo slot " + slotIndex);
 						
 					break;
 				}
