@@ -113,12 +113,16 @@ public abstract class JmeGame extends BaseGame {
 
 			@Override
 			public void run() {
-				fightState.initGame(input.getPlayerID());
-				status.init();
+				initScene();
 
 			}
 		};
 		new Thread(initiator).start();
+	}
+	
+	public void initScene() {
+		fightState.initGame(input.getPlayerID());
+		status.init();
 	}
 
 
