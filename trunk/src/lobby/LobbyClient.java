@@ -197,6 +197,9 @@ public class LobbyClient extends Thread {
 			else if(message.startsWith(Messages.CHANGESLOTTYPE))
 				this.changeJoinedGameSlotType(message);
 			
+			else if(message.startsWith(Messages.SLOTLEFT))
+				this.slotLeft(message);
+			
 			else if(message.startsWith(Messages.STARTSERVERGAME))
 				this.startServerGame(message);
 			
@@ -325,6 +328,15 @@ public class LobbyClient extends Thread {
 		
 		this.joinedGame.changeSlotType(msg);
 		this.graphicLobby.joinAGame();
+	}
+	
+	public void slotLeft(String msg)
+	{
+		int slotIndex = Integer.parseInt(msg.substring(Messages.SLOTLEFT.length()));
+		
+		this.hostedGame.changeSlotState(slotIndex, Messages.OPEN);
+		
+		this.graphicLobby.hostAGame();
 	}
 	
 	public void joinSlot(String msg)

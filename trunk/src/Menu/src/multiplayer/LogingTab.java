@@ -1,21 +1,18 @@
 package Menu.src.multiplayer;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Menu.src.MainMenu;
 import Menu.src.multiplayer.lobby.Lobby;
+import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
 
 public class LogingTab extends MultiplayerMenuTabs {
 	
@@ -55,7 +52,7 @@ public class LogingTab extends MultiplayerMenuTabs {
 					LogingTab.super.showWarning("Connessione Fallita!");
 			}
 				
-			});
+		});
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;

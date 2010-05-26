@@ -11,7 +11,6 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import Menu.src.multiplayer.LobbyUtilsFactory;
 
 public class PlayerListPanel extends JScrollPane {
 

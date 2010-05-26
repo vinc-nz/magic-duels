@@ -46,6 +46,10 @@ public class Messages {
 	
 	public static String LEAVESLOT = "LEAVESLOT";
 	
+	//server -> gamehoster
+	//SLOTLEFT>SLOTINDEX
+	public static String SLOTLEFT = "SLOTLEFT>";
+	
 	//CHANGESLOTTYPE>SLOTINDEX;SLOTTYPE  (it's the same for server-> and client->server)
 	public static String CHANGESLOTTYPE = "CHANGESLOTTYPE>";
 	

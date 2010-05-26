@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 
 import lobby.LobbyClient;
 import Menu.src.MainMenu;
-import Menu.src.multiplayer.LobbyUtilsFactory;
 
 public class Lobby extends JPanel {
 

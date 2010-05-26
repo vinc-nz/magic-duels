@@ -7,6 +7,8 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
+import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
+
 public class MultiplayerMenuTabbedPane extends JTabbedPane {
 
 	Image background;

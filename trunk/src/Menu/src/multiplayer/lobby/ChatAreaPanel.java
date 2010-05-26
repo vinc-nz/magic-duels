@@ -16,7 +16,6 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
-import Menu.src.multiplayer.LobbyUtilsFactory;
 
 public class ChatAreaPanel extends JScrollPane {
 

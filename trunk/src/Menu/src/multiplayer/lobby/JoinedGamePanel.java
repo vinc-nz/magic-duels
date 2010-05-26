@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Menu.src.multiplayer.LobbyUtilsFactory;
 
 import lobby.LobbyJoinedGame;
 
