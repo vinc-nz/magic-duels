@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import core.objects.AbstractObject;
 import core.objects.MovingObject;
 import core.objects.Spell;
+import core.space.Direction;
 
 /**
  * @author spax
@@ -18,8 +19,10 @@ public class Character extends MovingObject {
 	int mana;
 	int target;
 	boolean enoughMana = true;
+	boolean moving = false;
 	
 	Spell preparedSpell = null;
+	//Lock action = new ReentrantLock();
 	Callable<Void> deathEvent = null;
 	Callable<Void> winEvent = null;
 	
@@ -48,19 +51,29 @@ public class Character extends MovingObject {
 
 
 	
-	public boolean isPreparingSpell() {
+	public boolean isPreparingSpell() {	
 		return preparedSpell!=null;
 	}
 	
 	
 	
-	public boolean isAvailable() {
-		return life>0 && !isPreparingSpell();
+	public synchronized boolean isAvailable() {
+		if (isPreparingSpell() || moving) {
+//			try {
+//				wait();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			return false;
+		}
+		return life>0;
 	}
 
-	public void applyDamage(int points) {
+	public synchronized void applyDamage(int points) {
 		life -= points;
 		if (life<=0) {
+			notify();
 			if (deathEvent!=null)
 				try {
 					deathEvent.call();
@@ -73,16 +86,21 @@ public class Character extends MovingObject {
 	
 	
 	
-	public boolean prepareSpell(Spell s) {
+	public synchronized void prepareSpell(Spell s) {
 		int cost = s.getManaCost();
-		if (cost<=mana) {
+		if (cost<=mana) {		
 			preparedSpell = s;
 			s.setOwner(this);
 			mana -= cost;
-			return true;
+			notify();
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		this.enoughMana = false;
-		return false;
+		else this.enoughMana = false;
 	}
 	
 	
@@ -97,12 +115,27 @@ public class Character extends MovingObject {
 
 
 	public void castSpell() {
+		
 		if (preparedSpell!=null) {
 			preparedSpell.launch();
 			preparedSpell = null;
 		}
 	}
 
+	@Override
+	protected void moveThrough(Direction d) {
+		super.moveThrough(d);
+		moving = true;
+		synchronized (this) {
+			notify();
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	
 
 	public int getTarget() {
@@ -170,6 +203,30 @@ public class Character extends MovingObject {
 	public boolean isDead() {
 		return life<=0;
 	}
+
+	public synchronized void checkState() {
+		while (!moving && !isPreparingSpell())
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+
+	public synchronized void ready() {
+		notifyAll();
+	}
+	
+	public void moved() {
+		moving = false;
+	}
+
+	public boolean isMoving() {
+		return moving;
+	}
+	
+	
 	
 	
 

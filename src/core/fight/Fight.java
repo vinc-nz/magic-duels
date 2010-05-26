@@ -117,13 +117,13 @@ public class Fight {
 
 	public void prepareSpell(int playerId, Class<? extends Spell> spell) {
 		if (isActive() && this.getPlayer(playerId).isAvailable()) {
+			
 			try {
 				Spell s = (Spell) spell.newInstance();
-				if (this.getPlayer(playerId).prepareSpell(s)){
-					this.setSpellParams(playerId, s);
+				this.getPlayer(playerId).prepareSpell(s);
+				this.setSpellParams(playerId, s);
 
-					monitor.startSpell();
-				}
+				monitor.startSpell();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

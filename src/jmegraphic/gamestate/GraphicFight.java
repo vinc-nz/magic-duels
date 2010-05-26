@@ -69,7 +69,6 @@ public class GraphicFight extends BasicGameState {
 					public Void call() throws Exception {
 						game.showMessage("sei stato sconfitto", false);
 						fight.end();
-						focused.die();
 						return null;
 					}
 				});
@@ -190,7 +189,6 @@ public class GraphicFight extends BasicGameState {
 		@Override
 		public Void call() throws Exception {
 			game.showNotification(enemy.getName()+"è stato sconfitto");
-			((GraphicCharacter) objects.get(enemy)).die();
 			return null;
 		}
 

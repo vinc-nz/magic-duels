@@ -80,7 +80,7 @@ public abstract class MovingObject extends AbstractObject {
 	}
 	
 	
-	private void moveThrough(Direction d) {
+	protected void moveThrough(Direction d) {
 		if (forbiddenDirection == null || d.difference(forbiddenDirection)>Math.PI/3) {
 			this.lastMovement = d;
 			this.forbiddenDirection = null;
