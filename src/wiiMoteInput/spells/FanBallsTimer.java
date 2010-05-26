@@ -8,12 +8,12 @@ import wiiMoteInput.Spells;
  * if the player is casting a spell,
  * as the time is passed
  */
-public class FiveFireBallTimer extends Thread {
+public class FanBallsTimer extends Thread {
 
 	protected FanBalls spell;
 	protected int timer;
 	
-	public FiveFireBallTimer(FanBalls spell, int millisec) {
+	public FanBallsTimer(FanBalls spell, int millisec) {
 
 		this.spell = spell;
 		this.timer = millisec;

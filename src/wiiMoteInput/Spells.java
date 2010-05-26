@@ -83,27 +83,22 @@ abstract public class Spells extends Thread {
 	 */
 	public static Spells StartingSpell(int X, int Y, int Z)
 	{
-
-		System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
 		
 		if(FIREBALL_START.isAtStep(X, Y, Z))
 		{
-			System.out.println("FIREBALLS");
-			System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
+			System.out.println("FIREBALL");
 			return new FireBallSpell();
 		}
 		else 
 			if(FIVEFIREBALLS_START.isAtStep(X, Y, Z))
 			{
-				System.out.println("FIREBALLS");
-				System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
+				System.out.println("FUNBALL");
 				return new FanBalls();
 			}
 		else 
 			if(NEWSPELL_START.isAtStep(X, Y, Z))
 			{
-				System.out.println("FIREBALLS");
-				System.out.println("VALORE CORRENTE: " + X + ", " + Y + ", " + Z);
+				System.out.println("NEWSPELL");
 				return new NewSpell();
 			}
 		return null;
@@ -113,7 +108,6 @@ abstract public class Spells extends Thread {
 	protected void castSpell()
 	{
 		characterController.castSpell(this.toString());
-		System.out.println("LANCIO LA MAGIA: " + this.toString());
 	}
 	
 	/*

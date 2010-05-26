@@ -2,12 +2,11 @@ package Menu.src.multiplayer;
 
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -32,7 +31,7 @@ public class MultiplayerMenu extends JPanel {
 	
 	public MultiplayerMenu(final MainMenu mainMenu) {
 		
-		super.setLayout(new FlowLayout(FlowLayout.CENTER));
+		super.setLayout(new GridBagLayout());
 		
 		this.mainMenu = mainMenu;
 		
@@ -63,22 +62,7 @@ public class MultiplayerMenu extends JPanel {
 			}
 		});
 		
-		JButton buttonBack = new JButton("BACK");
-		this.add(buttonBack);
-		
-		
-		// cancel return to main panel
-		buttonBack.addActionListener(
-		    new ActionListener() {
-				@Override
-		        public void actionPerformed(ActionEvent e) {
-					mainMenu.ok.play();
-		            mainMenu.switchTo(mainMenu.panel);	
-		        }
-		    }
-		);
-		
-		super.add(this.tabbedPane);
+		super.add(this.tabbedPane, new GridBagConstraints());
 
 		super.setOpaque(false);
 		super.setVisible(true);

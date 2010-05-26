@@ -1,7 +1,8 @@
 package Menu.src.multiplayer;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -19,7 +20,8 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 	JTextField serverPort;
 	
 	JButton connect;
-	
+	JButton back;
+
 	public MultiplayerMenuTabs(MainMenu mainMenu)
 	{
 		super.setOpaque(false);
@@ -30,13 +32,23 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 		
 		this.serverIp = new JTextField("127.0.0.1");
 		LobbyUtilsFactory.setLobbyTextFieldParameters(this.serverIp, "IP Server:");
-			
-		//System.out.println("SIZE " + (int)this.mainMenu.panel.mouseAdapter.multiplayerMenu.getSize().getWidth());
 		
 		this.serverPort = new JTextField("7000");
 		LobbyUtilsFactory.setLobbyTextFieldParameters(this.serverPort, "Porta Server:");
 		
-		this.connect = new JButton("Connettiti al Server!");
+		this.connect = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/connect1.gif", "src/Menu/data/multiplayer/connect2.gif");
+		this.back = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/back1.gif", "src/Menu/data/multiplayer/back2.gif");
+		this.back.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				MultiplayerMenuTabs.this.mainMenu.ok.play();
+				MultiplayerMenuTabs.this.mainMenu.switchTo(MultiplayerMenuTabs.this.mainMenu.panel);
+			
+			}
+		});
+		
 		
 		this.checkPanel();		
 	}

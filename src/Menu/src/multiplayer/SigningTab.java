@@ -1,17 +1,17 @@
 package Menu.src.multiplayer;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -19,6 +19,8 @@ import Menu.src.MainMenu;
 import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
 
 public class SigningTab extends MultiplayerMenuTabs {
+	
+	Image top;
 	
 	JTextField user;
 	JPasswordField password;
@@ -38,7 +40,7 @@ public class SigningTab extends MultiplayerMenuTabs {
 		this.mail = new JTextField();
 		LobbyUtilsFactory.setLobbyTextFieldParameters(this.mail, "Email");
 		
-		this.iscrivi = new JButton("Crea Nuovo Utente!");	
+		this.iscrivi = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/new1.gif", "src/Menu/data/multiplayer/new2.gif");
 		this.iscrivi.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -61,32 +63,43 @@ public class SigningTab extends MultiplayerMenuTabs {
 	public void connecting()
 	{
 		super.removeAll();
-		super.setLayout(new GridBagLayout());
+		
+		this.top = new ImageIcon("src/Menu/data/multiplayer/connect.gif").getImage();
 		
 		this.connect.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				String ip = SigningTab.this.serverIp.getText();
-				int port = Integer.parseInt(SigningTab.this.serverPort.getText());
-				if(SigningTab.this.mainMenu.lobbyClient.connect(ip, port))
-					SigningTab.this.checkPanel();
-				else
-					SigningTab.super.showWarning("Connessione Fallita!");
+				try{
+					
+					String ip = SigningTab.this.serverIp.getText();
+					int port = Integer.parseInt(SigningTab.this.serverPort.getText());
+					if(SigningTab.this.mainMenu.lobbyClient.connect(ip, port))
+						SigningTab.this.checkPanel();
+					else
+						SigningTab.super.showWarning("Connessione Fallita!");
+			
+				} catch (UnknownHostException exc) {
+					System.out.println("L'host è sconosciuto");
+					SigningTab.super.showWarning("L'Host sembra essere sconosciuto!");
+				} catch (IOException exc) {
+					SigningTab.super.showWarning("Errore durante la connessione all'Host!");
+				}
+				
 			}
 				
-			});
+		});
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(10, 10, 10, 10);
+		c.anchor =  GridBagConstraints.CENTER;
+		c.insets = new Insets(10, 20, 10, 20);
 		c.gridx = 0;
 		
-		//super.add(this.serverIp_);
 		c.gridy = 0;
 		super.add(this.serverIp, c);
-		//super.add(this.serverPort_);
+
 		c.gridy = 1;
 		super.add(this.serverPort, c);
 		
@@ -94,7 +107,7 @@ public class SigningTab extends MultiplayerMenuTabs {
 		super.add(this.connect, c);
 		
 		c.gridy = 3;
-		super.add(this.connect, c);
+		super.add(this.back, c);
 		
 		super.repaint();
 		super.revalidate();
@@ -104,6 +117,8 @@ public class SigningTab extends MultiplayerMenuTabs {
 	{
 		super.removeAll();
 		super.setLayout(new GridBagLayout());
+		
+		this.top = new ImageIcon("src/Menu/data/multiplayer/new.gif").getImage();
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
@@ -121,6 +136,9 @@ public class SigningTab extends MultiplayerMenuTabs {
 		
 		c.gridy = 3;
 		super.add(this.iscrivi, c);
+		
+		c.gridy = 4;
+		super.add(this.back, c);
 
 		super.repaint();
 		super.revalidate();
@@ -132,6 +150,10 @@ public class SigningTab extends MultiplayerMenuTabs {
 			this.formIscrizione();
 		else
 			this.connecting();
+	}
+	
+	public void paintComponent(Graphics g) {
+		g.drawImage(this.top, 5, 5, super.getWidth()-10, this.top.getHeight(null), null);
 	}
 	
 }

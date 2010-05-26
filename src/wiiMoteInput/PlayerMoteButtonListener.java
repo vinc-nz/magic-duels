@@ -29,10 +29,10 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 			if(!this.playingMote.isChecking)
 				this.playingMote.check();
 		
-		if(evento.isButtonMinusPressed())
+		if(evento.isButtonMinusPressed() || evento.isDPadLeftPressed())
 			this.characterController.move("left");
 		
-		if(evento.isButtonPlusPressed())
+		if(evento.isButtonPlusPressed() || evento.isDPadRightPressed())
 			this.characterController.move("right");
 
 		if(evento.isButtonBPressed())
