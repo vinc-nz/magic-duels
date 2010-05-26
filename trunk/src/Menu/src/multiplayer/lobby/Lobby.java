@@ -1,15 +1,12 @@
 package Menu.src.multiplayer.lobby;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -22,6 +19,8 @@ public class Lobby extends JPanel {
 
 	public MainMenu mainMenu;
 	LobbyClient lobbyClient;
+
+	TopPanel topPanel;
 	
 	PlayerListPanel playerListPanel;
 	GameListPanel gameListPanel;
@@ -38,10 +37,12 @@ public class Lobby extends JPanel {
 		this.lobbyClient = mainMenu.lobbyClient;
 		
 		this.lobbyClient.setGraphicLobby(this);
-		this.background = new ImageIcon("src/Menu/data/lala.jpg").getImage();
+		this.background = new ImageIcon("src/Menu/data/multiplayer/lobby.jpg").getImage();
+		
+		this.topPanel = new TopPanel();
 		
 		super.setLayout(new BorderLayout());
-		super.add(this.getTopPanel(), BorderLayout.NORTH);
+		super.add(this.topPanel, BorderLayout.NORTH);
 		
 		this.playerListPanel = new PlayerListPanel(this);
 		this.gameListPanel = new GameListPanel(this);
@@ -79,40 +80,12 @@ public class Lobby extends JPanel {
 	public void paintComponent(Graphics g) {
 		g.drawImage( background, 0, 0, this.getWidth(), this.getHeight(), null);
 	}
-
-	public JPanel getTopPanel()
-	{
-		JPanel pane = new JPanel(){
-			public void paintComponent(Graphics g) {
-				g.drawImage( new ImageIcon("src/Menu/data/lala2.gif").getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
-			}			
-		};
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-		int textWidth = (int) screenSize.getWidth();
-		int textHeight = (int) screenSize.getHeight() / 6 * 1;
-		
-		pane.setPreferredSize(new Dimension(textWidth, textHeight));
-		pane.setOpaque(false);
-
-		JLabel titolo = new JLabel("WELCOME TO THE LOBBY!");		
-		
-		return pane;
-	}
 	
 	public void refreshPlayerListPanel() { this.playerListPanel.refreshPlayerList(); }
 	public void refreshGameListPanel() { this.gameListPanel.refreshGameListArePanel(); }
 	
 	public void multiplayerGame()
-	{/*
-		this.multiplayerGame.removeAll();
-		this.multiplayerGame.setLayout(new FlowLayout(FlowLayout.CENTER));
-		this.multiplayerGame.add(new MultiplayerGamePanel(this));
-		this.multiplayerGame.setOpaque(false);
-		this.multiplayerGame.repaint();
-		this.multiplayerGame.revalidate();
-		*/
+	{
 		this.rightPanel.removeAll();
 		this.rightPanel.setLayout(new GridLayout(2, 2));		
 		this.rightPanel.add(this.gameListPanel);

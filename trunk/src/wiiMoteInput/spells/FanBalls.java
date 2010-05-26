@@ -9,7 +9,7 @@ public class FanBalls extends Spells {
 	public final static SpellStep END = new SpellStep(130, 130, 165, CLOSE, CLOSE, CLOSE, AMB, AMB, AMB);
 	
 	public boolean canCheck;
-	private FiveFireBallTimer canCheckTimer;
+	private FanBallsTimer canCheckTimer;
 	
 	public FanBalls() {
 		super("FanBalls");
@@ -17,11 +17,11 @@ public class FanBalls extends Spells {
 
 	public void run()
 	{
-		System.out.println("ENTRO NELLA RUN DELLA MAGIA FIVE FIRE BALLS");
+		System.out.println("ENTRO NELLA RUN DELLA MAGIA FUN BALLS");
 	
-		this.mediaX = 0;
-		this.mediaY = 0;
-		this.mediaZ = 0;
+		super.mediaX = 0;
+		super.mediaY = 0;
+		super.mediaZ = 0;
 		
 		this.timer = new SpellTimer(this, TIMEOUT);
 		this.timer.start();
@@ -29,7 +29,7 @@ public class FanBalls extends Spells {
 		this.stop = false;
 		this.canCheck = false;
 		
-		this.canCheckTimer = new FiveFireBallTimer(this, 101);
+		this.canCheckTimer = new FanBallsTimer(this, 101);
 		this.canCheckTimer.start();
 		
 		int X = this.playingMote.getCurrentXvalue();
@@ -41,12 +41,10 @@ public class FanBalls extends Spells {
 		while( (!this.canCheck) || (!ItIsSpell && !this.stop) || (mediaX == 0 || mediaY == 0 || mediaZ == 0))
 		{
 			ItIsSpell = this.isEndPosition(X, Y, Z);
-
-			//System.out.println(X + " : " + Y + " : " + Z);
 			
-			this.mediaX = (this.mediaX + X) / 2;
-			this.mediaY = (this.mediaY + Y) / 2;
-			this.mediaZ = (this.mediaZ + Z) / 2;
+			super.mediaX = (super.mediaX + X) / 2;
+			super.mediaY = (super.mediaY + Y) / 2;
+			super.mediaZ = (super.mediaZ + Z) / 2;
 			
 			X = this.playingMote.getCurrentXvalue();
 			Y = this.playingMote.getCurrentYvalue();
@@ -80,8 +78,8 @@ public class FanBalls extends Spells {
 
 	@Override
 	protected boolean isSpell() {
-		System.out.println("ENTRO IN ISSPELL DI FIVE BALLS");
-		if(super.about(super.mediaZ, 130, IRRILEVANT, DX))
+		System.out.println("ENTRO IN ISSPELL DI FAN BALLS");
+		if(super.about(super.mediaX, 140, IRRILEVANT, DX) && super.about(super.mediaY, 120, CLOSE, AMB) && super.about(super.mediaZ, 150, IRRILEVANT, DX))
 		{
 			System.out.println("E' LA MAGIA !!!");
 			super.castSpell();

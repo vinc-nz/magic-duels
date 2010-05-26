@@ -1,15 +1,16 @@
 package Menu.src.multiplayer.lobby;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-
-import sun.reflect.generics.visitor.Reifier;
 
 public class LobbyUtilsFactory {
 
@@ -29,6 +30,19 @@ public class LobbyUtilsFactory {
 		borderTitle.setTitleFont( new Font("Verdana", Font.BOLD, 18));
 		
 		return borderTitle;
+	}
+	
+	public static JButton createAnimatedButton(String mainImage, String rollOverImage)
+	{
+		JButton button = new JButton(new ImageIcon(mainImage));
+		button.setRolloverIcon(new ImageIcon(rollOverImage));
+		button.setFocusPainted(false);
+		button.setFocusable(false);
+		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
+		return button;
 	}
 	
 	public static void setLobbyTextFieldParameters(JTextField field, String borderTitle)

@@ -65,29 +65,20 @@ public class LobbyClient extends Thread {
 		return joinedGame;
 	}
 
-	public boolean connect(String ip, int port)
+	public boolean connect(String ip, int port) throws UnknownHostException, IOException
 	{
-		try {
 			
-			this.connection = new Socket(ip, port);
-			
-			this.out = new ObjectOutputStream(this.connection.getOutputStream());
-			this.out.flush();
-			this.in = new ObjectInputStream(this.connection.getInputStream());
-			
-			if(this.readMessage().equals(Messages.WELCOME))
-				return true;
-			else
-				return false;
-			
-		} catch (UnknownHostException e) {
-			System.out.println("L'host è sconosciuto");
-		} catch (IOException e) {
-			System.out.println("Errore durante la connessione all'Host");
-			e.printStackTrace();
-		}		
+		this.connection = new Socket(ip, port);
 		
-		return false;
+		this.out = new ObjectOutputStream(this.connection.getOutputStream());
+		this.out.flush();
+		this.in = new ObjectInputStream(this.connection.getInputStream());
+		
+		if(this.readMessage().equals(Messages.WELCOME))
+			return true;
+		else
+			return false;		
+		
 	}
 	
 	public boolean isConnected()
