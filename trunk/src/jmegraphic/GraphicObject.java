@@ -38,7 +38,9 @@ public abstract class GraphicObject extends SceneElem {
 		this.moving = false;
 		this.addBoundingBox();
 		this.applyCullState();
-		this.applyZBufferState();
+		//this.applyZBufferState();
+		this.getLocalTranslation().x = this.object.getPosition().getX();
+		this.getLocalTranslation().z = this.object.getPosition().getY();
 		if (object instanceof MovingObject)
 			this.calculateRotation();
 	}
@@ -46,9 +48,7 @@ public abstract class GraphicObject extends SceneElem {
 	
 	
 	
-	@Override
-	public void update(float tpf) {
-		super.update(tpf);
+	public void updatePosition() {
 		Vector3f position = new Vector3f();
 		position.x = this.object.getPosition().getX();
 		position.z = this.object.getPosition().getY();

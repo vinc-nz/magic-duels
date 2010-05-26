@@ -32,4 +32,15 @@ public class CountdownTimer {
 			}
 	}
 
+	public boolean isActive() {
+		return lastTime!=0;
+	}
+
+	public void deactivate() {
+		lastTime=0;
+		
+	}
+	
+	
+
 }

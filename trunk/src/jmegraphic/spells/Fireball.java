@@ -14,6 +14,10 @@ import core.objects.AbstractObject;
 
 public class Fireball extends GraphicObject {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ParticleMesh explosion = null;
 	int height = 20;
 
@@ -52,6 +56,7 @@ public class Fireball extends GraphicObject {
 	public void update(float tpf) {
 		
 		super.update(tpf);
+		this.updatePosition();
 		
 		if (!this.getObject().isInGame())
 			this.explode();

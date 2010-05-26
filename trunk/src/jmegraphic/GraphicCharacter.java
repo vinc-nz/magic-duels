@@ -13,12 +13,12 @@ import com.jme.scene.Node;
 import com.jme.scene.state.TextureState;
 import com.jme.system.DisplaySystem;
 import com.jme.util.TextureManager;
-import com.jme.util.Timer;
 import com.jmex.model.animation.JointController;
 
 import core.fight.Character;
+import core.fight.Fight;
 
-public class GraphicCharacter extends GraphicObject {
+public class GraphicCharacter extends GraphicObject implements Runnable {
 	
 	/**
 	 * 
@@ -36,7 +36,8 @@ public class GraphicCharacter extends GraphicObject {
 	short currentAnim;				//animazione corrente
 	
 	boolean preparingSpell;
-	float lastTime;
+	boolean positionUpdated = true;
+	CountdownTimer animationTimer = new CountdownTimer();
 
 	public GraphicCharacter(Character coreCharacter) {
 		super(coreCharacter);
@@ -44,7 +45,8 @@ public class GraphicCharacter extends GraphicObject {
 		this.coreCharacter = coreCharacter;
 		
 		this.preparingSpell = false;
-		this.lastTime = 0;
+		
+		
 	}
 	
 	
@@ -54,30 +56,58 @@ public class GraphicCharacter extends GraphicObject {
 	}
 
 
-
 	@Override
-	public void update(float tpf) {
-		super.update(tpf);
+	public void run() {
+		while(!Fight.getInstance().finished) {
+			coreCharacter.checkState();
+			updateState();
+		}
+		
+	}
+	
+	public void updateState() {
+		if (coreCharacter.isMoving()) {
+			positionUpdated = false;
+			coreCharacter.moved();
+		}
 		
 		if (!preparingSpell && coreCharacter.isPreparingSpell()) {
 			this.preparingSpell = true;
 			this.setAnimation(ATTACK);
 		}
 		
+		if (coreCharacter.isDead()) {
+			this.setAnimation(DIE);
+		}
+		
+	}
+	
+	@Override
+	public void update(float tpf) {
+		if (pointOfAnimation(ATTACK, 0.95f)) {
+			coreCharacter.castSpell();
+		}
+		
 		if (pointOfAnimation(ATTACK,1)) { //se l'animazione di attacco è finita
 			this.setAnimation(STAND);
-		}
-		else if (pointOfAnimation(ATTACK, 0.95f)) {
-			coreCharacter.castSpell();
 			this.preparingSpell = false;
-		} 
-		else if (pointOfAnimation(DIE, 1))
+			coreCharacter.ready();
+		}
+		
+		if (pointOfAnimation(DIE, 1))
 			controller.setActive(false);
+		
+		if (!positionUpdated) {
+			this.updatePosition();
+			positionUpdated = true;
+			coreCharacter.ready();
+		}
+		else if (currentAnim==WALK)
+			this.stopMoving();
 		
 		this.calculateRotation();
 		
-		//this.controller.update(tpf);
-		
+		super.update(tpf);
 	}
 	
 	
@@ -147,34 +177,37 @@ public class GraphicCharacter extends GraphicObject {
 		this.attachChild(model);
 		
 		this.controller=(JointController)model.getController(0);
-		//this.controller.setActive(false);
-		this.setAnimation(STAND);
 		this.controller.setSpeed(0.3f);
+		this.setAnimation(STAND);
+		new Thread(this).start();
 	}
 
 	@Override
 	public void startMoving() {
 		super.startMoving();
 		this.setAnimation(WALK);
-		
+		animationTimer.deactivate();
 	}
 
 	@Override
 	public void stopMoving() {
-		float time = Timer.getTimer().getTimeInSeconds();
-		if (lastTime==0)
-			lastTime = time;
-		else if (time-lastTime>ANIMATION_UPTIME) {
+		if (!animationTimer.isActive())
+			animationTimer.start(ANIMATION_UPTIME);
+		else if (animationTimer.expired()) {
 			super.stopMoving();
 			this.setAnimation(STAND);
-			lastTime = 0;
+			animationTimer.deactivate();
 		}
-	}
-
-
-
-	public void die() {
-		this.setAnimation(DIE);
+//		animationTimer.start(ANIMATION_UPTIME);
+//		animationTimer.waitExpire();
+//		try {
+//			Thread.sleep((long) (ANIMATION_UPTIME*1000));
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		this.setAnimation(STAND);
+//		super.stopMoving();
 	}
 	
 }
