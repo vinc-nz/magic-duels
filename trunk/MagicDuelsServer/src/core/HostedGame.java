@@ -66,10 +66,11 @@ public class HostedGame {
 				{
 					slot.changeSlotState(Messages.OPEN);
 					slotIndex = this.slots.indexOf(slot);
+						
 					break;
 				}
 		}
-		
+				
 		if(slotIndex != -1)
 		{
 			String message = Messages.CHANGESLOTTYPE;
@@ -79,10 +80,15 @@ public class HostedGame {
 			for (Iterator iterator = this.slots.iterator(); iterator.hasNext();)
 			{
 				HostedGameSlot slot = (HostedGameSlot) iterator.next();
-				if(slot.isHuman())
+				if(slot.isHuman() && this.slots.indexOf(slot) != 0)
+				{
 					slot.human.sendMessage(message);
+					System.out.println("Server>" + slot.human.utente.getNome() + ": " + message);
+				}
 			}
-		}		
+			
+			this.host.sendMessage(Messages.SLOTLEFT + slotIndex);
+		}
 	}
 	
 	public String getSlotMessageInfo()

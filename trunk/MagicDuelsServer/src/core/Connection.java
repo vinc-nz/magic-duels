@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Iterator;
 
 import entities.Utente;
 
@@ -165,9 +166,9 @@ public class Connection extends Thread {
 			return Messages.KILL;
 		} catch (ClassNotFoundException e) {
 			System.out.println("Classe non trovata!");
+			return Messages.KILL;
 		}
 		
-		return Messages.KILL;
 	}
 	
 	protected void closeConnection()
@@ -207,9 +208,9 @@ public class Connection extends Thread {
 		String gameName = msg.substring(Messages.JOIN.length());
 		
 		HostedGame hostedGame = this.server.hostedGames.get(gameName);
-		if(hostedGame == null) this.sendMessage(Messages.JOINFAILED);
+		if(hostedGame == null){ this.sendMessage(Messages.JOINFAILED); return; }
 		int slotIndex = hostedGame.joinGame(this); 
-		if(slotIndex == -1) this.sendMessage(Messages.JOINFAILED);
+		if(slotIndex == -1){ this.sendMessage(Messages.JOINFAILED); return; }
 		
 		String message = Messages.JOINOK;
 		message += hostedGame.getSlotMessageInfo();
@@ -219,6 +220,20 @@ public class Connection extends Thread {
 		message += slotIndex + ";";
 		message += this.utente.getNome() + ";";
 		hostedGame.host.sendMessage(message);
+		
+		for (Iterator iterator = this.hostedGame.slots.iterator(); iterator.hasNext();) {
+			HostedGameSlot slot = (HostedGameSlot) iterator.next();
+			
+			if(slot.isHuman())
+			{
+				message = Messages.CHANGESLOTTYPE;
+				message += String.valueOf(this.hostedGame.slots.indexOf(slot)) + ";";
+				message += this.utente.getNome();
+				
+				slot.human.sendMessage(message);
+			}
+			
+		}
 		
 		this.joinedGame = hostedGame;
 	}
