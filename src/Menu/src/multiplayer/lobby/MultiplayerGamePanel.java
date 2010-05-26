@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import Menu.src.multiplayer.LobbyUtilsFactory;
 
 public class MultiplayerGamePanel extends JPanel{
 	
@@ -72,11 +71,16 @@ public class MultiplayerGamePanel extends JPanel{
 
 				if(MultiplayerGamePanel.this.graphicLobby.gameListPanel.selectedTableRow == -1) return;
 				
-				String gameName = (String)MultiplayerGamePanel.this.graphicLobby.gameListPanel.gameTable.getValueAt(MultiplayerGamePanel.this.graphicLobby.gameListPanel.selectedTableRow, 0);
-				String ip = (String)MultiplayerGamePanel.this.graphicLobby.gameListPanel.gameTable.getValueAt(MultiplayerGamePanel.this.graphicLobby.gameListPanel.selectedTableRow, 2);
-				int porta = (Integer)MultiplayerGamePanel.this.graphicLobby.gameListPanel.gameTable.getValueAt(MultiplayerGamePanel.this.graphicLobby.gameListPanel.selectedTableRow, 3);
-				
-				MultiplayerGamePanel.this.graphicLobby.lobbyClient.tryJoiningGame(gameName, ip, porta);
+				try{
+					String gameName = (String)MultiplayerGamePanel.this.graphicLobby.gameListPanel.gameTable.getValueAt(MultiplayerGamePanel.this.graphicLobby.gameListPanel.selectedTableRow, 0);
+					String ip = (String)MultiplayerGamePanel.this.graphicLobby.gameListPanel.gameTable.getValueAt(MultiplayerGamePanel.this.graphicLobby.gameListPanel.selectedTableRow, 2);
+					int porta = (Integer)MultiplayerGamePanel.this.graphicLobby.gameListPanel.gameTable.getValueAt(MultiplayerGamePanel.this.graphicLobby.gameListPanel.selectedTableRow, 3);
+	
+					MultiplayerGamePanel.this.graphicLobby.lobbyClient.tryJoiningGame(gameName, ip, porta);
+				} catch(ArrayIndexOutOfBoundsException exc)
+				{
+					MultiplayerGamePanel.this.graphicLobby.showWarning("Non hai selezionato una partita!");
+				}
 			}
 				
 		});

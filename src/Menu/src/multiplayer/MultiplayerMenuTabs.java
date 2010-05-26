@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Menu.src.MainMenu;
+import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
 
 public abstract class MultiplayerMenuTabs extends JPanel{
 

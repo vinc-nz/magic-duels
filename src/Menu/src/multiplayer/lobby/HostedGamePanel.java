@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import Menu.src.multiplayer.LobbyUtilsFactory;
 
 import lobby.LobbyHostedGame;
 import lobby.Messages;

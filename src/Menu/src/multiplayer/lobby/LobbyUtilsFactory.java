@@ -1,4 +1,4 @@
-package Menu.src.multiplayer;
+package Menu.src.multiplayer.lobby;
 
 import java.awt.Color;
 import java.awt.Font;

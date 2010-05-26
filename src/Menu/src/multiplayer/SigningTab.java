@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Menu.src.MainMenu;
+import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
 
 public class SigningTab extends MultiplayerMenuTabs {
 	

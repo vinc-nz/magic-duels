@@ -12,7 +12,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import Menu.src.multiplayer.LobbyUtilsFactory;
 
 public class WriteChatAreaPanel extends JPanel {
 
