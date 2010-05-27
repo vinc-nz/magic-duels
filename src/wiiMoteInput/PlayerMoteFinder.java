@@ -17,16 +17,25 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 		this.disconnectMote = false;
 	}
 	
+	/**
+	 * @return the mote object
+	 */
 	public Mote getMote() {
 		return mote;
 	}
 
-	public void disconnectMote()
+	/**
+	 * Disconnects the mote
+	 */
+	public synchronized void disconnectMote()
 	{
 		this.disconnectMote = true;
 		super.notifyAll();
 	}
 	
+	/**
+	 * Is called as the mote has been connected
+	 */
 	public void moteFound(Mote mote) {
 		this.mote = mote;
 		synchronized(lock) {
@@ -77,15 +86,13 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 			System.out.println(ex.getMessage());
 		};
 		
-
-		System.out.println("INIZIO WHILE: IF NOT DISCONNECT..");
 		while(!this.disconnectMote)
 			try {
 				sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println("FINE WHILE: MOTE DISCONNECTED..");	
+
 		mote.disconnect();
 		this.mote = null;
 

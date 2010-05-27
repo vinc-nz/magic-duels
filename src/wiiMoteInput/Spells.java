@@ -5,8 +5,8 @@ import wiiMoteInput.spells.FanBalls;
 import wiiMoteInput.spells.FireBallSpell;
 import wiiMoteInput.spells.NewSpell;
 
-/*
- * The function manages all the spells that a player could
+/**
+ * The class manages all the spells that a player could
  * cast by using the wii mote controller
  */
 abstract public class Spells extends Thread {
@@ -45,16 +45,14 @@ abstract public class Spells extends Thread {
 	protected abstract SpellStep getEndStep();
 	protected abstract boolean isSpell();
 	
-	public String toString() {
-		return this.currentSpellName;
-	}
-		
 	public Spells(String currentSpellName) {
 		this.currentSpellName = currentSpellName;
 	}
-	/*
-	 * 
-	 */
+
+	public String toString() {
+		return this.currentSpellName;
+	}
+	
 	public void setPlayingMote(PlayingMote playingMote) {
 		this.playingMote = playingMote;
 	}
@@ -64,8 +62,8 @@ abstract public class Spells extends Thread {
 		this.characterController = characterController;
 	}
 	
-	/*
-	 * The function checks if the given position is the end of a spell movment
+	/**
+	 * The function checks if the given position is the end of a spell movement
 	 */
 	public boolean isEndPosition(int currentXvalue, int currentYvalue, int currentZvalue)
 	{

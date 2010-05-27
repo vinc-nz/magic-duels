@@ -28,7 +28,6 @@ public class LobbyClient extends Thread {
  	public LobbyHostedGame hostedGame;
  	public LobbyJoinedGame joinedGame;
  	
- 	// Grafica della Lobby
  	Lobby graphicLobby;
  	
  	ServerGame serverGame;
@@ -37,6 +36,7 @@ public class LobbyClient extends Thread {
 	int comPlayers;
 	int port;
 	int result;
+	boolean isFinished;
 	public static short SERVER_STARTED = 0;
 	public static short SERVER_FAILED = 1;
 	
@@ -45,29 +45,56 @@ public class LobbyClient extends Thread {
 		this.joinedGame = null;
 	}
 	
+	/**
+	 * Sets the Lobby variable
+	 * @param graphicLobby
+	 */
 	public void setGraphicLobby(Lobby graphicLobby) {
 		this.graphicLobby = graphicLobby;
 	}
 
+	/**
+	 * 
+	 * @return a list of the player names logged to the server
+	 */
 	public List<String> getPlayers() {
 		return players;
 	}
 
+	/**
+	 * 
+	 * @return a list of the hosted games given by the server
+	 */
 	public List<HostedGameInfo> getHostedGameList() {
 		return hostedGameList;
 	}
 
+	/**
+	 *  
+	 * @return the game hosted by the player
+	 */
 	public LobbyHostedGame getHostedGame() {
 		return hostedGame;
 	}
 	
+	/**
+	 * 
+	 * @return the game joined by the player
+	 */
 	public LobbyJoinedGame getJoinedGame() {
 		return joinedGame;
 	}
 
+	/**
+	 * Connect the game to the server whose connection parameters are specified by the user
+	 * @param server ip
+	 * @param server port
+	 * @return true if connected, flase otherwise
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	public boolean connect(String ip, int port) throws UnknownHostException, IOException
-	{
-			
+	{		
 		this.connection = new Socket(ip, port);
 		
 		this.out = new ObjectOutputStream(this.connection.getOutputStream());
@@ -77,15 +104,22 @@ public class LobbyClient extends Thread {
 		if(this.readMessage().equals(Messages.WELCOME))
 			return true;
 		else
-			return false;		
-		
+			return false;			
 	}
 	
+	/**
+	 * 
+	 * @return true if the game is connected to a server, dalse otherwise
+	 */
 	public boolean isConnected()
 	{
 		return (this.connection != null && this.connection.isConnected());
 	}
 	
+	/**
+	 * Sends a message to the server 
+	 * @param msg
+	 */
 	public void sendMessage(String msg)
 	{
 		try{
@@ -97,6 +131,10 @@ public class LobbyClient extends Thread {
 		}
 	}
 
+	/**
+	 * Reads a message from the server 
+	 * @return the string received from the server
+	 */
 	public synchronized String readMessage()
 	{
 		try{
@@ -116,6 +154,12 @@ public class LobbyClient extends Thread {
 		return null;
 	}
 	
+	/**
+	 * Sends a login request to the server
+	 * @param nome
+	 * @param password
+	 * @return true if logged, false otherwise
+	 */
 	public boolean logIn(String nome, String password)
 	{
 		this.sendMessage(Messages.LOGIN + nome + ";" + password);
@@ -129,6 +173,9 @@ public class LobbyClient extends Thread {
 		}
 	}
 	
+	/**
+	 * Closes the connection with the server
+	 */
 	protected void closeConnection()
 	{
 		try {
@@ -143,6 +190,10 @@ public class LobbyClient extends Thread {
 		}
 	}
 	
+	/**
+	 * The thread is started after the connection with the server.
+	 * It manages the dialog among client and server
+	 */
 	@Override
 	public void run() {
 		
@@ -198,7 +249,7 @@ public class LobbyClient extends Thread {
 				this.startClientGame();
 			
 			else if(message.startsWith(Messages.GAMEKILLED))
-				this.killGame(message);
+				this.killGame();
 			
 			else if(message.startsWith(Messages.PLAYERKICKED))
 				this.playerKicked();
@@ -208,32 +259,52 @@ public class LobbyClient extends Thread {
 		this.closeConnection();
 	}
 
+	/**
+	 * Sends the chat message to the server
+	 * @param message the chat message
+	 */
 	public void sendChatMessage(String message)
 	{
 		this.sendMessage(Messages.CHAT + message);
-		System.out.println("INVIO " + Messages.CHAT + message);
 	}
 	
+	/**
+	 * Shows to the player the chat message
+	 * @param message the message received from the server containing the chat message, preceded by protocol information
+	 */
 	public void writeChatMessage(String message)
-	{
-		
+	{	
 		String []msg = message.substring(Messages.CHAT.length()).split(";", 2);
-		
 		this.graphicLobby.writeChatMessage(msg[1].substring(0, Integer.parseInt(msg[0])), msg[1].substring(Integer.parseInt(msg[0])));
 	}
 	
+	/**
+	 * Sets the player list and refreshes the graphic
+	 * @param message the message received from the server containing the player list, preceded by protocol information
+	 */
 	public void setClientList(String message)
 	{
 		this.players = LobbyClient.createClientList(message);
 		this.graphicLobby.refreshPlayerListPanel();
 	}
 	
+	/**
+	 * Sets the hosted game list and refreshes the graphic
+	 * @param message the message received from the server containing the hosted game list, preceded by protocol information
+	 */
 	public void setGameList(String message)
 	{
 		this.hostedGameList = LobbyClient.createGameList(message);
 		this.graphicLobby.refreshGameListPanel();
 	}
 	
+	/**
+	 * Asks the server to sign a new user to the dbms
+	 * @param utente the user name
+	 * @param password the user password
+	 * @param mail the user mail
+	 * @return true if signed, false otherwise
+	 */
 	public boolean newUser(String utente, String password, String mail)
 	{
 		this.sendMessage(Messages.NEWUSER + utente + ";" + password + ";" + mail);
@@ -243,6 +314,11 @@ public class LobbyClient extends Thread {
 			return false;
 	}
 	
+	/**
+	 * Turns a string into a list by cutting protocol information and splitting it
+	 * @param message the message sent by the server, containing protocol information
+	 * @return a list of string containing the player logged to the server
+	 */
 	public static List createClientList(String message)
 	{
 		String list = message.substring(Messages.CLIENTLIST.length());
@@ -256,6 +332,11 @@ public class LobbyClient extends Thread {
 		return clientList;
 	}
 	
+	/**
+	 * Turns a string into a list by cutting protocol information and splitting it
+	 * @param message the message sent by the server, containing protocol information
+	 * @return a list of string containing the hosted game contained into the server
+	 */
 	public static List createGameList(String message)
 	{
 		String list = message.substring(Messages.GAMELIST.length());
@@ -274,11 +355,20 @@ public class LobbyClient extends Thread {
 		return gameList;
 	}
 	
+	/**
+	 * Sends a message to the server to ask both the player and game lists
+	 */
 	public void requestListRefresh()
 	{
 		this.sendMessage(Messages.REFRESHLIST);
 	}
 	
+	/**
+	 * Creates a new LobbyHostedGame object and advice the server
+	 * @param gameName the name of the hosted game
+	 * @param numSlots the number of slot of the hosted game
+	 * @param numPorta the port number of the hosted game
+	 */
 	public void createGame(String gameName, int numSlots, int numPorta)
 	{
 		this.hostedGame = new LobbyHostedGame(this, gameName, numPorta, numSlots);
@@ -287,12 +377,16 @@ public class LobbyClient extends Thread {
 		msg += gameName + ";";
 		msg += String.valueOf(numSlots) + ";";
 		msg += String.valueOf(numPorta) + ";";
-
-		System.out.println("HOSTED GAME CREATO");
 		
 		this.sendMessage(msg);
 	}
 	
+	/**
+	 * Requests to the server to join a game
+	 * @param gameName the name of the game that you want to join to
+	 * @param ip the ip of the game that you want to join to
+	 * @param porta the port of the game that you want to join to
+	 */
 	public void tryJoiningGame(String gameName, String ip, int porta)
 	{
 		this.joinedGame = new LobbyJoinedGame(gameName, ip, porta);
@@ -303,6 +397,9 @@ public class LobbyClient extends Thread {
 		this.sendMessage(msg);
 	}
 	
+	/**
+	 * Adds the joined game information and refreshes the graphic
+	 */
 	public void joinGame(String msg)
 	{
 		String []parameter = msg.substring(Messages.JOINOK.length()).split(";");
@@ -313,6 +410,10 @@ public class LobbyClient extends Thread {
 		this.graphicLobby.joinAGame();
 	}
 	
+	/**
+	 * Changes the joined game information and refreshes the graphic
+	 * @param msg the slot information sent by the server. contains protocol information
+	 */
 	public void changeJoinedGameSlotType(String msg)
 	{
 		if(this.joinedGame == null) return;
@@ -321,6 +422,10 @@ public class LobbyClient extends Thread {
 		this.graphicLobby.joinAGame();
 	}
 	
+	/**
+	 * Changes the hosted game information and refreshes the graphic
+	 * @param msg the slot information sent by the server. contains protocol information
+	 */
 	public void slotLeft(String msg)
 	{
 		int slotIndex = Integer.parseInt(msg.substring(Messages.SLOTLEFT.length()));
@@ -329,6 +434,10 @@ public class LobbyClient extends Thread {
 		this.graphicLobby.hostAGame();
 	}
 	
+	/**
+	 * Changes the hosted game information and refreshes the graphic
+	 * @param msg the slot information sent by the server. contains protocol information
+	 */
 	public void joinSlot(String msg)
 	{
 		String []parameter = msg.substring(Messages.JOINOK.length()).split(";");
@@ -336,18 +445,28 @@ public class LobbyClient extends Thread {
 		this.hostedGame.joinSlot(Integer.parseInt(parameter[0]), parameter[1]);
 	}
 	
+	/**
+	 * Communicates to the server that the client has left the game
+	 */
 	public void leaveSlot()
 	{
 		this.sendMessage(Messages.LEAVESLOT);
 	}
 	
+	/**
+	 * Communicates to the player that he's been kicked by the host and refreshes the graphic
+	 */
 	public void playerKicked()
 	{
 		this.graphicLobby.showWarning("Sei Stato Cacciato dalla Partita!");
 		this.graphicLobby.multiplayerGame();
 	}
 	
-	public void killGame(String msg)
+	/**
+	 * Communicates the client that the game has been destroyed and refreshes the graphic
+	 * @param msg
+	 */
+	public void killGame()
 	{
 		this.hostedGame = null;
 		this.joinedGame = null;
@@ -356,7 +475,11 @@ public class LobbyClient extends Thread {
 		this.graphicLobby.multiplayerGame();
 	}
 	
-	public void startServerGame(String msg)
+	/**
+	 * Starts a new server game
+	 * @param msg the message sent by the server containing game and protocol information 
+	 */
+	public synchronized void startServerGame(String msg)
 	{
 		String []parameter = msg.substring(Messages.STARTSERVERGAME.length()).split(";");
 		
@@ -372,15 +495,19 @@ public class LobbyClient extends Thread {
 		this.serverGame = new ServerGame(playerMote, mainMenu);
 		
 		System.out.println(name + " - " + humanPlayers + " - " + comPlayers + " - " + port);
-					
+		
+		this.isFinished = false;
+		
 		Runnable init = new Runnable() {
 			@Override
 			public void run() {	
 				LobbyClient.this.result = LobbyClient.SERVER_STARTED;
 				try {
 					LobbyClient.this.serverGame.init(LobbyClient.this.name, LobbyClient.this.humanPlayers,
-							LobbyClient.this.comPlayers, LobbyClient.this.port);
+					LobbyClient.this.comPlayers, LobbyClient.this.port);
 					LobbyClient.this.serverGame.start();
+					LobbyClient.this.isFinished = true;
+					LobbyClient.this.notifyAll();
 				} catch (IOException e) {
 					LobbyClient.this.result = LobbyClient.SERVER_FAILED;
 				}
@@ -397,12 +524,23 @@ public class LobbyClient extends Thread {
 			}
 		
 		if(this.result == LobbyClient.SERVER_STARTED)
+		{
 			this.sendMessage(Messages.SERVERGAMESTARTED);
-		else
+			while(!this.isFinished)
+				try {
+					this.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			this.graphicLobby.multiplayerGame();
+		} else
 			this.graphicLobby.showWarning("Attenzione!\nSembra vi sia un errore che impedisca l'inizio della partita!");
 			
 	}
 	
+	/**
+	 * Starts a new client game
+	 */
 	public void startClientGame()
 	{
 		PlayerMote playerMote = this.graphicLobby.mainMenu.playMote;
@@ -414,9 +552,7 @@ public class LobbyClient extends Thread {
 		String address = this.joinedGame.ip;
 		if(address.startsWith("/")) address = address.substring(1);
 		int port = this.joinedGame.porta;
-		
-		System.out.println(name + " - " + address + " - " + port);
-		
+				
 		try {
 			game.init(name, address, port);
 			game.start();

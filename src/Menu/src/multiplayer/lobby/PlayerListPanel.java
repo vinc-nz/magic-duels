@@ -12,7 +12,6 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-
 public class PlayerListPanel extends JScrollPane {
 
 	Lobby graphicLobby;
@@ -32,6 +31,9 @@ public class PlayerListPanel extends JScrollPane {
 		super.revalidate();
 	}
 
+	/**
+	 * Refreshes the game list panel
+	 */
 	public void refreshPlayerList()
 	{
 		DefaultListModel model = new DefaultListModel();
@@ -53,14 +55,7 @@ public class PlayerListPanel extends JScrollPane {
 		list.repaint();
 		list.revalidate();
 		
-		//super.removeAll();
 		super.setViewportView(list);
-		//super.getViewport().add(list);
-		//this.playerList.setViewportView(list);
-		//this.playerList.add(list);
-
 	}
-
-
 
 }

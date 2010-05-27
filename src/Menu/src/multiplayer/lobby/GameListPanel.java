@@ -42,6 +42,9 @@ public class GameListPanel extends JScrollPane {
 		this.initGameListArePanel();
 	}
 
+	/**
+	 * Initializes the game list panel
+	 */
 	public void initGameListArePanel()
 	{
 		
@@ -93,6 +96,9 @@ public class GameListPanel extends JScrollPane {
 		
 	}
 
+	/**
+	 * Refreshes the game list panel
+	 */
 	public void refreshGameListArePanel()
 	{
 

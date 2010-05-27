@@ -22,6 +22,9 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 		this.buttonBTimeStamp = 0;
 	}
 
+	/**
+	 * Is called as a button is pressed
+	 */
 	@Override
 	public void buttonPressed(CoreButtonEvent evento) {
 		
@@ -35,6 +38,12 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 		if(evento.isButtonPlusPressed() || evento.isDPadRightPressed())
 			this.characterController.move("right");
 
+		if(evento.isDPadUpPressed())
+		this.characterController.move("forward");
+		
+		if(evento.isDPadDownPressed())
+		this.characterController.move("backward");
+		
 		if(evento.isButtonBPressed())
 		{
 			long nextTimestamp = new Date().getTime();

@@ -79,6 +79,5 @@ public class JoinedGamePanel extends JPanel {
 		super.repaint();
 		super.revalidate();
 		
-	}
-	
+	}	
 }

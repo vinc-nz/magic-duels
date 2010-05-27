@@ -31,6 +31,9 @@ public class WriteChatAreaPanel extends JPanel {
 	
 	}
 	
+	/**
+	 * Initializes the panel in which to write chat message
+	 */
 	public void initWriteChatAreaPanel()
 	{	
 		this.chatArea = new JTextField();

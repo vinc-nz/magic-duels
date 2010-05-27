@@ -77,12 +77,19 @@ public class Lobby extends JPanel {
 				
 	}
 	
-	public void paintComponent(Graphics g) {
-		g.drawImage( background, 0, 0, this.getWidth(), this.getHeight(), null);
-	}
-	
+	/**
+	 * Refreshes the player list panel
+	 */
 	public void refreshPlayerListPanel() { this.playerListPanel.refreshPlayerList(); }
+	
+	/**
+	 * Refreshes the game list panel
+	 */
 	public void refreshGameListPanel() { this.gameListPanel.refreshGameListArePanel(); }
+	
+	/**
+	 * Shows the basic multiplayer menu (no hosted or joined games) 
+	 */
 	
 	public void multiplayerGame()
 	{
@@ -94,6 +101,9 @@ public class Lobby extends JPanel {
 		this.rightPanel.revalidate();
 	}
 	
+	/**
+	 * Shows the hosted game panel
+	 */
 	public void hostAGame() 
 	{ 
 		this.rightPanel.removeAll();
@@ -101,15 +111,11 @@ public class Lobby extends JPanel {
 		this.rightPanel.add(new HostedGamePanel(this));
 		this.rightPanel.repaint();
 		this.rightPanel.revalidate();
-		/*
-		this.multiplayerGame.removeAll();
-		this.multiplayerGame.setLayout(new FlowLayout());
-		this.multiplayerGame.add(new HostedGamePanel(this));
-		this.multiplayerGame.repaint();
-		this.multiplayerGame.revalidate();
-		*/
 	}
 
+	/**
+	 * Shows the joined game panel
+	 */
 	public void joinAGame()
 	{
 		this.rightPanel.removeAll();
@@ -117,17 +123,22 @@ public class Lobby extends JPanel {
 		this.rightPanel.add(new JoinedGamePanel(this));
 		this.rightPanel.repaint();
 		this.rightPanel.revalidate();
-		
-		/*
-		this.multiplayerGame.removeAll();
-		this.multiplayerGame.setLayout(new FlowLayout());
-		this.multiplayerGame.add(new JoinedGamePanel(this));
-		this.multiplayerGame.repaint();
-		this.multiplayerGame.revalidate();*/
 	}
 	
+	/**
+	 * Writes a chat message into the chat area panel
+	 * @param player the player whos ent the message
+	 * @param msg the chat message
+	 */
 	public void writeChatMessage(String player, String msg) { this.chatAreaPanel.writeChatMessage(player, msg); }
 	
+	/**
+	 * Shows a warning message tot he client
+	 * @param warning the warning message
+	 */
     public void showWarning(String warning) { JOptionPane.showMessageDialog(mainMenu, warning, "Magic Duels Game", JOptionPane.WARNING_MESSAGE); }
 	
+	public void paintComponent(Graphics g) {
+		g.drawImage( background, 0, 0, this.getWidth(), this.getHeight(), null);
+	}
 }
