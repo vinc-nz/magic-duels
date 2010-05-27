@@ -8,14 +8,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-
 
 public class MultiplayerGamePanel extends JPanel{
 	
@@ -112,7 +108,6 @@ public class MultiplayerGamePanel extends JPanel{
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
-		//c.insets = new Insets(5, 5, 5, 5);
 		c.ipadx = 5;
 		c.ipady = 5;
 		

@@ -1,6 +1,5 @@
 package Menu.src.multiplayer;
 
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -44,7 +43,7 @@ public class MultiplayerMenu extends JPanel {
 		this.tabbedPane = new MultiplayerMenuTabbedPane();
 		this.tabbedPane.addTab(MultiplayerMenu.LOGIN, this.logingTab);
 		this.tabbedPane.addTab(MultiplayerMenu.NEWACCOUNT, this.signingTab);
-		this.tabbedPane.addTab(MultiplayerMenu.DIRECTCONNECTION, this.directConnectionServerTab);
+		//this.tabbedPane.addTab(MultiplayerMenu.DIRECTCONNECTION, this.directConnectionServerTab);
 				
 		this.tabbedPane.addChangeListener(new ChangeListener() {
 			

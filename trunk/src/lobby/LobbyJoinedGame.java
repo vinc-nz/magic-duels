@@ -21,6 +21,10 @@ public class LobbyJoinedGame {
 		this.slots = new ArrayList<String>();
 	}
 	
+	/**
+	 * Changes the type of a slot
+	 * @param message the message sent by the server containing informations about the slot to modify and protocol information
+	 */
 	public void changeSlotType(String message)
 	{
 		String []parameter = message.substring(Messages.CHANGESLOTTYPE.length()).split(";");
@@ -29,10 +33,20 @@ public class LobbyJoinedGame {
 		this.slots.add(Integer.parseInt(parameter[0]), parameter[1]);
 	}
 	
+	/**
+	 * Adds a slot
+	 * @param slot the slot to add
+	 */
 	public void addSlot(String slot){ this.slots.add(slot); }
 
+	/**
+	 * @return the number of slots
+	 */
 	public int getNumSlots(){ return this.slots.size(); }
 
+	/**
+	 * @return a list of slots
+	 */
 	public List<String> getSlots() { return slots; }
 	
 }

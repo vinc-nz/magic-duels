@@ -1,9 +1,11 @@
 package Menu.src.multiplayer;
 
+import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,7 +28,8 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 	{
 		super.setOpaque(false);
 		super.setLayout(new GridBagLayout());
-		super.setBorder(LobbyUtilsFactory.createPanelBorder());
+		//super.setBorder(LobbyUtilsFactory.createPanelBorder());
+		super.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 
 		this.mainMenu = mainMenu;
 		
@@ -48,13 +51,19 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 			
 			}
 		});
-		
-		
+			
 		this.checkPanel();		
 	}
 	
+	/**
+	 * Shows an alert message to the client
+	 * @param warning the message to show
+	 */
 	public void showWarning(String warning) { JOptionPane.showMessageDialog(mainMenu, warning, "Magic Duels Game", JOptionPane.WARNING_MESSAGE); }
 	
+	/**
+	 * Checks if the client is connected to a server a sets the panel to show
+	 */
 	public abstract void checkPanel();
 
 }

@@ -60,6 +60,9 @@ public class SigningTab extends MultiplayerMenuTabs {
 	
 	}
 
+	/**
+	 * Creates the panel showing the connecting form
+	 */
 	public void connecting()
 	{
 		super.removeAll();
@@ -113,6 +116,9 @@ public class SigningTab extends MultiplayerMenuTabs {
 		super.revalidate();
 	}
 	
+	/**
+	 * Creates the panel showing the signing form
+	 */
 	public void formIscrizione()
 	{
 		super.removeAll();
@@ -144,6 +150,9 @@ public class SigningTab extends MultiplayerMenuTabs {
 		super.revalidate();
 	}
 	
+	/**
+	 * Checks if the client is connected to a server a sets the panel to show
+	 */
 	public void checkPanel()
 	{
 		if(this.mainMenu.lobbyClient.isConnected())

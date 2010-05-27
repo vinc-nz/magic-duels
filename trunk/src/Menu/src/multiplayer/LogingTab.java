@@ -41,6 +41,9 @@ public class LogingTab extends MultiplayerMenuTabs {
 	
 	}
 
+	/**
+	 * Creates the panel showing the connecting form
+	 */
 	public void connecting()
 	{
 		super.removeAll();
@@ -93,6 +96,9 @@ public class LogingTab extends MultiplayerMenuTabs {
 		super.revalidate();
 	}
 	
+	/**
+	 * Creates the panel showing the logging form
+	 */
 	public void logging()
 	{
 		super.removeAll();
@@ -137,6 +143,9 @@ public class LogingTab extends MultiplayerMenuTabs {
 		super.revalidate();
 	}
 
+	/**
+	 * Checks if the client is connected to a server a sets the panel to show
+	 */
 	public void checkPanel()
 	{
 		if(this.mainMenu.lobbyClient.isConnected())

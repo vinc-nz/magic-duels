@@ -14,6 +14,9 @@ import javax.swing.border.TitledBorder;
 
 public class LobbyUtilsFactory {
 
+	/**
+	 * @return a Compound Border
+	 */
 	public static Border createPanelBorder()
 	{
 		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
@@ -22,6 +25,11 @@ public class LobbyUtilsFactory {
 		return BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
 	}
 	
+	/**
+	 * Returns a titled border
+	 * @param title the title o the border to return
+	 * @return a titled border
+	 */
 	public static Border createTitledBorder(String title)
 	{
 		Border border = BorderFactory.createLineBorder(Color.black, 3);
@@ -32,6 +40,12 @@ public class LobbyUtilsFactory {
 		return borderTitle;
 	}
 	
+	/**
+	 * Returns an animated JButton
+	 * @param mainImage the button background
+	 * @param rollOverImage the button image to be shown as the the mouse rolls over the button
+	 * @return an animated JButton
+	 */
 	public static JButton createAnimatedButton(String mainImage, String rollOverImage)
 	{
 		JButton button = new JButton(new ImageIcon(mainImage));
@@ -45,6 +59,11 @@ public class LobbyUtilsFactory {
 		return button;
 	}
 	
+	/**
+	 * Sets customized parameters to the text field given
+	 * @param field the text field to which set the parameters
+	 * @param borderTitle the title of the border to add to the text field
+	 */
 	public static void setLobbyTextFieldParameters(JTextField field, String borderTitle)
 	{
 		field.setOpaque(false);

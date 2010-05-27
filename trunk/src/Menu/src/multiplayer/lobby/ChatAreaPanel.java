@@ -9,13 +9,11 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneLayout;
-import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
-
 
 public class ChatAreaPanel extends JScrollPane {
 
@@ -39,6 +37,9 @@ public class ChatAreaPanel extends JScrollPane {
 		
 	}
 	
+	/**
+	 * Initializes the chat area text panel
+	 */
 	public void initChatAreaPanel()
 	{
 		
@@ -62,16 +63,16 @@ public class ChatAreaPanel extends JScrollPane {
 			e.printStackTrace();
 		}
 		
-		//super.setLayout(new FlowLayout());
 		super.getViewport().add(editorPane);
 		
-		//this.chatAreaScrollPane.setAutoscrolls(true);
-		//this.chatAreaScrollPane.setPreferredSize(new Dimension(chatWidth, chatHeight));
-		
-		this.initChat();
-		
+		this.initChat();		
 	}
 	
+	/**
+	 * Writes a new messages into the chat area
+	 * @param player the player who sent the message
+	 * @param msg the chat message
+	 */
 	public void writeChatMessage(String player, String msg)
 	{   
 		try {
@@ -89,6 +90,9 @@ public class ChatAreaPanel extends JScrollPane {
 		}
 	}
 	
+	/**
+	 * Initializes the styles of the chat area
+	 */
 	public void initChat()
 	{
 		Style def = StyleContext.getDefaultStyleContext().getStyle( StyleContext.DEFAULT_STYLE );

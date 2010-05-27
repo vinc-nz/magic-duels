@@ -10,18 +10,24 @@ public class LedThread extends Thread {
 	private Mote mote;
 	private boolean[] leds = new boolean[] { false, false, false, false };
 
-	
 	public LedThread(Mote mote)
 	{
 		this.mote = mote;
 		this.type = LedThread.NORMAL;
 		mote.setPlayerLeds(this.leds);
 	}
-	
+
+	/**
+	 * Sets the type in wich the leds have to flash
+	 * @param type
+	 */
 	public void setType(String type) {
 		this.type = type;
 	}
 
+	/**
+	 * Makes the leds to flash normally
+	 */
 	private void normal()
 	{
 		for (int i = 0; i < this.leds.length; i++) {

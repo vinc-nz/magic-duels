@@ -5,7 +5,7 @@ import motej.Mote;
 
 import com.intel.bluetooth.BlueCoveImpl;
 
-/*
+/**
  * The class manages the Wii Mote Controller 
  * with all its functions
  */
@@ -65,7 +65,7 @@ public class PlayerMote extends Thread {
 		this.start();
 	}
 	
-	/*
+	/**
 	 * The function returns the connected
 	 * WiiMote Controller, null if no controller 
 	 * is connected
@@ -75,10 +75,10 @@ public class PlayerMote extends Thread {
 		return this.mote;
 	}
 	
-	/*
+	/**
 	 * The function disconnects the wii mote controller
 	 * (if there's one connected) and sets to null
-	 * tha variable mote
+	 * the variable mote
 	 */
 	public void disconnectMote()
 	{
@@ -90,7 +90,7 @@ public class PlayerMote extends Thread {
 		}
 	}
 	
-	/*
+	/**
 	 * The functions set the current value of the mote battery level.
 	 * Note that it's only used by the report information listener
 	 */
@@ -108,6 +108,9 @@ public class PlayerMote extends Thread {
 		this.playingMote = new PlayingMote(characterController, this);
 	}
 	
+	/**
+	 * The function removes the PlayingMote object
+	 */
 	public void removePlayingMote()
 	{
 		this.playingMote.removeAccellerometerListener();
@@ -121,7 +124,6 @@ public class PlayerMote extends Thread {
 
 	@Override
 	public void run() {
-
 
 		BlueCoveImpl.setConfigProperty("bluecove.stack", "widcomm");
 		
@@ -137,8 +139,8 @@ public class PlayerMote extends Thread {
 		
 		this.mote = this.playerMoteFinder.getMote();
 		
-		if (mote != null) {
-			
+		if (mote != null)
+		{	
 			while (mote.getStatusInformationReport() == null) {
 				System.out.println("waiting for status information report");
 				try {
@@ -147,17 +149,13 @@ public class PlayerMote extends Thread {
 					e.printStackTrace();
 				}
 			}
-			System.out.println(mote.getStatusInformationReport());	
-			
+			System.out.println(mote.getStatusInformationReport());		
 		}
 		
 		if (this.mote != null)
 		{
 			Thread thread = new LedThread(this.mote);
-			thread.start();
-			
+			thread.start();	
 		}	
-	
-	}
-	
+	}	
 }
