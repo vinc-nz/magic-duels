@@ -2,6 +2,11 @@ package wiiMoteInput;
 
 import motej.Mote;
 
+/**
+ * The class manages the leds located on the Wii Mote
+ * @author Neb
+ *
+ */
 public class LedThread extends Thread {
 
 	public static String NORMAL = "normal";
@@ -19,7 +24,7 @@ public class LedThread extends Thread {
 
 	/**
 	 * Sets the type in wich the leds have to flash
-	 * @param type
+	 * @param type 
 	 */
 	public void setType(String type) {
 		this.type = type;
