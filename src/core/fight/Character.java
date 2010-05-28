@@ -205,7 +205,7 @@ public class Character extends MovingObject {
 	}
 
 	public synchronized void checkState() {
-		while (!moving && !isPreparingSpell())
+		while (!moving && !isPreparingSpell() && !isDead())
 			try {
 				wait();
 			} catch (InterruptedException e) {
