@@ -34,6 +34,13 @@ public class LobbyJoinedGame {
 	}
 	
 	/**
+	 * @return the name of the game
+	 */
+	public String getGameName() {
+		return gameName;
+	}
+
+	/**
 	 * Adds a slot
 	 * @param slot the slot to add
 	 */

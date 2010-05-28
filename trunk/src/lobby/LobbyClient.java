@@ -31,8 +31,8 @@ public class LobbyClient extends Thread {
  	Lobby graphicLobby;
  	
  	ServerGame serverGame;
- 	String name;
-	int humanPlayers;
+	
+ 	int humanPlayers;
 	int comPlayers;
 	int port;
 	int result;
@@ -54,15 +54,13 @@ public class LobbyClient extends Thread {
 	}
 
 	/**
-	 * 
 	 * @return a list of the player names logged to the server
 	 */
 	public List<String> getPlayers() {
 		return players;
 	}
 
-	/**
-	 * 
+	/** 
 	 * @return a list of the hosted games given by the server
 	 */
 	public List<HostedGameInfo> getHostedGameList() {
@@ -70,7 +68,6 @@ public class LobbyClient extends Thread {
 	}
 
 	/**
-	 *  
 	 * @return the game hosted by the player
 	 */
 	public LobbyHostedGame getHostedGame() {
@@ -78,7 +75,6 @@ public class LobbyClient extends Thread {
 	}
 	
 	/**
-	 * 
 	 * @return the game joined by the player
 	 */
 	public LobbyJoinedGame getJoinedGame() {
@@ -89,7 +85,7 @@ public class LobbyClient extends Thread {
 	 * Connect the game to the server whose connection parameters are specified by the user
 	 * @param server ip
 	 * @param server port
-	 * @return true if connected, flase otherwise
+	 * @return true if connected, false otherwise
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
@@ -108,7 +104,6 @@ public class LobbyClient extends Thread {
 	}
 	
 	/**
-	 * 
 	 * @return true if the game is connected to a server, dalse otherwise
 	 */
 	public boolean isConnected()
@@ -234,8 +229,11 @@ public class LobbyClient extends Thread {
 				this.graphicLobby.hostAGame();
 			
 			else if(message.equals(Messages.CREATEFAILED))
+			{
+				this.graphicLobby.showWarning("Impossibile creare la partita!");
 				this.hostedGame = null;
-
+			}
+			
 			else if(message.startsWith(Messages.CHANGESLOTTYPE))
 				this.changeJoinedGameSlotType(message);
 			
@@ -348,7 +346,6 @@ public class LobbyClient extends Thread {
 		
 		List<HostedGameInfo> gameList = new ArrayList<HostedGameInfo>();
 		
-		//TODO: ATTENZIONE POTREBBE FINIRE CON UN ; E LO SPLIT POTREBBE CREARE UN POSTO IN PIU'
 		for (int i = 0; i < games.length; i+=4)
 			gameList.add(new HostedGameInfo(games[i], games[i+1], games[i+2], Integer.parseInt(games[i+3])));
 		
@@ -489,13 +486,10 @@ public class LobbyClient extends Thread {
 		PlayerMote playerMote = this.graphicLobby.mainMenu.playMote;
 		MainMenu mainMenu = this.graphicLobby.mainMenu;
 		
-		this.name = this.hostedGame.getGameName();
 		this.port = this.hostedGame.getPorta();
 		
 		this.serverGame = new ServerGame(playerMote, mainMenu);
-		
-		System.out.println(name + " - " + humanPlayers + " - " + comPlayers + " - " + port);
-		
+				
 		this.isFinished = false;
 		
 		Runnable init = new Runnable() {
@@ -503,7 +497,7 @@ public class LobbyClient extends Thread {
 			public void run() {	
 				LobbyClient.this.result = LobbyClient.SERVER_STARTED;
 				try {
-					LobbyClient.this.serverGame.init(LobbyClient.this.name, LobbyClient.this.humanPlayers,
+					LobbyClient.this.serverGame.init(LobbyClient.this.playerName, LobbyClient.this.humanPlayers,
 					LobbyClient.this.comPlayers, LobbyClient.this.port);
 					LobbyClient.this.serverGame.start();
 					LobbyClient.this.isFinished = true;
@@ -556,10 +550,13 @@ public class LobbyClient extends Thread {
 		try {
 			game.init(name, address, port);
 			game.start();
+			this.graphicLobby.multiplayerGame();
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			this.graphicLobby .showWarning("Errore durante la connessione all'Host!");
+			this.graphicLobby.multiplayerGame();
 		} catch (IOException e) {
-			e.printStackTrace();
+			this.graphicLobby .showWarning("Errore durante la connessione all'Host!");
+			this.graphicLobby.multiplayerGame();
 		}
 	}
 	

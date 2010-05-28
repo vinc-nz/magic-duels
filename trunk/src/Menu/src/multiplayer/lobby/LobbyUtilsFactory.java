@@ -8,12 +8,25 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 public class LobbyUtilsFactory {
 
+	public static JLabel createGameTitleLabel(String text)
+	{
+		JLabel label = new JLabel(text, JLabel.CENTER);
+		label.setVerticalTextPosition(JLabel.BOTTOM);
+		label.setHorizontalTextPosition(JLabel.CENTER);
+		label.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
+		label.setForeground(Color.black);
+		label.setBorder(LobbyUtilsFactory.createPanelBorder());
+		
+		return label;
+	}
+	
 	/**
 	 * @return a Compound Border
 	 */

@@ -8,6 +8,7 @@ import com.intel.bluetooth.BlueCoveImpl;
 /**
  * The class manages the Wii Mote Controller 
  * with all its functions
+ * @author Neb
  */
 public class PlayerMote extends Thread {
 	
@@ -30,6 +31,7 @@ public class PlayerMote extends Thread {
 	 * The function returns the connected
 	 * WiiMote Controller, null if no controller 
 	 * is connected
+	 * @return the Mote object
 	 */
 	public Mote getMote()
 	{
@@ -51,14 +53,16 @@ public class PlayerMote extends Thread {
 		}
 	}
 	
+	/*
 	/**
 	 * The functions set the current value of the mote battery level.
 	 * Note that it's only used by the report information listener
-	 */
+	 * @param batteryLevel the batter level
+	 *//*
 	public void setBatteryLevel(int batteryLevel)
 	{
 		this.batteryLevel = batteryLevel;
-	}
+	}*/
 
 	/**
 	 * The function creates a PlayingMote that must be associated
@@ -79,6 +83,9 @@ public class PlayerMote extends Thread {
 		this.playingMote = null;
 	}
 
+	/**
+	 * @return the PlayingMote object
+	 */
 	public PlayingMote getPlayingMote() {
 		return this.playingMote;
 	}
