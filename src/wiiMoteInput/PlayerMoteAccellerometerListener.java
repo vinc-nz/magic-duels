@@ -4,6 +4,11 @@ import motej.Mote;
 import motej.event.AccelerometerEvent;
 import motej.event.AccelerometerListener;
 
+/**
+ * The class manages the Wii Mote accellerometer listener
+ * @author neb
+ *
+ */
 public class PlayerMoteAccellerometerListener implements AccelerometerListener<Mote> {
 	
 	PlayingMote playingMote;

@@ -2,12 +2,16 @@ package wiiMoteInput;
 
 import input.CharacterController;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import motej.event.CoreButtonEvent;
 import motej.event.CoreButtonListener;
 
+/**
+ * The class manages the Wii Mote button listener
+ * @author neb
+ *
+ */
 public class PlayerMoteButtonListener implements CoreButtonListener {
 	
 	protected CharacterController characterController;

@@ -4,6 +4,11 @@ import motej.Mote;
 import motej.MoteFinder;
 import motej.MoteFinderListener;
 
+/**
+ * The class is used to 
+ * @author neb
+ *
+ */
 public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 
 	protected MoteFinder finder;

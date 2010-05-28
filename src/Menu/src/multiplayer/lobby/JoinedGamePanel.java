@@ -35,9 +35,15 @@ public class JoinedGamePanel extends JPanel {
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
-		//c.insets = new Insets(5, 5, 5, 5);
 		c.gridx = 0;
 		c.gridy = 0;
+		
+		c.gridwidth = 2;
+		
+		panel.add(LobbyUtilsFactory.createGameTitleLabel(this.graphicLobby.lobbyClient.joinedGame.getGameName()));
+		
+		c.gridy = 1;
+		c.gridwidth = 1;
 		
 		int giocatore;
 		List<String> slots = joinedGame.getSlots();
@@ -62,7 +68,7 @@ public class JoinedGamePanel extends JPanel {
 			}			
 		}
 		
-		back = new JButton("Esci dalla Partita");
+		back = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/back1.gif", "src/Menu/data/multiplayer/back2.gif");
 		back.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -72,7 +78,14 @@ public class JoinedGamePanel extends JPanel {
 				JoinedGamePanel.this.graphicLobby.multiplayerGame();
 			}
 		});
-		
+
+		if(c.gridx == 1)
+		{
+			c.gridx = 0;
+			c.gridy++;
+		}
+		c.gridwidth = 2;
+
 		panel.add(back, c);
 		
 		super.add(panel);
