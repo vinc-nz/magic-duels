@@ -19,49 +19,10 @@ public class PlayerMote extends Thread {
 
 	/**
 	 * The function is used to connect a WiiMote Controller.
-	 * @return true if connected, false otherwise
+	 * It starts the main thread that operate the connection
 	 */
 	public void findMote()
 	{
-/*
-		BlueCoveImpl.setConfigProperty("bluecove.stack", "widcomm");
-		
-		this.playerMoteFinder = new PlayerMoteFinder();
-		this.playerMoteFinder.start();
-		
-		while(this.playerMoteFinder.getMote() == null)
-			try {
-				Thread.sleep(101);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-		
-		this.mote = this.playerMoteFinder.getMote();
-		
-		if (mote != null) {
-			
-			while (mote.getStatusInformationReport() == null) {
-				System.out.println("waiting for status information report");
-				try {
-					Thread.sleep(10l);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			System.out.println(mote.getStatusInformationReport());	
-			
-		}
-		
-		if (this.mote != null)
-		{
-			Thread thread = new LedThread(this.mote);
-			thread.start();
-			
-			return true;
-		}
-		
-		return false;
-		*/
 		this.start();
 	}
 	
