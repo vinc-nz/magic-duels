@@ -88,9 +88,10 @@ public class ServerGame extends NetGame {
 
 
 	@Override
-	public void forward(String message) throws IOException {
+	public synchronized void forward(String message) throws IOException {
 		for (int i = 0; i < out.length; i++) {
 			out[i].writeBytes(message + "\n");
+			System.out.println(message);
 		}
 	}
 
@@ -152,14 +153,16 @@ public class ServerGame extends NetGame {
 	}
 	
 	public static void main(String[] args) {
-		ServerGame game = new ServerGame(null, null);
+		PlayerMote playerMote = new PlayerMote();
+		playerMote.findMote();
+		ServerGame game = new ServerGame(playerMote, null);
 		try {
 			game.init("spax", 2,0, 6000);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//game.start();
+		game.start();
 	}
 
 }

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import jmegraphic.Arena;
-import jmegraphic.CountdownTimer;
 import jmegraphic.CustomCamera;
 import jmegraphic.GraphicCharacter;
 import jmegraphic.GraphicObject;
@@ -34,7 +33,7 @@ public class GraphicFight extends BasicGameState {
 	GraphicCharacter focused;
 	ObjectMap objects;
 	
-	CountdownTimer uptime;
+	//CountdownTimer uptime;
 	
 	public static final float UPTIME = 0.008f;  //intervallo di aggiornamento (in secondi)
 	
@@ -44,7 +43,7 @@ public class GraphicFight extends BasicGameState {
 		super("GraphicFight");
 		this.game = game;
 		this.fight = game.getFight();
-		uptime = new CountdownTimer();
+		//uptime = new CountdownTimer();
 		objects = new ObjectMap();
 	}
 	
@@ -107,19 +106,19 @@ public class GraphicFight extends BasicGameState {
 
 	
 
-	@Override
-	public void setActive(boolean active) {
-		super.setActive(active);
-		if (active)
-			uptime.start(UPTIME);
-	}
+//	@Override
+//	public void setActive(boolean active) {
+//		super.setActive(active);
+//		if (active)
+//			uptime.start(UPTIME);
+//	}
 
 	// aggiornamento
 	@Override
 	public void update(float tpf) {
 		super.update(tpf);
 		
-		if (uptime.expired()) {
+		//if (uptime.expired()) {
 
 			fight.update();
 			this.updateObjects(tpf);
@@ -127,8 +126,8 @@ public class GraphicFight extends BasicGameState {
 
 			this.updateCamera();
 			
-			uptime.start(UPTIME);
-		} //ENDIF
+//			uptime.start(UPTIME);
+//		} //ENDIF
 		
 	}
 	
