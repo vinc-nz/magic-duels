@@ -175,6 +175,8 @@ public class Mouse extends MouseAdapter{
 		
 		if(mainPanel.sMultiplayer){
 			mainMenu.ok.play();
+			this.mainMenu.refreshLobbyClient();
+			this.multiplayerMenu.logingTab.checkPanel();
 			mainMenu.switchTo(this.multiplayerMenu);
 		}
 		

@@ -1,15 +1,14 @@
 package Menu.src;
 
+import game.Game;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
 
 import javax.swing.JPanel;
 
 import wiiMoteInput.PlayerMote;
-
-import game.Game;
 
 public class MainPanel extends JPanel{
 	

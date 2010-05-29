@@ -13,6 +13,11 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+/**
+ * The class contains several useful static methods used by different classes
+ * @author Neb
+ *
+ */
 public class LobbyUtilsFactory {
 
 	public static JLabel createGameTitleLabel(String text)

@@ -7,8 +7,11 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,9 +21,10 @@ public class WriteChatAreaPanel extends JPanel {
 	Lobby graphicLobby;
 	
 	JTextField chatArea;
+	JButton back;
 	
-	public WriteChatAreaPanel(Lobby lobby) {
-
+	public WriteChatAreaPanel(Lobby lobby)
+	{
 		super(new FlowLayout(FlowLayout.CENTER));
 		super.setOpaque(false);
 		super.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(), 150));		
@@ -28,7 +32,6 @@ public class WriteChatAreaPanel extends JPanel {
 		
 		this.graphicLobby = lobby;
 		this.initWriteChatAreaPanel();
-	
 	}
 	
 	/**
@@ -43,7 +46,7 @@ public class WriteChatAreaPanel extends JPanel {
 		this.chatArea.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
 		this.chatArea.setForeground(Color.BLACK);
 		
-		this.chatArea.setPreferredSize(new Dimension((int)super.getPreferredSize().getWidth(), 100));
+		this.chatArea.setPreferredSize(new Dimension((int)super.getPreferredSize().getWidth()-210, 100));
 
 		this.chatArea.addKeyListener(new KeyListener() {
 			@Override
@@ -52,7 +55,8 @@ public class WriteChatAreaPanel extends JPanel {
 			public void keyReleased(KeyEvent arg0) {}
 			
 			@Override
-			public void keyPressed(KeyEvent evt) {
+			public void keyPressed(KeyEvent evt)
+			{
 				if(evt.getKeyCode() == KeyEvent.VK_ENTER)
 				{
 					if(!WriteChatAreaPanel.this.chatArea.getText().trim().equals(""))
@@ -64,9 +68,25 @@ public class WriteChatAreaPanel extends JPanel {
 				}
 			}
 		});
-				
-		super.add(this.chatArea);
-	
+
+		this.back = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/back1.gif", "src/Menu/data/multiplayer/back2.gif");
+		this.back.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				WriteChatAreaPanel.this.graphicLobby.lobbyClient.sendByeMessage();
+				WriteChatAreaPanel.this.graphicLobby.mainMenu.ok.play();			
+			}
+		});
+		
+		JPanel panel = new JPanel(new FlowLayout());
+		panel.setOpaque(false);
+		panel.add(this.chatArea);
+		panel.add(this.back);
+		
+		super.add(panel);
+		
 		super.repaint();
 		super.revalidate();
 	}

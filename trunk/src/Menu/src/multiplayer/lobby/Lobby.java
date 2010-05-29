@@ -34,9 +34,16 @@ public class Lobby extends JPanel {
 	public Lobby(MainMenu mainMenu) {
 		
 		this.mainMenu = mainMenu;
-		this.lobbyClient = mainMenu.lobbyClient;
 		
+		this.refreshLobby(mainMenu.lobbyClient);
+	}
+	
+	public void refreshLobby(LobbyClient lobbyClient)
+	{
+		
+		this.lobbyClient = mainMenu.lobbyClient;
 		this.lobbyClient.setGraphicLobby(this);
+		
 		this.background = new ImageIcon("src/Menu/data/multiplayer/lobby.jpg").getImage();
 		
 		this.topPanel = new TopPanel();
@@ -68,13 +75,21 @@ public class Lobby extends JPanel {
 		
 		this.centerPanel.add(this.chatAreaPanel);
 		this.centerPanel.add(this.rightPanel);
+		
 		super.add(this.centerPanel, BorderLayout.CENTER);
 		super.add(this.playerListPanel, BorderLayout.EAST);
 		super.add(this.writeChatAreaPanel, BorderLayout.SOUTH);
 		
 		super.validate();
+		super.repaint();
 		super.setVisible(true);
-				
+		
+		super.requestFocus();
+		
+		this.mainMenu.pack();
+		this.mainMenu.validate();
+		this.mainMenu.repaint();
+		
 	}
 	
 	/**
@@ -99,6 +114,7 @@ public class Lobby extends JPanel {
 		this.rightPanel.add(this.multiplayerGame);
 		this.rightPanel.repaint();
 		this.rightPanel.revalidate();
+		this.rightPanel.requestFocus();
 	}
 	
 	/**
@@ -111,6 +127,7 @@ public class Lobby extends JPanel {
 		this.rightPanel.add(new HostedGamePanel(this));
 		this.rightPanel.repaint();
 		this.rightPanel.revalidate();
+		this.rightPanel.requestFocus();
 	}
 
 	/**
@@ -123,6 +140,7 @@ public class Lobby extends JPanel {
 		this.rightPanel.add(new JoinedGamePanel(this));
 		this.rightPanel.repaint();
 		this.rightPanel.revalidate();
+		this.rightPanel.requestFocus();
 	}
 	
 	/**

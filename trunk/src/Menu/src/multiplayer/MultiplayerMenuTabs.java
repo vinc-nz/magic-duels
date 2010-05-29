@@ -14,6 +14,11 @@ import javax.swing.JTextField;
 import Menu.src.MainMenu;
 import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
 
+/**
+ * This abstract class is the mother of all the tabs placed into the multiplayer tabbed panel 
+ * @author Neb
+ *
+ */
 public abstract class MultiplayerMenuTabs extends JPanel{
 
 	MainMenu mainMenu;
@@ -28,7 +33,6 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 	{
 		super.setOpaque(false);
 		super.setLayout(new GridBagLayout());
-		//super.setBorder(LobbyUtilsFactory.createPanelBorder());
 		super.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 
 		this.mainMenu = mainMenu;
@@ -51,7 +55,7 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 			
 			}
 		});
-			
+		
 		this.checkPanel();		
 	}
 	

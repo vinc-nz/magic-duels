@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -19,13 +21,19 @@ import Menu.src.MainMenu;
 import Menu.src.multiplayer.lobby.Lobby;
 import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
 
+/**
+ * The class represents the tab used by the player to login to the lobby
+ * @author Neb
+ *
+ */
 public class LogingTab extends MultiplayerMenuTabs {
 	
 	Image top;
 	
+	Lobby lobby;
+	
 	JTextField user;
 	JPasswordField password;
-	
 	JButton login;
 	
 	public LogingTab(MainMenu mainMenu) {
@@ -106,22 +114,30 @@ public class LogingTab extends MultiplayerMenuTabs {
 
 		this.top = new ImageIcon("src/Menu/data/multiplayer/login.gif").getImage();
 		
-		this.login.addMouseListener(new MouseAdapter() {
+		this.login.addActionListener(new ActionListener() {
 			
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
 
+				System.out.println("EVENTO LOGIN");
+				
 				String nome = LogingTab.this.user.getText();
 				String password = LogingTab.this.password.getText();
 				
 				if(LogingTab.this.mainMenu.lobbyClient.logIn(nome, password))
-					LogingTab.this.mainMenu.switchTo(new Lobby(LogingTab.this.mainMenu));
-				else
-					LogingTab.super.showWarning("Login Fallito!");
+				{
+					//if(LogingTab.this.lobby == null) LogingTab.this.lobby = new Lobby(LogingTab.this.mainMenu);
+					//else LogingTab.this.lobby.refreshLobby(LogingTab.this.mainMenu.lobbyClient);
+					
+					LogingTab.this.lobby = new Lobby(LogingTab.this.mainMenu);
+					
+					LogingTab.this.mainMenu.switchTo(LogingTab.this.lobby);
+				} else
+					LogingTab.super.showWarning("Login Fallito!");				
 			}
-				
+			
 		});
-
+		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(10, 10, 10, 10);

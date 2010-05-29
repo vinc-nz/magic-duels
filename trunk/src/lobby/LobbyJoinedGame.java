@@ -3,6 +3,11 @@ package lobby;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class stores information about the game joined by the player and manages all needed operation
+ * @author Neb
+ *
+ */
 public class LobbyJoinedGame {
 	
 	String gameName;

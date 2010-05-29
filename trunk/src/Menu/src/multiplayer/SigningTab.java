@@ -18,6 +18,11 @@ import javax.swing.JTextField;
 import Menu.src.MainMenu;
 import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
 
+/**
+ * The class represents the tab used by the player to sign in a new user
+ * @author Neb
+ *
+ */
 public class SigningTab extends MultiplayerMenuTabs {
 	
 	Image top;

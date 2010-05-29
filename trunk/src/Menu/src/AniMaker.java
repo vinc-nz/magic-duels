@@ -7,7 +7,6 @@ import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -112,31 +111,7 @@ public class AniMaker extends MouseAdapter implements Icon, ActionListener {
 		        g.translate(offX, offY);
 		        g.setClip(previousClip);
 		}
-		
-		/** L'ingresso del mouse nell'area del pulsante
-		animato causa avvio dell'animazione */
-		/*
-		  public void mouseEntered(MouseEvent e) {
-		          if(e.getSource() == TARGET_BUTTON) {
-		                  startAnimation();
-		          }
-		  }*/
-		  /** L'uscita del mouse dall'area del pulsante
-		  animato causa interruzione dell'animazione */
-		/*  
-		public void mouseExited(MouseEvent e) {
-		          if(e.getSource() == TARGET_BUTTON) {
-		                  stopAnimation();
-		          }
-		  }/*
-		  /** La pressione del mouse sul pulsante animato
-		  causa interruzione dell'animazione */
 		  
-		/*public void mousePressed(MouseEvent e) {
-		          if(e.getSource() == TARGET_BUTTON) {
-		                  stopAnimation();
-		          }
-		  }*/
 		  /** Blocco ciclicamente eseguito dall'AWT Event
 		  Dispatcher tramite il javax.swing.Timer che controlla
 		  l'animazione */
