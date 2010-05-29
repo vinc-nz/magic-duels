@@ -1,5 +1,10 @@
 package lobby;
 
+/**
+ * The class stores information about a game
+ * @author Neb
+ *
+ */
 public class HostedGameInfo {
 
 	String hostName;

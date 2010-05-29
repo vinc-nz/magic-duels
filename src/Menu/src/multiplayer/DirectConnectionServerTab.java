@@ -12,6 +12,11 @@ import javax.swing.JTextField;
 
 import Menu.src.MainMenu;
 
+/**
+ * 
+ * @author Neb
+ *
+ */
 public class DirectConnectionServerTab extends MultiplayerMenuTabs {
 
 	JTextField numPlayers;

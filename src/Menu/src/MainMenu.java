@@ -96,6 +96,12 @@ public class MainMenu extends JFrame {
 		setVisible(true);
 	}
 
+	public void refreshLobbyClient()
+	{
+		this.lobbyClient = null;
+		System.out.println("LOBBY CLIENT NULL");
+		this.lobbyClient = new LobbyClient();
+	}
 	
 	public void close() {
 		this.dispose();

@@ -10,6 +10,11 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
+/**
+ * The class represents the tabbed panel of the multiplayer section
+ * @author neb
+ *
+ */
 public class MultiplayerMenuTabbedPane extends JTabbedPane {
 
 	Image background;
@@ -17,7 +22,6 @@ public class MultiplayerMenuTabbedPane extends JTabbedPane {
 	public MultiplayerMenuTabbedPane()
 	{
 		super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-		//super.setBorder(LobbyUtilsFactory.createPanelBorder());
 		super.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 		super.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 * 2, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3 * 2));
 		

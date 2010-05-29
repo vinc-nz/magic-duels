@@ -13,6 +13,11 @@ import javax.swing.event.ChangeListener;
 
 import Menu.src.MainMenu;
 
+/**
+ * The class represents the main panel of the multiplayer game
+ * @author Neb
+ *
+ */
 public class MultiplayerMenu extends JPanel {
 
 	MainMenu mainMenu;
@@ -20,7 +25,7 @@ public class MultiplayerMenu extends JPanel {
 	JTabbedPane tabbedPane;
 	Image background;
 	
-	LogingTab logingTab;
+	public LogingTab logingTab;
 	SigningTab signingTab;
 	DirectConnectionServerTab directConnectionServerTab;
 	

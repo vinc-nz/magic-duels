@@ -14,9 +14,14 @@ import wiiMoteInput.PlayerMote;
 import Menu.src.MainMenu;
 import Menu.src.multiplayer.lobby.Lobby;
 
+/**
+ * The class manages all the communication between client and server 
+ * @author Neb
+ *
+ */
 public class LobbyClient extends Thread {
 	
-	String playerName;
+	public String playerName;
 	
 	Socket connection;
 	ObjectOutputStream out;
@@ -41,8 +46,13 @@ public class LobbyClient extends Thread {
 	public static short SERVER_FAILED = 1;
 	
 	public LobbyClient() {
+		
+		this.playerName = null;
+		
 		this.hostedGame = null;
 		this.joinedGame = null;
+		
+		this.graphicLobby = null;
 	}
 	
 	/**
@@ -106,10 +116,7 @@ public class LobbyClient extends Thread {
 	/**
 	 * @return true if the game is connected to a server, dalse otherwise
 	 */
-	public boolean isConnected()
-	{
-		return (this.connection != null && this.connection.isConnected());
-	}
+	public boolean isConnected() { return (this.connection != null && this.connection.isConnected()); }
 	
 	/**
 	 * Sends a message to the server 
@@ -120,9 +127,14 @@ public class LobbyClient extends Thread {
 		try{
 			this.out.writeObject(msg);
 			this.out.flush();
+			System.out.println("MANDO " + msg);
 		}
-		catch(IOException ioException){
+		catch(IOException ioException)
+		{
 			System.out.println("Errore durante l'invio del messaggio al client");
+			if(this.connection != null) this.closeConnection();
+			this.graphicLobby.showWarning("La connessione è stata interrotta!");
+			this.graphicLobby.mainMenu.switchTo(this.graphicLobby.mainMenu.panel);
 		}
 	}
 
@@ -140,10 +152,13 @@ public class LobbyClient extends Thread {
 			return message;
 			
 		} catch(IOException e) {
-			System.out.println("Errore durante la ricezione del messaggio");
-			e.printStackTrace();
+			if(this.connection != null) this.closeConnection();
+			this.graphicLobby.showWarning("La connessione è stata interrotta!");
+			this.graphicLobby.mainMenu.switchTo(this.graphicLobby.mainMenu.panel);
 		} catch (ClassNotFoundException e) {
-			System.out.println("Classe non trovata!");
+			if(this.connection != null) this.closeConnection();
+			this.graphicLobby.showWarning("La connessione è stata interrotta!");
+			this.graphicLobby.mainMenu.switchTo(this.graphicLobby.mainMenu.panel);
 		}
 		
 		return null;
@@ -157,31 +172,52 @@ public class LobbyClient extends Thread {
 	 */
 	public boolean logIn(String nome, String password)
 	{
+		
 		this.sendMessage(Messages.LOGIN + nome + ";" + password);
-		if(this.readMessage().equals(Messages.LOGINOK))
+		
+		String message = this.readMessage(); 
+		
+		System.out.println("RICEVO>" + message);
+		
+		if(message.equals(Messages.LOGINOK))
 		{
 			this.playerName = nome;
 			this.start();
 			return true;
-		} else {
+		} else if(message.equals(Messages.LOGINFAILED)) {
 			return false;
 		}
+		return false;
+	}
+	
+	/**
+	 * Sends to the server server a message to advise it that the client is closing the connection
+	 */
+	public void sendByeMessage()
+	{
+		this.sendMessage(Messages.CLOSE);
 	}
 	
 	/**
 	 * Closes the connection with the server
 	 */
-	protected void closeConnection()
+	public void closeConnection()
 	{
 		try {
 		
+			//this.sendMessage(Messages.CLOSE);
 			this.in.close();
 			this.out.close();
 			
 			this.connection.close();
+			this.connection = null;
+			this.playerName = "NOMEEEEEEEEEEEEEEEEEEEEEE";
+			
+			this.graphicLobby.showWarning("A Presto!");
+			this.graphicLobby.mainMenu.switchTo(this.graphicLobby.mainMenu.panel);
 			
 		} catch (IOException e) {
-			System.out.println("Errore nella chiusura della connessione");
+			this.graphicLobby.showWarning("Errore nella chiusura della connessione");
 		}
 	}
 	
@@ -194,6 +230,8 @@ public class LobbyClient extends Thread {
 		
 		while(this.graphicLobby == null ||this.graphicLobby.multiplayerGame == null)
 			try {
+				if(this.graphicLobby == null) System.out.println("GRAPHICLOBBY NULL");
+				System.out.println("Nome Player: " + this.playerName);
 				Thread.sleep(501);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -202,6 +240,8 @@ public class LobbyClient extends Thread {
 		String message = null;
 		
 		this.sendMessage(Messages.REFRESHLIST);
+		
+		System.out.println("STEP 1");
 		
 		while(message == null || !message.equals(Messages.CLOSE))
 		{					
@@ -251,8 +291,13 @@ public class LobbyClient extends Thread {
 			
 			else if(message.startsWith(Messages.PLAYERKICKED))
 				this.playerKicked();
+
+			System.out.println("STEP 2");
 			
 		}
+		
+		System.out.println("STEP 3");
+
 		
 		this.closeConnection();
 	}

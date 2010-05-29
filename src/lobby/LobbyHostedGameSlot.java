@@ -1,5 +1,10 @@
 package lobby;
 
+/**
+ * The class represents a slot of the game hosted by the player
+ * @author Neb
+ *
+ */
 public class LobbyHostedGameSlot {
 	
 	public String type;
