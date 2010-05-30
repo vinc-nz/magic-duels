@@ -51,7 +51,6 @@ public class Connection extends Thread {
 		
 		String message = null;
 		
-		// Mi aspetto di ricevere una richiesta di Login, un iscrizione, o la chiusura		
 		do
 		{
 			message = this.readMessage();
@@ -65,10 +64,8 @@ public class Connection extends Thread {
 				else
 					this.sendMessage(Messages.NEWUSERFAILED);
 			
-		} while(!message.equals(Messages.CLOSE) && this.utente == null);
-		
-		System.out.println("INIZIO SECONDO WHILE (THREAD)");
-		
+		} while(!message.equals(Messages.CLOSE) && !message.equals(Messages.KILL) && this.utente == null);
+				
 		if(this.utente != null)
 		{
 			
@@ -78,7 +75,7 @@ public class Connection extends Thread {
 				System.out.println("client>" + message);
 				
 				if (message.equals(Messages.CLOSE))
-					this.sendMessage(Messages.CLOSE);
+					this.sendMessage(Messages.CLOSE);		
 			
 				else if(message.startsWith(Messages.CHAT))
 					this.server.sendChatMessage(this.utente.getNome(), message.substring(Messages.CHAT.length()));
@@ -96,7 +93,10 @@ public class Connection extends Thread {
 					this.leaveSlot();
 				
 				else if(message.startsWith(Messages.GAMEKILLED))
+				{
 					this.server.removeHostedGame(this.hostedGame);
+					this.hostedGame = null;
+				}
 				
 				else if(message.startsWith(Messages.CHANGESLOTTYPE))
 					this.hostedGame.changeSlotType(message);
@@ -131,11 +131,9 @@ public class Connection extends Thread {
 			this.sendMessage(Messages.LOGINFAILED);
 		else
 		{
-			this.server.players.remove(this.player.getInetAddress().toString());
-			
-			// TODO: controllare l'utente è già loggato
-			
+			this.server.players.remove(this.player.getInetAddress().toString());			
 			this.server.players.put(utente.getNome(), this);
+			DBFunctions.newConnectionLog(this.player.getInetAddress(), this.utente);
 			this.sendMessage(Messages.LOGINOK);
 		}
 	}
@@ -155,7 +153,6 @@ public class Connection extends Thread {
 	public String readMessage()
 	{
 		try{
-			
 			String message;
 			message = (String)this.in.readObject();
 			
@@ -163,14 +160,11 @@ public class Connection extends Thread {
 			
 		} catch(IOException e) {
 			System.out.println("Errore durante la ricezione del messaggio");
-			this.closeConnection();
-			this.server.removePlayer(this);
+			return Messages.KILL;		
 		} catch (ClassNotFoundException e) {
 			System.out.println("Classe non trovata!");
-			this.closeConnection();
-			this.server.removePlayer(this);
+			return Messages.KILL;		
 		}
-		return Messages.KILL;		
 	}
 	
 	protected void closeConnection()
@@ -195,8 +189,7 @@ public class Connection extends Thread {
 	{
 		String []gameParameter = msg.substring(Messages.CREATE.length()).split(";");
 		
-		if(this.hostedGame != null)
-			this.sendMessage(Messages.CREATEFAILED);
+		if(this.hostedGame != null){ this.sendMessage(Messages.CREATEFAILED); return; }
 		
 		this.hostedGame = new HostedGame(this, Integer.parseInt(gameParameter[2]), gameParameter[0], Integer.parseInt(gameParameter[1]));
 		this.server.hostedGames.put(this.hostedGame.gameName, this.hostedGame);

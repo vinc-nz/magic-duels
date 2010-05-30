@@ -6,6 +6,8 @@ public class ListRefreshingThread extends Thread {
 
 	Server server;
 	
+	protected static int REFRESH_TIME = 40000;
+	
 	public ListRefreshingThread(Server server) {
 		super();
 		this.server = server;
@@ -17,7 +19,7 @@ public class ListRefreshingThread extends Thread {
 		while(true)
 		{
 			try {
-				this.sleep(60000);
+				this.sleep(ListRefreshingThread.REFRESH_TIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

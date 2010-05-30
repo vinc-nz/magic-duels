@@ -1,7 +1,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -38,7 +38,7 @@ public class Log implements Serializable {
 	Timestamp timestamp;
 	
 	@Column(name="ip")
-	Inet4Address ip;
+	InetAddress ip;
 	
 	public int getId() {
 		return id;
@@ -61,10 +61,10 @@ public class Log implements Serializable {
 		this.timestamp = timestamp;
 	}
 	
-	public Inet4Address getIp() {
+	public InetAddress getIp() {
 		return ip;
 	}
-	public void setIp(Inet4Address ip) {
+	public void setIp(InetAddress ip) {
 		this.ip = ip;
 	}	
 	

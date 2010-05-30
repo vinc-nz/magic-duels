@@ -24,6 +24,7 @@ public class Server extends Thread{
 			System.out.println("SERVER IN ASCOLTO SULLA PORTA: " + porta);
 		} catch (IOException e) {
 			System.out.println("Impossibile aprire una connessione!");
+			return;
 		}
 		
 		System.out.println("ADDRESS: " + InetAddress.getLocalHost().getHostAddress());
@@ -49,7 +50,8 @@ public class Server extends Thread{
 	public synchronized void removePlayer(Connection player)
 	{
 		this.removeHostedGame(player.hostedGame);
-		this.players.remove(player.utente.getNome());
+		Connection conn = this.players.remove(player.utente.getNome());
+		if(conn == null) this.players.remove(player.player.getInetAddress().toString());
 		
 		this.refreshLists();
 	}
@@ -88,8 +90,7 @@ public class Server extends Thread{
 
 			} catch (IOException e) {
 				System.out.println("Impossibile accettare la connessione!");
-			}
-			
+			}	
 		}
 	}
 
@@ -129,9 +130,17 @@ public class Server extends Thread{
 		
 		String clientList = Messages.CLIENTLIST;
 		
-		for (Iterator iterator = clients.keySet().iterator(); iterator.hasNext();)
+		for(Iterator iterator = clients.keySet().iterator(); iterator.hasNext();)
+		{
+			/*
+			Connection client = clients.get(iterator.next()); 
+			if(client == null)
+				System.out.println("NULL POINTER!");
+			clientList = clientList + client.utente.getNome() + ";";
+			*/
 			clientList = clientList + clients.get(iterator.next()).utente.getNome() + ";";
-			
+		}
+		
 		return clientList;
 	}
 	
