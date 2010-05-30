@@ -8,19 +8,16 @@ public class WiiMoteButtonListener implements ActionListener {
 	MainMenu mainMenu;
 	Options options;
 	
-	public WiiMoteButtonListener(MainMenu mainMenu, Options options) {
-
+	public WiiMoteButtonListener(MainMenu mainMenu, Options options)
+	{
 		this.mainMenu = mainMenu;
 		this.options = options;
-		
 	}
-
+	
 	@Override
     public void actionPerformed(ActionEvent e) {
 		if(mainMenu.playMote.getMote() == null)
 		{
-			this.options.startFlashing();
-			
 			this.mainMenu.playMote.findMote();
 			
 			Runnable runnable = new Runnable() {
@@ -28,6 +25,17 @@ public class WiiMoteButtonListener implements ActionListener {
 				@Override
 				public void run() {
 
+					while(WiiMoteButtonListener.this.mainMenu.playMote.playerMoteFinder == null)
+						try { Thread.sleep(101); } catch (InterruptedException e1) { System.out.println("WiiMoteButtonListener Sleep Exception!"); }
+				
+					if(WiiMoteButtonListener.this.mainMenu.playMote.playerMoteFinder.exception)
+					{
+						WiiMoteButtonListener.this.mainMenu.refreshPlayerMote();
+						return;
+					}
+					
+					WiiMoteButtonListener.this.options.startFlashing();
+					
 					while(WiiMoteButtonListener.this.mainMenu.playMote.getMote() == null)
 					{
 						try {
@@ -51,6 +59,7 @@ public class WiiMoteButtonListener implements ActionListener {
 		{
 			
 			this.mainMenu.playMote.disconnectMote();
+			this.mainMenu.refreshPlayerMote();
 
 		}
     }

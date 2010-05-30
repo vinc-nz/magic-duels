@@ -37,7 +37,7 @@ public class PlayingMote extends Thread implements InputInterface
 
 	/**
 	 * The function creates, if not already exists, a button listener
-	 * object and assignes it to the related class variable
+	 * object and assigns it to the related class variable
 	 */
 	public void createButtonListener()
 	{
