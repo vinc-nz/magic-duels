@@ -26,7 +26,6 @@ public class DBFunctions {
 		
 		try
 		{
-			
 			Utente utenteDB = em.find(Utente.class, nome);
 			if(utenteDB != null) return false;
 			
@@ -67,7 +66,7 @@ public class DBFunctions {
 			return null;
 	}
 	
-	public static boolean newConnectionLog(Inet4Address ip, Utente utente)
+	public static boolean newConnectionLog(InetAddress ip, Utente utente)
 	{
 		EntityManager em = DBFunctions.getEntityManager();
 		
