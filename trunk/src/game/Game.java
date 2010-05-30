@@ -18,6 +18,14 @@ public abstract class Game extends JmeGame {
 		this.playerMote = playerMote;
 		this.mainMenu = mainMenu;
 	}
+	
+	@Override
+	public void startFight() {
+		// TODO Auto-generated method stub
+		super.startFight();
+		mainMenu.colonna.close();
+		mainMenu.fight.play();
+	}
 
 	@Override
 	protected void initSystem() {
