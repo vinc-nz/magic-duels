@@ -21,7 +21,7 @@ import core.spells.TargettingSpell;
  */
 public class Fight {
 
-	static final int MANA_INCREASE_FACTOR = 10;
+	static final int MANA_INCREASE_FACTOR = 500;
 
 	static Fight instance = null;
 

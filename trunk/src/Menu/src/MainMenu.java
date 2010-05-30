@@ -14,6 +14,13 @@ import javax.swing.JPanel;
 import lobby.LobbyClient;
 import wiiMoteInput.PlayerMote;
 
+/**
+ * Class MainMenu
+ * Frame genarale del menu del gioco
+ * 
+ * @author Luigi Marino
+ * 
+ */
 public class MainMenu extends JFrame {
 	
 	Dimension size;
@@ -34,10 +41,18 @@ public class MainMenu extends JFrame {
 	public int HEIGHT;
 	public boolean fullscreen = true;
 	
+	/**
+	 * Main che avvia il menù
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		new MainMenu();
 	}
-
+	
+	/**
+	 * Costruttore della classe
+	 * Vengono creati il frame, caricato l'audio, e le immagini
+	 */
 	public MainMenu() {
 		super();
 		
@@ -103,10 +118,17 @@ public class MainMenu extends JFrame {
 		this.lobbyClient = new LobbyClient();
 	}
 	
+	/**
+	 * Chiude il menù
+	 */
 	public void close() {
 		this.dispose();
 	}
 	
+	/**
+	 * Fa uno switch tra i pannelli del menù
+	 * @param p
+	 */
 	public void switchTo( JPanel p ) {
 		getContentPane().removeAll();
 		repaint();
@@ -115,6 +137,10 @@ public class MainMenu extends JFrame {
 	    p.requestFocus();
 	}
 	
+	/**
+	 * Fullscreen esclusivo
+	 * @param displayMode
+	 */
 	public void fullscreen( DisplayMode displayMode ) {
 		device.setFullScreenWindow(this);
 		device.setDisplayMode( displayMode );

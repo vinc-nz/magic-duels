@@ -10,6 +10,12 @@ import javax.swing.JOptionPane;
 import wiiMoteInput.PlayerMote;
 import Menu.src.multiplayer.MultiplayerMenu;
 
+/**
+ * Class Mouse
+ * Vengono gestite le coordinate del mouse
+ * @author Luigi Marino
+ *
+ */
 public class Mouse extends MouseAdapter{
 	
 	Image fantasy;
@@ -38,6 +44,19 @@ public class Mouse extends MouseAdapter{
 	public static String EXIT = "exit";
 	
 	
+	/**
+	 * 
+	 * @param initialPosition
+	 * @param fantasy
+	 * @param newGame
+	 * @param multiplayer
+	 * @param credits
+	 * @param options
+	 * @param exit
+	 * @param playerMote
+	 * @param mainMenu
+	 * @param mainPanel
+	 */
 	public Mouse(int initialPosition[], Image fantasy, Image newGame, Image multiplayer, Image credits, Image options,
 			     Image exit, PlayerMote playerMote, MainMenu mainMenu, MainPanel mainPanel ){
 		
@@ -60,6 +79,9 @@ public class Mouse extends MouseAdapter{
 		this.initSingleGame = new InitSingleGame(this.mainMenu, this.mainPanel, this.playerMote);
 	}
 	
+	/**
+	 * Quando il mouse passa sulle immagini allora viene avviato l'audio
+	 */
 	public void mouseMoved(MouseEvent e){
 		super.mouseMoved(e);		
 
@@ -146,6 +168,10 @@ public class Mouse extends MouseAdapter{
 						
 	}
 	
+	/**
+	 * Quando si clicca su una immagine viene eseguito lo switch ad un'altro
+	 * pannello
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		super.mouseClicked(e);
@@ -154,6 +180,7 @@ public class Mouse extends MouseAdapter{
 			//TODO kill wii
 			mainMenu.ok.play();
 			mainMenu.colonna.close();
+			playerMote.disconnectMote();
 			mainMenu.close();
 		}
 		
