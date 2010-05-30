@@ -1,12 +1,17 @@
 package wiiMoteInput;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import motej.Mote;
 import motej.MoteFinder;
 import motej.MoteFinderListener;
 
+import com.intel.bluetooth.BlueCoveImpl;
+
 /**
- * The class is used to 
- * @author neb
+ * The class is used to find a Wii Mote controller
+ * @author Neb
  *
  */
 public class PlayerMoteFinder extends Thread implements MoteFinderListener {
@@ -17,9 +22,25 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 	
 	protected boolean disconnectMote;
 
+	public boolean exception;
+	
 	public PlayerMoteFinder()
 	{
 		this.disconnectMote = false;
+		this.exception = false;
+				
+		this.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+			
+			@Override
+			public void uncaughtException(Thread t, Throwable e)
+			{
+				PlayerMoteFinder.this.exception = true;
+				
+		    	JOptionPane.showMessageDialog(new JFrame(), "Oops!\nSomething  went wrong!\nAre you sure you have connected your bluetooth device!?", 
+		    			"Magic Duels Game", JOptionPane.ERROR_MESSAGE);
+		    	e.printStackTrace();
+			}
+		});
 	}
 	
 	/**
@@ -35,7 +56,9 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 	public synchronized void disconnectMote()
 	{
 		this.disconnectMote = true;
-		super.notifyAll();
+		synchronized(lock) {
+			lock.notifyAll();
+		}
 	}
 	
 	/**
@@ -48,33 +71,6 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 		}
 	}
 	
-	/*
-	public void findMote() {
-				
-		if (finder == null) {
-			finder = MoteFinder.getMoteFinder();
-			finder.addMoteFinderListener(this);
-		}
-		
-		finder.startDiscovery();
-		
-		try {
-			synchronized(lock) {
-				lock.wait();
-			}
-		} catch (InterruptedException ex) {
-			System.out.println(ex.getMessage());
-		};
-		
-		while(!this.disconnectMote)
-			try {
-				sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-	
-	}
-	*/
 	@Override
 	public void run() {
 	
@@ -82,7 +78,9 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 			finder = MoteFinder.getMoteFinder();
 			finder.addMoteFinderListener(this);
 		}
+	
 		finder.startDiscovery();
+		
 		try {
 			synchronized(lock) {
 				lock.wait();
@@ -98,9 +96,15 @@ public class PlayerMoteFinder extends Thread implements MoteFinderListener {
 				e.printStackTrace();
 			}
 
+		System.out.println("SONO QUI !");
+			
 		mote.disconnect();
 		this.mote = null;
 
+		BlueCoveImpl.shutdown();
+		BlueCoveImpl.shutdownThreadBluetoothStack();
+		
+		System.out.println("SONO QUI 2 !");
 	}
 	
 }

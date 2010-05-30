@@ -113,10 +113,16 @@ public class MainMenu extends JFrame {
 		setVisible(true);
 	}
 
+	public void refreshPlayerMote()
+	{
+		this.playMote = null;
+		this.playMote = new PlayerMote();
+		System.out.println("PLAYERMOTE REFRESHED");
+	}
+	
 	public void refreshLobbyClient()
 	{
 		this.lobbyClient = null;
-		System.out.println("LOBBY CLIENT NULL");
 		this.lobbyClient = new LobbyClient();
 	}
 	

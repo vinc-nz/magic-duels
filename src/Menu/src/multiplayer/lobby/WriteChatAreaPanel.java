@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -25,7 +26,7 @@ public class WriteChatAreaPanel extends JPanel {
 	
 	public WriteChatAreaPanel(Lobby lobby)
 	{
-		super(new FlowLayout(FlowLayout.CENTER));
+		super(new GridLayout(1, 1));
 		super.setOpaque(false);
 		super.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(), 150));		
 		super.setBorder(LobbyUtilsFactory.createPanelBorder());
@@ -40,13 +41,13 @@ public class WriteChatAreaPanel extends JPanel {
 	public void initWriteChatAreaPanel()
 	{	
 		this.chatArea = new JTextField();
+		this.chatArea.setBorder(null);
 		this.chatArea.setOpaque(false);
-		this.chatArea.setBorder(BorderFactory.createEmptyBorder(0, 5, 20, 5));
 		
 		this.chatArea.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
 		this.chatArea.setForeground(Color.BLACK);
 		
-		this.chatArea.setPreferredSize(new Dimension((int)super.getPreferredSize().getWidth()-210, 100));
+		this.chatArea.setPreferredSize(new Dimension((int)super.getPreferredSize().getWidth()-300, 100));
 
 		this.chatArea.addKeyListener(new KeyListener() {
 			@Override
@@ -63,7 +64,6 @@ public class WriteChatAreaPanel extends JPanel {
 						WriteChatAreaPanel.this.graphicLobby.lobbyClient.sendChatMessage(WriteChatAreaPanel.this.chatArea.getText());
 					
 					WriteChatAreaPanel.this.chatArea.setText(null);
-					
 					WriteChatAreaPanel.this.chatArea.requestFocus();
 				}
 			}
@@ -80,8 +80,10 @@ public class WriteChatAreaPanel extends JPanel {
 			}
 		});
 		
-		JPanel panel = new JPanel(new FlowLayout());
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panel.setOpaque(false);
+		panel.setPreferredSize(new Dimension((int)super.getPreferredSize().getWidth(), 150));
+		//panel.setBorder(BorderFactory.createEmptyBorder(30, 5, 20, 5));
 		panel.add(this.chatArea);
 		panel.add(this.back);
 		

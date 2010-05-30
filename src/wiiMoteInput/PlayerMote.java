@@ -12,12 +12,10 @@ import com.intel.bluetooth.BlueCoveImpl;
  */
 public class PlayerMote extends Thread {
 	
-	protected Mote mote;
-	protected PlayerMoteFinder playerMoteFinder;
-	protected PlayingMote playingMote;
+	public Mote mote;
+	public PlayerMoteFinder playerMoteFinder;
+	public PlayingMote playingMote;
 	
-	protected int batteryLevel;
-
 	/**
 	 * The function is used to connect a WiiMote Controller.
 	 * It starts the main thread that operate the connection
@@ -47,22 +45,10 @@ public class PlayerMote extends Thread {
 	{
 		if(this.mote != null)
 		{
-			//this.playerMoteFinder.disconnectMote();
-			this.mote.disconnect();
-			this.notifyAll();
+			this.playerMoteFinder.disconnectMote();
+			this.mote = null;
 		}
 	}
-	
-	/*
-	/**
-	 * The functions set the current value of the mote battery level.
-	 * Note that it's only used by the report information listener
-	 * @param batteryLevel the batter level
-	 *//*
-	public void setBatteryLevel(int batteryLevel)
-	{
-		this.batteryLevel = batteryLevel;
-	}*/
 
 	/**
 	 * The function creates a PlayingMote that must be associated
