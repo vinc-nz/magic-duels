@@ -8,6 +8,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+/**
+ * Class Credits
+ * visualizza i creatori del gioco
+ * @author Luigi Marino
+ *
+ */
 public class Credits extends JPanel{
 
 	MainMenu mainMenu;
@@ -26,6 +32,11 @@ public class Credits extends JPanel{
 	final int IMAGE_WIDTH = 211;
 	final int IMAGE_HEIGTH = 122;
 	
+	/**
+	 * Carica le immagini che vengono visualizzate nel pannello
+	 * @param mainMenu
+	 * @param mainPanel
+	 */
 	public Credits( final MainMenu mainMenu, final MainPanel mainPanel){
 		super();
 		this.mainMenu = mainMenu;
@@ -51,6 +62,9 @@ public class Credits extends JPanel{
 		});
 	}
 	
+	/**
+	 * Disegna le immagini
+	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage( background, 0, 0, this.getWidth(), this.getHeight(), null);
 		
@@ -68,19 +82,34 @@ public class Credits extends JPanel{
 		cont++;
 	}
 	
-
+	/**
+	 * Funzione che serve per il ridimensionamento delle immagini 
+	 * @return
+	 */
 	public int imageGetWidth(){
 		return (IMAGE_WIDTH * this.getWidth()) / SCREEN_WIDTH;
 	}
-
+	
+	/**
+	 * Funzione che serve per il ridimensionamento delle immagini
+	 * @return
+	 */
 	public int imageGetHeight(){
 		return (IMAGE_HEIGTH * this.getHeight()) / SCREEN_HEIGHT;
 	}
 	
+	/**
+	 * Funzione che serve per il ridimensionamento delle immagini
+	 * @return
+	 */
 	public int konst(int i){
 		return (i * this.getHeight()) / SCREEN_HEIGHT; 
 	}
-
+	
+	/**
+	 * Funzione che serve per il ridimensionamento delle immagini
+	 * @return
+	 */
 	public int konst2(int i){
 		return (i * this.getWidth()) / SCREEN_WIDTH; 
 	}

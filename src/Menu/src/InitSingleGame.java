@@ -25,7 +25,14 @@ import javax.swing.border.TitledBorder;
 
 import wiiMoteInput.PlayerMote;
 
-
+/**
+ * Class InitSingleGame
+ * Pannello per l'inserimento dei dati del single Game:
+ * nome giocatore e numero di giocatori nella partita.
+ * Avvia la partita in modalità single Game
+ * @author Luigi Marino
+ *
+ */
 public class InitSingleGame extends JPanel {
 	
 	/** Class ID */
@@ -41,6 +48,13 @@ public class InitSingleGame extends JPanel {
 	/** Container */
 	Vector<String> numberPlayer;
 	
+	/**
+	 * Vengono creati i vari pannelli contenti bottini, label, e tutto ciò
+	 * che occorre per l'inserimento dei dati del giocatore
+	 * @param mainMenu
+	 * @param mainPanel
+	 * @param playerMote
+	 */
 	public InitSingleGame(final MainMenu mainMenu, final MainPanel mainPanel, final PlayerMote playerMote){
 		super();
 		this.mainMenu = mainMenu;
@@ -152,7 +166,9 @@ public class InitSingleGame extends JPanel {
 			    		SingleGame singleGame = new SingleGame(playerMote, mainMenu);
 			    		String name = namePlayer.getText();
 			    		singleGame.init(name, index);
+			    		mainMenu.setVisible(false);
 						singleGame.start();
+						mainMenu.setVisible(true);
 				       	mainMenu.ok.play();
 			            mainMenu.switchTo(mainPanel);
 			        }
@@ -186,6 +202,9 @@ public class InitSingleGame extends JPanel {
 		this.setFocusable(true);
 	}
 	
+	/**
+	 * disegna l'immagine di sfondo
+	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage( background, 0, 0, this.getWidth(), this.getHeight(), null);
 	}

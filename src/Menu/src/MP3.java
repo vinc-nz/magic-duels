@@ -5,7 +5,12 @@ import java.io.FileInputStream;
 
 import javazoom.jl.player.Player;
 
-
+/**
+ * Class MP3
+ * Carica l'audio utilizzato nel menù
+ * @author Luigi Marino
+ *
+ */
 public class MP3 {
     private String filename;
     private Player player; 
@@ -38,32 +43,3 @@ public class MP3 {
         }.start();
     }
 }
-
-
-    // test client
-//    public static void main(String[] args) {
-//        String filename = "vimdone.wma";
-//        MP3 mp3 = new MP3(filename);
-//        mp3.play();
-//
-//        // do whatever computation you like, while music plays
-////        int N = 4000;
-////        double sum = 0.0;
-////        for (int i = 0; i < N; i++) {
-////            for (int j = 0; j < N; j++) {
-////                sum += Math.sin(i + j);
-////            }
-////        }
-////        System.out.println(sum);
-//
-//        // when the computation is done, stop playing it
-//        mp3.close();
-//
-//        // play from the beginning
-//        mp3 = new MP3(filename);
-//        mp3.play();
-//
-//    }
-//
-//}
-

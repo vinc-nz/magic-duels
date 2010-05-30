@@ -3,6 +3,13 @@ package ia;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Class Monitor
+ * Gestisce i lock, fa si che un thread alla volta acceda ai metodi della
+ * classe Fight
+ * @author Luigi Marino
+ *
+ */
 public class Monitor {
 	
 	boolean start;

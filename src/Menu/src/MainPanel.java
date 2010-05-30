@@ -10,6 +10,14 @@ import javax.swing.JPanel;
 
 import wiiMoteInput.PlayerMote;
 
+/**
+ * Class MainPanel
+ * Pannello principale del menù
+ * da esso si può decidere dove switchare:
+ * Single Game, Multiplayer, Options, Credits, Exit
+ * @author Luigi Marino
+ *
+ */
 public class MainPanel extends JPanel{
 	
 	public Image fantasy, newGame, multiplayer, options, credits, exit,
@@ -30,7 +38,22 @@ public class MainPanel extends JPanel{
 	Game game;
 	MainMenu mainMenu;
 	PlayerMote playerMote;
-		
+	
+	/**
+	 * @param fantasy
+	 * @param newGame
+	 * @param multiplayer
+	 * @param options
+	 * @param credits
+	 * @param exit
+	 * @param selectNewGame
+	 * @param selecMultiplayer
+	 * @param selectOptions
+	 * @param selectCredits
+	 * @param selectExit
+	 * @param playerMote
+	 * @param mainMenu
+	 */
 	public MainPanel(Image fantasy, Image newGame, Image multiplayer, Image options, 
 			Image credits, Image exit, Image selectNewGame,
 			Image selecMultiplayer, Image selectOptions,
@@ -77,7 +100,10 @@ public class MainPanel extends JPanel{
 		setSize(size);
 		
 	}
-
+	
+	/**
+	 * Disegna l'immagine di sfondo e le immagini per la scelta dello switch
+	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage(fantasy, 0, 0, this.getWidth(), this.getHeight(), null);
 		
@@ -120,18 +146,34 @@ public class MainPanel extends JPanel{
 
 	}
 
+	/**
+	 * Funzione che serve per il ridimensionamento delle immagini
+	 * @return
+	 */
 	public int imageGetWidth(){
 		return (IMAGE_WIDTH * this.getWidth()) / SCREEN_WIDTH;
 	}
-
+	
+	/**
+	 * Funzione che serve per il ridimensionamento delle immagini
+	 * @return
+	 */
 	public int imageGetHeight(){
 		return (IMAGE_HEIGTH * this.getHeight()) / SCREEN_HEIGHT;
 	}
 	
+	/**
+	 * Funzione che serve per il ridimensionamento delle immagini
+	 * @return
+	 */
 	public int konst(int i){
 		return (i * this.getHeight()) / SCREEN_HEIGHT; 
 	}
 
+	/**
+	 * Funzione che serve per il ridimensionamento delle immagini
+	 * @return
+	 */
 	public int konst2(int i){
 		return (i * this.getWidth()) / SCREEN_WIDTH; 
 	}

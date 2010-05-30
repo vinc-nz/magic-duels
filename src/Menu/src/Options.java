@@ -20,7 +20,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-
+/**
+ * Class Options
+ * Pannello per la scelta delle opzioni di gioco
+ * @author Luigi Marino
+ *
+ */
 public class Options extends JPanel {
 	
 	/** Class ID */
@@ -44,6 +49,12 @@ public class Options extends JPanel {
 	/** Resolution's container */
 	Vector<String> resolutions;
 	
+	/**
+	 * Vengono creati i vari pannelli contenenti i botton, label e tutto
+	 * ciò che serve per la scelta delle impostazioni di gioco
+	 * @param mainMenu
+	 * @param mainPanel
+	 */
 	public Options(final MainMenu mainMenu, final MainPanel mainPanel){
 		super();
 		this.mainMenu = mainMenu;
@@ -209,11 +220,17 @@ public class Options extends JPanel {
 		this.setFocusable(true);
 	}
 	
+	/**
+	 * Disegna l'immagine di sfondo
+	 */
 	public void paintComponent(Graphics g) {
 		g.drawImage( background, 0, 0, this.getWidth(), this.getHeight(), null);
 		mote.setSize(73,307);
 	}
 	
+	/**
+	 * Fa partire il falshing del wiiMote
+	 */
 	public void startFlashing()
 	{
 		this.wiiMoteFlashing = true;
@@ -221,7 +238,10 @@ public class Options extends JPanel {
 		this.animaker = AniMaker.bindAnimation("../data/clips.png", 73, 307, 80, mote);
 		this.animaker.startAnimation();
 	}
-
+	
+	/**
+	 * Stoppa il falshing del wiiMote
+	 */
 	public void stopFlashing()
 	{
 		this.wiiMoteFlashing = false;

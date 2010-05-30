@@ -6,17 +6,30 @@ import core.spells.FanBalls;
 import core.spells.Fireball;
 import input.CharacterController;
 
+/**
+ * Class Ia
+ * Gestisce l'intelligenza artificiale dei maghi
+ * @author Luigi Marino
+ *
+ */
 public class Ia extends Thread{
 	
 	CharacterController characterController;
 	Random rand;
 	
+	/**
+	 * 
+	 * @param characterController
+	 */
 	public Ia(CharacterController characterController) {
 		super();
 		this.characterController = characterController;
 		rand = new Random();
 	}
 	
+	/**
+	 * Muove velocemente l'avversario
+	 */
 	public void moveSpeed(){
 		for(int i=0; i<40; i++){
 			characterController.move("right");
@@ -29,6 +42,9 @@ public class Ia extends Thread{
 		}
 	}
 	
+	/**
+	 * Muove lentamente l'avversario
+	 */
 	public void moveSlow(){
 		for(int i=0; i<40; i++){
 			characterController.move("left");
@@ -41,10 +57,24 @@ public class Ia extends Thread{
 		}
 	}
 	
-	public void rambo(){
-		characterController.castSpell(FanBalls.class);
+	/**
+	 * Permette all'avversario di lanciare le varie magie
+	 */
+	public void combo(){
+		if(rand.nextInt(10) == 2)
+			characterController.castSpell(Fireball.class);
+		else if(rand.nextInt(10) == 3)
+			characterController.castSpell(FanBalls.class);
+		else{
+			characterController.castSpell(Fireball.class);
+			characterController.castSpell(Fireball.class);
+			characterController.castSpell(Fireball.class);
+		}
 	}
 	
+	/**
+	 * Il mago gestito dall'Ia, si muove in base alla magia ricevuta 
+	 */
 	public void intelligence(){
 		
 		if(characterController.getFight().prepSpeel(1, FanBalls.class)){
@@ -56,7 +86,6 @@ public class Ia extends Thread{
 		}	
 	}
 	
-	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -64,22 +93,10 @@ public class Ia extends Thread{
 		
 		while(!characterController.getFight().finished){
 			
-			if(rand.nextInt(10) == 3)
-				intelligence();
-				//this.moveSpeed();
-				//characterController.move("left");
+			if(rand.nextInt(20) == 3)
+				combo();
 			else
-				rambo();
-//				try {
-//					sleep(2000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				characterController.castSpell(FanBalls.class);
-//				
-				
-			
+				intelligence();
 		}
 	}
 }
