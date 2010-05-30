@@ -167,9 +167,11 @@ public class InitSingleGame extends JPanel {
 			    		String name = namePlayer.getText();
 			    		singleGame.init(name, index);
 			    		mainMenu.setVisible(false);
+			    		mainMenu.ok.play();
 						singleGame.start();
+						mainMenu.fight.close();
+						mainMenu.colonna.play();
 						mainMenu.setVisible(true);
-				       	mainMenu.ok.play();
 			            mainMenu.switchTo(mainPanel);
 			        }
 			    }
