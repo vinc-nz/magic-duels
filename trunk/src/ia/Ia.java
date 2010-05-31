@@ -8,7 +8,7 @@ import input.CharacterController;
 
 /**
  * Class Ia
- * Gestisce l'intelligenza artificiale dei maghi
+ * Gestisce l'intelligenza artificiale 
  * @author Luigi Marino
  *
  */
@@ -61,15 +61,15 @@ public class Ia extends Thread{
 	 * Permette all'avversario di lanciare le varie magie
 	 */
 	public void combo(){
-		if(rand.nextInt(10) == 2)
-			characterController.castSpell(Fireball.class);
-		else if(rand.nextInt(10) == 3)
-			characterController.castSpell(FanBalls.class);
-		else{
+		if(rand.nextInt(10) == 2){
 			characterController.castSpell(Fireball.class);
 			characterController.castSpell(Fireball.class);
 			characterController.castSpell(Fireball.class);
 		}
+		else if(rand.nextInt(10) == 3)
+			characterController.castSpell(FanBalls.class);
+		else
+			characterController.castSpell(Fireball.class);
 	}
 	
 	/**
@@ -77,13 +77,14 @@ public class Ia extends Thread{
 	 */
 	public void intelligence(){
 		
-		if(characterController.getFight().prepSpeel(1, FanBalls.class)){
-			this.moveSpeed();
+		if(characterController.getFight().prepSpeel(1, FanBalls.class) || 
+		   characterController.getFight().prepSpeel(1, Fireball.class) ){
+
+			if(rand.nextInt(3) == 1)
+				this.moveSlow();
+			else
+				this.moveSpeed();
 		}
-		
-		if(characterController.getFight().prepSpeel(1, Fireball.class)){
-			this.moveSlow();
-		}	
 	}
 	
 	@Override

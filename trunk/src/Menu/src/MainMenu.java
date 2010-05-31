@@ -130,7 +130,7 @@ public class MainMenu extends JFrame {
 	 * Chiude il menù
 	 */
 	public void close() {
-		this.dispose();
+		System.exit(DISPOSE_ON_CLOSE);
 	}
 	
 	/**
