@@ -62,12 +62,31 @@ public class Ia extends Thread{
 	 */
 	public void combo(){
 		if(rand.nextInt(10) == 2){
+			for(int i=0; i<40; i++){
+				characterController.move("forward");
+				try {
+					sleep(20);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			characterController.castSpell(Fireball.class);
 			characterController.castSpell(Fireball.class);
 			characterController.castSpell(Fireball.class);
 		}
-		else if(rand.nextInt(10) == 3)
+		else if(rand.nextInt(10) == 3){
+			for(int i=0; i<40; i++){
+				characterController.move("backward");
+				try {
+					sleep(20);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			characterController.castSpell(FanBalls.class);
+		}
 		else
 			characterController.castSpell(Fireball.class);
 	}
