@@ -174,7 +174,7 @@ public class Fight {
 		if (isActive()) {
 			Character player = this.getPlayer(playerId);
 			player.target = player.target%numberOfPlayers()+1;
-			if (player.target == playerId || !player.isInGame())
+			if (player.target == playerId || player.isDead())
 				this.nextTarget(playerId);
 		}
 	}
@@ -197,8 +197,12 @@ public class Fight {
 
 		for (int i = 0; i < players.length; i++) {
 			if (!players[i].isDead()) {
+				int playerId = i+1;
 				int target = players[i].target;
-				players[i].lookAt(this.getPlayer(target));
+				if (getPlayer(target).isDead())
+					nextTarget(playerId);
+				else
+					players[i].lookAt(this.getPlayer(target));
 				if (increaseMana) 
 					players[i].mana++;
 			}

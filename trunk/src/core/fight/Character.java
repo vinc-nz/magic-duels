@@ -73,7 +73,8 @@ public class Character extends MovingObject {
 	public synchronized void applyDamage(int points) {
 		life -= points;
 		if (life<=0) {
-			notify();
+			setCollideable(false);
+			notifyAll();
 			if (deathEvent!=null)
 				try {
 					deathEvent.call();

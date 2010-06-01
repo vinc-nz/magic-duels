@@ -35,16 +35,15 @@ public class GraphicCharacter extends GraphicObject implements Runnable {
 	JointController controller;		//per le animazioni
 	short currentAnim;				//animazione corrente
 	
-	boolean preparingSpell;
+	boolean preparingSpell = false;
 	boolean positionUpdated = true;
+	boolean active = true;
 	CountdownTimer animationTimer = new CountdownTimer();
 
 	public GraphicCharacter(Character coreCharacter) {
 		super(coreCharacter);
 		
 		this.coreCharacter = coreCharacter;
-		
-		this.preparingSpell = false;
 		
 		
 	}
@@ -58,7 +57,7 @@ public class GraphicCharacter extends GraphicObject implements Runnable {
 
 	@Override
 	public void run() {
-		while(!Fight.getInstance().finished) {
+		while(active && !Fight.getInstance().finished) {
 			coreCharacter.checkState();
 			updateState();
 		}
@@ -66,24 +65,28 @@ public class GraphicCharacter extends GraphicObject implements Runnable {
 	}
 	
 	public void updateState() {
-		if (coreCharacter.isMoving()) {
-			positionUpdated = false;
-			coreCharacter.moved();
-		}
-		
-		if (!preparingSpell && coreCharacter.isPreparingSpell()) {
-			this.preparingSpell = true;
-			this.setAnimation(ATTACK);
-		}
 		
 		if (coreCharacter.isDead()) {
 			this.setAnimation(DIE);
+			active=false;
+		}
+		else if (coreCharacter.isMoving()) {
+			positionUpdated = false;
+			coreCharacter.moved();
+		}
+		else if (!preparingSpell && coreCharacter.isPreparingSpell()) {
+			this.preparingSpell = true;
+			super.stopMoving();
+			this.setAnimation(ATTACK);
 		}
 		
 	}
 	
 	@Override
 	public void update(float tpf) {
+		
+		
+		
 		if (pointOfAnimation(ATTACK, 0.95f)) {
 			coreCharacter.castSpell();
 		}
@@ -102,8 +105,7 @@ public class GraphicCharacter extends GraphicObject implements Runnable {
 			positionUpdated = true;
 			coreCharacter.ready();
 		}
-		else if (currentAnim==WALK)
-			this.stopMoving();
+		else stopMoving();
 		
 		this.calculateRotation();
 		
@@ -195,7 +197,8 @@ public class GraphicCharacter extends GraphicObject implements Runnable {
 			animationTimer.start(ANIMATION_UPTIME);
 		else if (animationTimer.expired()) {
 			super.stopMoving();
-			this.setAnimation(STAND);
+			if (currentAnim==WALK)
+				this.setAnimation(STAND);
 			animationTimer.deactivate();
 		}
 //		animationTimer.start(ANIMATION_UPTIME);
