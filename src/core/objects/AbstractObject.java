@@ -16,6 +16,8 @@ public abstract class AbstractObject {
 	
 	float radius = 1;
 	
+	boolean collideable = true;
+	
 	private boolean inGame = false;
 
 	
@@ -49,7 +51,8 @@ public abstract class AbstractObject {
 	 * @return true if the objects collide
 	 */
 	public boolean collides(AbstractObject other) {
-		return this.position.distance(other.position) <= this.radius + other.radius;
+		return collideable && 
+			(this.position.distance(other.position) <= this.radius + other.radius);
 	}
 	
 	
@@ -60,6 +63,22 @@ public abstract class AbstractObject {
 	public abstract void handleCollision(AbstractObject other);
 	
 	
+	
+	
+	public boolean isCollideable() {
+		return collideable;
+	}
+
+
+
+
+	public void setCollideable(boolean collideable) {
+		this.collideable = collideable;
+	}
+
+
+
+
 	public abstract String getName();
 
 

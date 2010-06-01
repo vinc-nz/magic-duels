@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import jmegraphic.Arena;
+import jmegraphic.CountdownTimer;
 import jmegraphic.CustomCamera;
 import jmegraphic.GraphicCharacter;
 import jmegraphic.GraphicObject;
@@ -29,32 +30,32 @@ public class GraphicFight extends BasicGameState {
 	JmeGame game;
 	Fight fight; // parita
 	CustomCamera camera; // camera
-	
+
 	GraphicCharacter focused;
 	ObjectMap objects;
-	
-	//CountdownTimer uptime;
-	
+
+	CountdownTimer uptime;
+
 	public static final float UPTIME = 0.008f;  //intervallo di aggiornamento (in secondi)
-	
+
 	Arena arena;
-	
+
 	public GraphicFight(JmeGame game) {
 		super("GraphicFight");
 		this.game = game;
 		this.fight = game.getFight();
-		//uptime = new CountdownTimer();
+		uptime = new CountdownTimer();
 		objects = new ObjectMap();
 	}
-	
+
 	public int getLoadingSteps() {
 		return fight.numberOfPlayers() + 3;
 	}
-	
+
 
 	public void initGame(int playerId) {
 		camera = new CustomCamera();
-		
+
 		for (int i=1;i<=fight.numberOfPlayers();i++) {
 			game.getLoading().increment("loading players");
 			Character player = fight.getPlayer(i);
@@ -64,7 +65,7 @@ public class GraphicFight extends BasicGameState {
 				focused = graphicCharacter;
 				camera.setFocused(focused);
 				player.atDeath(new Callable<Void>() {
-					
+
 					@Override
 					public Void call() throws Exception {
 						game.showMessage("sei stato sconfitto", false);
@@ -83,9 +84,9 @@ public class GraphicFight extends BasicGameState {
 			} else new EnemyDeath(player);
 		}
 		game.getLoading().increment("initializing particle system");
-	    
+
 		ExplosionFactory.warmup();
-		
+
 		GameTaskQueueManager.getManager().update(new Callable<Void>() {
 
 			@Override
@@ -98,51 +99,49 @@ public class GraphicFight extends BasicGameState {
 				return null;
 			}
 		});
-		
-		//uptime.start(UPTIME);
-		
+
+		uptime.start(UPTIME);
+
 		//this.setActive(true);
 	}
 
-	
 
-//	@Override
-//	public void setActive(boolean active) {
-//		super.setActive(active);
-//		if (active)
-//			uptime.start(UPTIME);
-//	}
+
+	//	@Override
+	//	public void setActive(boolean active) {
+	//		super.setActive(active);
+	//		if (active)
+	//			uptime.start(UPTIME);
+	//	}
 
 	// aggiornamento
 	@Override
 	public void update(float tpf) {
 		super.update(tpf);
-		
-		//if (uptime.expired()) {
 
+		if (uptime.expired()) {
 			fight.update();
-			this.updateObjects(tpf);
-			
+			uptime.start(UPTIME);
+		}
 
-			this.updateCamera();
-			
-//			uptime.start(UPTIME);
-//		} //ENDIF
-		
+		this.updateObjects(tpf);
+		this.updateCamera();
+
+
 	}
-	
+
 	protected void updateCamera() {
 		Character enemy = fight.getEnemy(focused.getCoreCharacter());
 		GraphicObject target = objects.get(enemy);
-//		GameState camera = GameStateManager.getInstance().getChild("camera");
-//		((ThirdPersonCameraGameState) camera).lookAt(target);
+		//		GameState camera = GameStateManager.getInstance().getChild("camera");
+		//		((ThirdPersonCameraGameState) camera).lookAt(target);
 		camera.setTarget(target);
 		camera.update();
 	}
 
 
 	protected void updateObjects(float tpf) {
-		
+
 		for (AbstractObject obj : World.getObjects() ) {
 			GraphicObject go = this.objects.get(obj);
 			if (go==null)
@@ -152,15 +151,15 @@ public class GraphicFight extends BasicGameState {
 			else go.update(tpf);
 		}
 	}
-	
+
 	public void attach(Spatial child) {
 		this.getRootNode().attachChild(child);
 	}
-	
+
 	public void detach(Spatial child) {
 		this.getRootNode().detachChild(child);
 	}
-	
+
 
 	public class ObjectMap extends HashMap<AbstractObject, GraphicObject> {
 		private static final long serialVersionUID = 1L;
@@ -171,22 +170,22 @@ public class GraphicFight extends BasicGameState {
 			value.loadModel();
 			return super.put(key, value);
 		}
-		
+
 		@Override
 		public GraphicObject remove(Object key) {
 			GraphicFight.this.detach(this.get(key));
 			return super.remove(key);
 		}
-		
+
 		public void add(AbstractObject obj) {
 			GraphicObject go = GraphicObject.fromObject(obj);
 			this.put(obj, go);
 		}
 	}
-	
+
 	public class EnemyDeath implements Callable<Void> {
 		Character enemy;
-		
+
 		public EnemyDeath(Character enemy) {
 			super();
 			this.enemy = enemy;
@@ -200,7 +199,7 @@ public class GraphicFight extends BasicGameState {
 		}
 
 	}
-	
-	
+
+
 
 }
