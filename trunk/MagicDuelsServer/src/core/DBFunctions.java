@@ -55,15 +55,14 @@ public class DBFunctions {
 		
 		Utente utenteDB = DBFunctions.getEntityManager().find(Utente.class, nome);
 		
-		if(utenteDB != null)
-		{
-			if(DBFunctions.newConnectionLog((Inet4Address)ip, utenteDB))
-				return utenteDB;
-			else 
-				return null;
-		}
-		else
+		if(utenteDB == null) return null;
+		if(!utenteDB.getPassword().equals(password)) return null;
+		
+		if(DBFunctions.newConnectionLog((Inet4Address)ip, utenteDB))
+			return utenteDB;
+		else 
 			return null;
+		
 	}
 	
 	public static boolean newConnectionLog(InetAddress ip, Utente utente)
