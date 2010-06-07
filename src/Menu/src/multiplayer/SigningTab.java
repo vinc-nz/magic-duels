@@ -74,6 +74,7 @@ public class SigningTab extends MultiplayerMenuTabs {
 		
 		this.top = new ImageIcon("src/Menu/data/multiplayer/connect.gif").getImage();
 		
+		this.connect = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/connect1.gif", "src/Menu/data/multiplayer/connect2.gif");
 		this.connect.addMouseListener(new MouseAdapter() {
 			
 			@Override

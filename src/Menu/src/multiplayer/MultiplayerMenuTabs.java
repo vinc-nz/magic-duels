@@ -43,7 +43,6 @@ public abstract class MultiplayerMenuTabs extends JPanel{
 		this.serverPort = new JTextField("7000");
 		LobbyUtilsFactory.setLobbyTextFieldParameters(this.serverPort, "Porta Server:");
 		
-		this.connect = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/connect1.gif", "src/Menu/data/multiplayer/connect2.gif");
 		this.back = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/back1.gif", "src/Menu/data/multiplayer/back2.gif");
 		this.back.addMouseListener(new MouseAdapter() {
 			

@@ -74,7 +74,7 @@ public class WriteChatAreaPanel extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e)
-			{
+			{				
 				WriteChatAreaPanel.this.graphicLobby.lobbyClient.sendByeMessage();
 				WriteChatAreaPanel.this.graphicLobby.mainMenu.ok.play();			
 			}
