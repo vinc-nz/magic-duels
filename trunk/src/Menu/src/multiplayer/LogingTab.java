@@ -44,9 +44,7 @@ public class LogingTab extends MultiplayerMenuTabs {
 		
 		LobbyUtilsFactory.setLobbyTextFieldParameters(this.user, "Nome Utente");
 		LobbyUtilsFactory.setLobbyTextFieldParameters(this.password, "Password");
-		
-		this.login = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/login1.gif", "src/Menu/data/multiplayer/login2.gif");		
-	
+			
 	}
 
 	/**
@@ -58,12 +56,15 @@ public class LogingTab extends MultiplayerMenuTabs {
 		
 		this.top = new ImageIcon("src/Menu/data/multiplayer/connect.gif").getImage();
 		
+		this.connect = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/connect1.gif", "src/Menu/data/multiplayer/connect2.gif");
 		this.connect.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				try{
+					System.out.println("EVENTO CONNESSIONE!");
+					
 					String ip = LogingTab.this.serverIp.getText();
 					int port = Integer.parseInt(LogingTab.this.serverPort.getText());
 					if(LogingTab.this.mainMenu.lobbyClient.connect(ip, port))
@@ -114,6 +115,7 @@ public class LogingTab extends MultiplayerMenuTabs {
 
 		this.top = new ImageIcon("src/Menu/data/multiplayer/login.gif").getImage();
 		
+		this.login = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/login1.gif", "src/Menu/data/multiplayer/login2.gif");		
 		this.login.addActionListener(new ActionListener() {
 			
 			@Override

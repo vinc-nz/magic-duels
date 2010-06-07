@@ -47,7 +47,6 @@ public class GameListPanel extends JScrollPane {
 	 */
 	public void initGameListArePanel()
 	{
-		
 		Vector<String> header = new Vector<String>();
 		
 		header.add("Nome Partita");
