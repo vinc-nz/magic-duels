@@ -35,6 +35,11 @@ public class Protection extends GraphicObject {
 		super.update(tpf);
 	}
 	
+	@Override
+	public boolean isInGame() {
+		return getObject().isInGame();
+	}
+	
 	
 
 }
