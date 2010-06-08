@@ -43,9 +43,13 @@ public class FireBallSpell extends Spells {
 			X = this.playingMote.getCurrentXvalue();
 			Y = this.playingMote.getCurrentYvalue();
 			Z = this.playingMote.getCurrentZvalue();
+			
+			/* CHECK BUG PRESENCE */
+			if(mediaX == 0 || mediaY == 0 || mediaZ == 0)
+				System.out.println("ATTENZIONE! TUTTI ZERI NELLE ACCELERAZIONI!");
 		}
 		
-		// Se è scaduto il tempo:
+		// Se ï¿½ scaduto il tempo:
 		if(this.stop && !ItIsSpell) 
 		{
 			System.out.println("NON E' LA MAGIA (timeout)");

@@ -17,7 +17,7 @@ public class FanBalls extends Spells {
 
 	public void run()
 	{
-		System.out.println("ENTRO NELLA RUN DELLA MAGIA FUN BALLS");
+		System.out.println("ENTRO NELLA RUN DELLA MAGIA FAN BALLS");
 	
 		super.mediaX = 0;
 		super.mediaY = 0;
