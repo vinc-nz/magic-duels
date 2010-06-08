@@ -43,6 +43,10 @@ public class Protection extends Spells {
 			X = this.playingMote.getCurrentXvalue();
 			Y = this.playingMote.getCurrentYvalue();
 			Z = this.playingMote.getCurrentZvalue();
+			
+			/* CHECK BUG PRESENCE */
+			if(mediaX == 0 || mediaY == 0 || mediaZ == 0)
+				System.out.println("ATTENZIONE! TUTTI ZERI NELLE ACCELERAZIONI!");
 		}
 		
 		// Se � scaduto il tempo:
