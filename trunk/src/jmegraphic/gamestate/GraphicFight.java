@@ -95,10 +95,11 @@ public class GraphicFight extends BasicGameState {
 				arena = new Arena();
 				attach(arena);
 				arena.update(0);
-				game.getLoading().increment();
 				return null;
 			}
 		});
+		
+		game.getLoading().increment();
 
 		uptime.start(UPTIME);
 

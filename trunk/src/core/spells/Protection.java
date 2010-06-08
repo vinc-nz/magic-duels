@@ -10,6 +10,7 @@ public class Protection extends AbstractObject implements Spell {
 	public static final int DURATION = 5;
 	
 	long launchTime = 0;
+	Character owner;
 	
 
 	@Override
@@ -26,6 +27,7 @@ public class Protection extends AbstractObject implements Spell {
 
 	@Override
 	public void update() {
+		this.setPosition(owner.getPosition());
 		if (isInGame() && new Date().getTime()-launchTime>DURATION*1000)
 			this.destroy();
 	}
@@ -44,7 +46,7 @@ public class Protection extends AbstractObject implements Spell {
 
 	@Override
 	public void setOwner(Character owner) {
-		this.setPosition(owner.getPosition());
+		this.owner = owner;
 	}
 
 }
