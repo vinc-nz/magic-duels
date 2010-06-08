@@ -81,7 +81,7 @@ public abstract class MovingObject extends AbstractObject {
 	
 	
 	protected void moveThrough(Direction d) {
-		if (forbiddenDirection == null || d.difference(forbiddenDirection)>Math.PI/3) {
+		if (forbiddenDirection == null || d.difference(forbiddenDirection)>Math.PI) {
 			this.lastMovement = d;
 			this.forbiddenDirection = null;
 			float x = d.getX() * speed;
