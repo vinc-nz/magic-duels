@@ -18,6 +18,8 @@ public abstract class AbstractObject {
 	
 	boolean collideable = true;
 	
+	boolean toRevome = false;
+	
 	private boolean inGame = false;
 
 	
@@ -77,8 +79,6 @@ public abstract class AbstractObject {
 	}
 
 
-
-
 	public abstract String getName();
 
 
@@ -94,6 +94,21 @@ public abstract class AbstractObject {
 
 	public boolean isInGame() {
 		return inGame;
+	}
+
+
+	
+
+
+	public boolean isToRevome() {
+		return toRevome;
+	}
+
+
+
+
+	public void setToRevome(boolean toRevome) {
+		this.toRevome = toRevome;
 	}
 
 

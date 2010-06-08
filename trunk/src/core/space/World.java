@@ -33,8 +33,9 @@ public class World {
 	public static void checkCollisions() {
 		LinkedList<AbstractObject> newList = new LinkedList<AbstractObject>();
 		for (AbstractObject abstractObject : objects) {
-			abstractObject.update();
 			if (abstractObject.isInGame())
+				abstractObject.update();
+			if (!abstractObject.isToRevome())
 				newList.add(abstractObject);
 		}
 		

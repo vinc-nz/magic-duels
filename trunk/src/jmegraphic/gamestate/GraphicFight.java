@@ -150,6 +150,9 @@ public class GraphicFight extends BasicGameState {
 			else if (!go.isInGame()) 
 				this.objects.remove(obj);
 			else go.update(tpf);
+			
+			if (!obj.isInGame())
+				obj.setToRevome(true);
 		}
 	}
 
