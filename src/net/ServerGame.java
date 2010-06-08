@@ -1,5 +1,6 @@
 package net;
 
+import ia.Ia;
 import input.CharacterController;
 
 import java.io.DataOutputStream;
@@ -44,6 +45,11 @@ public class ServerGame extends NetGame {
 		for (int i=0;i<channels.length;i++) {
 			channels[i] = s.accept();
 			this.acceptClient(channels[i], i);
+		}
+		for (int i=1;i<=comPlayers;i++) {
+			int id = humanPlayers + i;
+			NetForwarderController c = new NetForwarderController(id, getFight(), this);
+			new Ia(c).start();
 		}
 	}
 
