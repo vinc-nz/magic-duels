@@ -43,10 +43,10 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 			this.characterController.move("right");
 
 		if(evento.isDPadUpPressed())
-		this.characterController.move("forward");
+			this.characterController.move("forward");
 		
 		if(evento.isDPadDownPressed())
-		this.characterController.move("backward");
+			this.characterController.move("backward");
 		
 		if(evento.isButtonBPressed())
 		{
@@ -55,6 +55,8 @@ public class PlayerMoteButtonListener implements CoreButtonListener {
 				this.characterController.nextTarget();
 			this.buttonBTimeStamp = nextTimestamp;
 		}
-
+		
+		if(evento.isButtonHomePressed())
+			this.characterController.pause();
 	}
 }

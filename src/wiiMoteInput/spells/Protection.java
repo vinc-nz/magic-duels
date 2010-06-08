@@ -4,12 +4,12 @@ import wiiMoteInput.SpellStep;
 import wiiMoteInput.SpellTimer;
 import wiiMoteInput.Spells;
 
-public class NewSpell extends Spells {
+public class Protection extends Spells {
 		
 	public final static SpellStep END = new SpellStep(120, 100, 130, Spells.CLOSE, Spells.CLOSE, Spells.IRRILEVANT, Spells.AMB, Spells.AMB, Spells.DX);
 
-	public NewSpell() {
-		super("Newspell");
+	public Protection() {
+		super("Protection");
 	}
 	
 	public void run()
@@ -45,7 +45,7 @@ public class NewSpell extends Spells {
 			Z = this.playingMote.getCurrentZvalue();
 		}
 		
-		// Se è scaduto il tempo:
+		// Se ï¿½ scaduto il tempo:
 		if(this.stop && !ItIsSpell) 
 		{
 			System.out.println("NON E' LA MAGIA (timeout)");
@@ -67,7 +67,7 @@ public class NewSpell extends Spells {
 	
 	@Override
 	protected SpellStep getEndStep() {
-		return NewSpell.END;
+		return Protection.END;
 	}
 	
 	@Override
@@ -75,7 +75,7 @@ public class NewSpell extends Spells {
 		System.out.println("ENTRO IN ISSPELL DI NEW SPELL");
 		/*if(about(super.mediaX, 125, CLOSE, AMB) && about(super.mediaY, 120, CLOSE, AMB))
 			return true;*/
-		if(about(super.mediaY, 80, IRRILEVANT, DX) && about(super.mediaZ, 100, IRRILEVANT, DX))
+		if(about(super.mediaY, 70, IRRILEVANT, DX) && about(super.mediaZ, 100, IRRILEVANT, DX))
 		{
 			System.out.println("E' LA MAGIA !!!");
 			super.castSpell();

@@ -3,7 +3,7 @@ package wiiMoteInput;
 import input.CharacterController;
 import wiiMoteInput.spells.FanBalls;
 import wiiMoteInput.spells.FireBallSpell;
-import wiiMoteInput.spells.NewSpell;
+import wiiMoteInput.spells.Protection;
 
 /**
  * The class manages all the spells that a player could
@@ -97,7 +97,7 @@ abstract public class Spells extends Thread {
 			if(NEWSPELL_START.isAtStep(X, Y, Z))
 			{
 				System.out.println("NEWSPELL");
-				return new NewSpell();
+				return new Protection();
 			}
 		return null;
 		
