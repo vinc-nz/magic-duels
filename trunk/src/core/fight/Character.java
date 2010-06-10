@@ -154,15 +154,7 @@ public class Character extends MovingObject {
 		return super.collides(other);
 	}
 
-	/* (non-Javadoc)
-	 * @see core.objects.AbstractObject#handleCollision(core.objects.AbstractObject)
-	 */
-	@Override
-	public void handleCollision(AbstractObject other) {
-		if (other == null || other instanceof Character)
-			this.forbidDirection();
-
-	}
+	
 
 	@Override
 	public String getName() {

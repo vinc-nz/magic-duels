@@ -36,7 +36,7 @@ public abstract class AbstractProjectileSpell extends MovingObject implements Sp
 	
 	@Override
 	public void handleCollision(AbstractObject other) {
-		
+		super.handleCollision(other);
 		if (other instanceof Character) {
 			((Character) other).applyDamage(this.getDamage());
 		}

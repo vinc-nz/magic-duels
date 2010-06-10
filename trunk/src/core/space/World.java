@@ -30,7 +30,7 @@ public class World {
 		return new LinkedList<AbstractObject>(objects);
 	}
 	
-	public static void checkCollisions() {
+	public static void updateObjects() {
 		LinkedList<AbstractObject> newList = new LinkedList<AbstractObject>();
 		for (AbstractObject abstractObject : objects) {
 			if (abstractObject.isInGame())
@@ -41,16 +41,15 @@ public class World {
 		
 		objects = newList;
 		
-		for (AbstractObject i : objects) {
-			for (AbstractObject j : objects) {
-				if (!i.getPosition().isValid())
-					i.handleCollision(null);
-				if (i != j && i.collides(j))
-					i.handleCollision(j);
-			}
-			
+	}
+	
+	public static void checkCollisions(AbstractObject collideable) {
+		if (!collideable.getPosition().isValid())
+			collideable.handleCollision(null);
+		for (AbstractObject obj : objects) {
+			if (collideable != obj)
+				collideable.handleCollision(obj);
 		}
-		
 	}
 
 }
