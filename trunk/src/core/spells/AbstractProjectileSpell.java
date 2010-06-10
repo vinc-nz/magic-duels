@@ -36,7 +36,6 @@ public abstract class AbstractProjectileSpell extends MovingObject implements Sp
 	
 	@Override
 	public void handleCollision(AbstractObject other) {
-		super.handleCollision(other);
 		if (other instanceof Character) {
 			((Character) other).applyDamage(this.getDamage());
 		}
@@ -51,9 +50,12 @@ public abstract class AbstractProjectileSpell extends MovingObject implements Sp
 	
 	@Override
 	public boolean collides(AbstractObject other) {
-		if (other!=this.owner)
-			return super.collides(other);
-		return false;
+		if (other instanceof AbstractProjectileSpell && 
+				((AbstractProjectileSpell) other).owner == this.owner)
+			return false;
+		if (other == this.owner)
+			return false;
+		return super.collides(other);
 	}
 
 }

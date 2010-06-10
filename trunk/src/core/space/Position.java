@@ -60,9 +60,13 @@ public class Position {
 	 * @param x the x component of the vector
 	 * @param y the y component of the vector
 	 */
-	public void move(float x, float y) {
-		this.x += x;
-		this.y += y;
+	public boolean move(float x, float y) {
+		if (World.validPosition(this.x+x, this.y+y)) {
+			this.x+=x;
+			this.y+=y;
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -96,7 +100,7 @@ public class Position {
 		return (float)angle;
 	}
 
-
+	
 
 
 	public boolean isValid() {

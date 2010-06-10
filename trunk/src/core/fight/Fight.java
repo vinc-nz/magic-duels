@@ -21,7 +21,7 @@ import core.spells.TargettingSpell;
  */
 public class Fight {
 
-	static final int MANA_INCREASE_FACTOR = 500;
+	static final int MANA_INCREASE_FACTOR = 100;
 
 	static Fight instance = null;
 
@@ -46,13 +46,6 @@ public class Fight {
 	public static Fight getInstance() {
 		return instance;
 	}
-
-
-
-	public static void setInstance(Fight instance) {
-		Fight.instance = instance;
-	}
-
 
 
 	public Fight(int numberOfPlayers) {
@@ -120,8 +113,8 @@ public class Fight {
 			
 			try {
 				Spell s = (Spell) spell.newInstance();
-				this.getPlayer(playerId).prepareSpell(s);
 				this.setSpellParams(playerId, s);
+				this.getPlayer(playerId).prepareSpell(s);
 
 				monitor.startSpell();
 			} catch (Exception e) {

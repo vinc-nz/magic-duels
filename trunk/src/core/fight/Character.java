@@ -218,6 +218,12 @@ public class Character extends MovingObject {
 	public boolean isMoving() {
 		return moving;
 	}
+
+	@Override
+	public void handleCollision(AbstractObject other) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

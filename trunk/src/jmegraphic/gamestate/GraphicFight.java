@@ -119,6 +119,8 @@ public class GraphicFight extends BasicGameState {
 	@Override
 	public void update(float tpf) {
 		super.update(tpf);
+		
+		arena.update(tpf);
 
 		if (uptime.expired()) {
 			fight.update();

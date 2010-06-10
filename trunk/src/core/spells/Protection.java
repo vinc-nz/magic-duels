@@ -51,11 +51,10 @@ public class Protection extends AbstractObject implements Spell {
 	
 	@Override
 	public boolean collides(AbstractObject other) {
-		boolean collides = super.collides(other);
-		if (collides && other instanceof AbstractProjectileSpell
+		if (other instanceof AbstractProjectileSpell
 			&& ((AbstractProjectileSpell) other).owner == this.owner)
 			return false;
-		return collides;
+		return super.collides(other);
 	}
 
 }
