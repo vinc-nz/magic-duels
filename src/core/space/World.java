@@ -47,7 +47,7 @@ public class World {
 		if (!collideable.getPosition().isValid())
 			collideable.handleCollision(null);
 		for (AbstractObject obj : objects) {
-			if (collideable != obj)
+			if (collideable != obj && collideable.collides(obj))
 				collideable.handleCollision(obj);
 		}
 	}

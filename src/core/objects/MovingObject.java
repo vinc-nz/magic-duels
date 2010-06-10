@@ -16,9 +16,6 @@ public abstract class MovingObject extends AbstractObject {
 
 	Direction direction;
 
-	Position lastPosition;
-	boolean collides = false;
-
 	float speed = 1;
 
 	public MovingObject() {
@@ -82,20 +79,12 @@ public abstract class MovingObject extends AbstractObject {
 
 
 	protected void moveThrough(Direction d) {
-		this.lastPosition = getPosition();
 		float x = d.getX() * speed;
 		float y = d.getY() * speed;
-		this.getPosition().move(x, y);
-		World.checkCollisions(this);
-		if (collides) {
-			this.setPosition(lastPosition);
-			collides = false;
-		}
-	}
-
-	@Override
-	public void handleCollision(AbstractObject other) {
-		collides = true;
+		if (getPosition().move(x, y))
+			World.checkCollisions(this);
+		else
+			handleCollision(null);
 	}
 
 

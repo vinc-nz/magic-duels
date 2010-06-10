@@ -3,8 +3,6 @@
  */
 package core.spells;
 
-import core.objects.AbstractObject;
-import core.space.Position;
 
 /**
  * @author deamon
@@ -16,7 +14,7 @@ public class Fireball extends AbstractProjectileSpell {
 
 	public Fireball() {
 		super();
-		this.setSpeed(3);
+		this.setSpeed(5);
 		this.setRadius(10);
 	}
 
