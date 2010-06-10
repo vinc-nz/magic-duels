@@ -192,7 +192,7 @@ public class Fight {
 		if (allDead())
 			end();
 
-		World.checkCollisions();
+		World.updateObjects();
 		boolean increaseMana = new Date().getTime() % MANA_INCREASE_FACTOR==0;
 
 		for (int i = 0; i < players.length; i++) {
