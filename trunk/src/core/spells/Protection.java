@@ -12,6 +12,9 @@ public class Protection extends AbstractObject implements Spell {
 	long launchTime = 0;
 	Character owner;
 	
+	public Protection() {
+		this.setRadius(50);
+	}
 
 	@Override
 	public String getName() {

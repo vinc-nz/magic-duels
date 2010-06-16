@@ -48,6 +48,7 @@ public class ServerGame extends NetGame {
 		}
 		for (int i=1;i<=comPlayers;i++) {
 			int id = humanPlayers + i;
+			names[id-1] = "com" + Integer.toString(i);
 			NetForwarderController c = new NetForwarderController(id, getFight(), this);
 			new Ia(c).start();
 		}
