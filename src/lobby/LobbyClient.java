@@ -546,7 +546,9 @@ public class LobbyClient extends Thread {
 					LobbyClient.this.comPlayers, LobbyClient.this.port);
 					LobbyClient.this.serverGame.start();
 					LobbyClient.this.isFinished = true;
-					LobbyClient.this.notifyAll();
+					synchronized (this) {
+						LobbyClient.this.notifyAll();						
+					}
 				} catch (IOException e) {
 					LobbyClient.this.result = LobbyClient.SERVER_FAILED;
 				}
