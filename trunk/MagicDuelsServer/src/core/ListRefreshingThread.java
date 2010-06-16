@@ -6,7 +6,7 @@ public class ListRefreshingThread extends Thread {
 
 	Server server;
 	
-	protected static int REFRESH_TIME = 40000;
+	protected static int REFRESH_TIME = 30000;
 	
 	public ListRefreshingThread(Server server) {
 		super();
