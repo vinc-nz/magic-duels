@@ -98,10 +98,13 @@ public class Ia extends Thread{
 		
 		if(characterController.getFight().prepSpeel(1, FanBalls.class) || 
 		   characterController.getFight().prepSpeel(1, Fireball.class) ){
+			
 
 			if(rand.nextInt(3) == 1)
+			{
+				characterController.nextTarget();
 				this.moveSlow();
-			else
+			} else
 				this.moveSpeed();
 		}
 	}
