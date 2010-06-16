@@ -211,7 +211,6 @@ public class LobbyClient extends Thread {
 			
 			this.connection.close();
 			this.connection = null;
-			this.playerName = "NOMEEEEEEEEEEEEEEEEEEEEEE";
 			
 			this.graphicLobby.showWarning("A Presto!");
 			this.graphicLobby.mainMenu.switchTo(this.graphicLobby.mainMenu.panel);
@@ -543,7 +542,7 @@ public class LobbyClient extends Thread {
 				LobbyClient.this.result = LobbyClient.SERVER_STARTED;
 				try {
 					LobbyClient.this.serverGame.init(LobbyClient.this.playerName, LobbyClient.this.humanPlayers,
-					LobbyClient.this.comPlayers, LobbyClient.this.port);
+					LobbyClient.this.comPlayers, LobbyClient.this.port);					
 					LobbyClient.this.serverGame.start();
 					LobbyClient.this.isFinished = true;
 					synchronized (this) {
@@ -595,7 +594,7 @@ public class LobbyClient extends Thread {
 		int port = this.joinedGame.porta;
 				
 		try {
-			game.init(name, address, port);
+			game.init(this.playerName, address, port);
 			game.start();
 			this.graphicLobby.multiplayerGame();
 		} catch (UnknownHostException e) {
