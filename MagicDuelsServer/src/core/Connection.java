@@ -189,7 +189,7 @@ public class Connection extends Thread {
 	{
 		String []gameParameter = msg.substring(Messages.CREATE.length()).split(";");
 		
-		if(this.hostedGame != null){ this.sendMessage(Messages.CREATEFAILED); return; }
+		//if(this.hostedGame != null){ this.sendMessage(Messages.CREATEFAILED); return; }
 		
 		this.hostedGame = new HostedGame(this, Integer.parseInt(gameParameter[2]), gameParameter[0], Integer.parseInt(gameParameter[1]));
 		this.server.hostedGames.put(this.hostedGame.gameName, this.hostedGame);
