@@ -547,7 +547,7 @@ public class LobbyClient extends Thread {
 					LobbyClient.this.serverGame.start();
 					LobbyClient.this.isFinished = true;
 					synchronized (this) {
-						LobbyClient.this.notifyAll();						
+						LobbyClient.this.notify_all();		
 					}
 				} catch (IOException e) {
 					LobbyClient.this.result = LobbyClient.SERVER_FAILED;
@@ -607,4 +607,8 @@ public class LobbyClient extends Thread {
 		}
 	}
 	
+	public synchronized void notify_all()
+	{
+		this.notifyAll();
+	}
 }
