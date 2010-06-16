@@ -108,7 +108,7 @@ public class Ia extends Thread{
 				this.moveSpeed();
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
