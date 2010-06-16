@@ -1,10 +1,10 @@
 package jmegraphic.hud;
 
 
-import com.jme.math.Vector3f;
+import utils.ProgressBar;
+
 import com.jme.renderer.ColorRGBA;
 
-import utils.ProgressBar;
 import core.fight.Character;
 
 

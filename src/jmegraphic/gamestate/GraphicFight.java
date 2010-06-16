@@ -13,6 +13,7 @@ import jmegraphic.CustomCamera;
 import jmegraphic.GraphicCharacter;
 import jmegraphic.GraphicObject;
 import jmegraphic.JmeGame;
+import jmegraphic.spells.Protection;
 import utils.ExplosionFactory;
 
 import com.jme.scene.Spatial;
@@ -149,8 +150,16 @@ public class GraphicFight extends BasicGameState {
 			GraphicObject go = this.objects.get(obj);
 			if (go==null)
 				this.objects.add(obj);
-			else if (!go.isInGame()) 
+			else if (!go.isInGame()) {
 				this.objects.remove(obj);
+				//in order to avoid a jme bug
+				if (go instanceof Protection) {
+					detach(arena);
+					arena = new Arena();
+					attach(arena);
+				}
+				//
+			}
 			else go.update(tpf);
 			
 			if (!obj.isInGame())
