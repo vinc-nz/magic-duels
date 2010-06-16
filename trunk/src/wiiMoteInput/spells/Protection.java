@@ -79,7 +79,7 @@ public class Protection extends Spells {
 		System.out.println("ENTRO IN ISSPELL DI NEW SPELL");
 		/*if(about(super.mediaX, 125, CLOSE, AMB) && about(super.mediaY, 120, CLOSE, AMB))
 			return true;*/
-		if(about(super.mediaY, 70, IRRILEVANT, DX) && about(super.mediaZ, 100, IRRILEVANT, DX))
+		if(about(super.mediaY, 70, IRRILEVANT, DX) && about(super.mediaZ, 80, IRRILEVANT, DX))
 		{
 			System.out.println("E' LA MAGIA !!!");
 			super.castSpell();

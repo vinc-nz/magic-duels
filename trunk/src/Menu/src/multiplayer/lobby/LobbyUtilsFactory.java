@@ -27,7 +27,7 @@ public class LobbyUtilsFactory {
 		label.setHorizontalTextPosition(JLabel.CENTER);
 		label.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
 		label.setForeground(Color.black);
-		label.setBorder(LobbyUtilsFactory.createPanelBorder());
+		label.setBorder(null);
 		
 		return label;
 	}
