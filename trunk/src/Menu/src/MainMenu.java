@@ -78,7 +78,7 @@ public class MainMenu extends JFrame {
 		WIDTH = dm.getWidth();
 		HEIGHT = dm.getHeight();
 		
-		//fullscreen( displayModes.get( WIDTH + "x" + HEIGHT ) );
+		fullscreen( displayModes.get( WIDTH + "x" + HEIGHT ) );
 		
 		this.lobbyClient = new LobbyClient();
 		this.playMote = new PlayerMote();
@@ -107,9 +107,9 @@ public class MainMenu extends JFrame {
 				playMote, this);
 	    
 		switchTo( panel );
-		size = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(size);
-		setSize(size);
+		//size = Toolkit.getDefaultToolkit().getScreenSize();
+		//setPreferredSize(size);
+		//setSize(size);
 		setVisible(true);
 	}
 
