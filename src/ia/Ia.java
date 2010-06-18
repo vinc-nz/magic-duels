@@ -4,6 +4,7 @@ import java.util.Random;
 
 import core.spells.FanBalls;
 import core.spells.Fireball;
+import core.spells.Protection;
 import input.CharacterController;
 
 /**
