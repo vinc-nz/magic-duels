@@ -126,7 +126,7 @@ public class AniMaker extends MouseAdapter implements Icon, ActionListener {
 		          AbstractButton button)
 		  {
 		          try {
-		                  java.net.URL address = AniMaker.class.getResource(
+		                  java.net.URL address = AniMaker.class.getClassLoader().getResource(
 		                          frameResourceAddress);
 		                  return new AniMaker(ImageIO.read(address), frameWidth,
 		                          frameHeight, animationPeriod, button);

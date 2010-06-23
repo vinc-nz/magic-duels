@@ -235,7 +235,7 @@ public class Options extends JPanel {
 	{
 		this.wiiMoteFlashing = true;
 		mainMenu.ok.play();
-		this.animaker = AniMaker.bindAnimation("../data/clips.png", 73, 307, 80, mote);
+		this.animaker = AniMaker.bindAnimation("Menu/data/clips.png", 73, 307, 80, mote);
 		this.animaker.startAnimation();
 	}
 	
