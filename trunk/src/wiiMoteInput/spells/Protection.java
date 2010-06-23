@@ -19,16 +19,20 @@ public class Protection extends Spells {
 		this.mediaX = 0;
 		this.mediaY = 0;
 		this.mediaZ = 0;
-		
+	
 		this.timer = new SpellTimer(this, TIMEOUT);
 		this.timer.start();
 		
 		this.stop = false;
 				
+		System.out.println("DEVO PRENDERE X Y Z");
+	
 		int X = this.playingMote.getCurrentXvalue();
 		int Y = this.playingMote.getCurrentYvalue();
 		int Z = this.playingMote.getCurrentZvalue();
 		
+		System.out.println("PRIMA DEL WHILE: " + X + " "+ Y + " "+ Z);
+
 		boolean ItIsSpell = false;
 		while( (!ItIsSpell && !this.stop) || (mediaX == 0 || mediaY == 0 || mediaZ == 0) )
 		{

@@ -32,9 +32,13 @@ public class FanBalls extends Spells {
 		this.canCheckTimer = new FanBallsTimer(this, 101);
 		this.canCheckTimer.start();
 		
+		System.out.println("DEVO PRENDERE X Y Z");
+		
 		int X = this.playingMote.getCurrentXvalue();
 		int Y = this.playingMote.getCurrentYvalue();
 		int Z = this.playingMote.getCurrentZvalue();
+		
+		System.out.println("PRIMA DEL WHILE: " + X + " "+ Y + " "+ Z);
 		
 		boolean ItIsSpell = false;
 		
