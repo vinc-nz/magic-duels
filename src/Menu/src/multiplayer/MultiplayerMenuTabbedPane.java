@@ -10,8 +10,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
-import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
-
 /**
  * The class represents the tabbed panel of the multiplayer section
  * @author neb

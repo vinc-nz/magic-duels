@@ -54,17 +54,14 @@ public class LogingTab extends MultiplayerMenuTabs {
 	{
 		super.removeAll();
 		
-		this.top = new ImageIcon("Menu/data/multiplayer/connect.gif").getImage();
+		this.top = new ImageIcon(LogingTab.class.getClassLoader().getResource("Menu/data/multiplayer/connect.gif")).getImage();
 		
 		this.connect = LobbyUtilsFactory.createAnimatedButton("Menu/data/multiplayer/connect1.gif", "Menu/data/multiplayer/connect2.gif");
 		this.connect.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				try{
-					System.out.println("EVENTO CONNESSIONE!");
-					
+				try{					
 					String ip = LogingTab.this.serverIp.getText();
 					int port = Integer.parseInt(LogingTab.this.serverPort.getText());
 					if(LogingTab.this.mainMenu.lobbyClient.connect(ip, port))
@@ -73,7 +70,6 @@ public class LogingTab extends MultiplayerMenuTabs {
 						LogingTab.super.showWarning("Connessione Fallita!");
 			
 				} catch (UnknownHostException exc) {
-					System.out.println("L'host è sconosciuto");
 					LogingTab.super.showWarning("L'Host sembra essere sconosciuto!");
 				} catch (IOException exc) {
 					LogingTab.super.showWarning("Errore durante la connessione all'Host!");
@@ -113,9 +109,9 @@ public class LogingTab extends MultiplayerMenuTabs {
 		super.removeAll();
 		super.setLayout(new GridBagLayout());
 
-		this.top = new ImageIcon("src/Menu/data/multiplayer/login.gif").getImage();
+		this.top = new ImageIcon(LogingTab.class.getClassLoader().getResource("Menu/data/multiplayer/login.gif")).getImage();
 		
-		this.login = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/login1.gif", "src/Menu/data/multiplayer/login2.gif");		
+		this.login = LobbyUtilsFactory.createAnimatedButton("Menu/data/multiplayer/login1.gif", "Menu/data/multiplayer/login2.gif");		
 		this.login.addActionListener(new ActionListener() {
 			
 			@Override
@@ -128,11 +124,7 @@ public class LogingTab extends MultiplayerMenuTabs {
 				
 				if(LogingTab.this.mainMenu.lobbyClient.logIn(nome, password))
 				{
-					//if(LogingTab.this.lobby == null) LogingTab.this.lobby = new Lobby(LogingTab.this.mainMenu);
-					//else LogingTab.this.lobby.refreshLobby(LogingTab.this.mainMenu.lobbyClient);
-					
-					LogingTab.this.lobby = new Lobby(LogingTab.this.mainMenu);
-					
+					LogingTab.this.lobby = new Lobby(LogingTab.this.mainMenu);					
 					LogingTab.this.mainMenu.switchTo(LogingTab.this.lobby);
 				} else
 					LogingTab.super.showWarning("Login Fallito!");				

@@ -44,7 +44,7 @@ public class Lobby extends JPanel {
 		this.lobbyClient = mainMenu.lobbyClient;
 		this.lobbyClient.setGraphicLobby(this);
 		
-		this.background = new ImageIcon(Lobby.class.getClassLoader().getResource("src/Menu/data/multiplayer/lobby.jpg")).getImage();
+		this.background = new ImageIcon(Lobby.class.getClassLoader().getResource("Menu/data/multiplayer/lobby.jpg")).getImage();
 		
 		this.topPanel = new TopPanel();
 		
