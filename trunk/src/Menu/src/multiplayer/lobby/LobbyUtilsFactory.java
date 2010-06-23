@@ -66,8 +66,8 @@ public class LobbyUtilsFactory {
 	 */
 	public static JButton createAnimatedButton(String mainImage, String rollOverImage)
 	{
-		JButton button = new JButton(new ImageIcon(mainImage));
-		button.setRolloverIcon(new ImageIcon(rollOverImage));
+		JButton button = new JButton(new ImageIcon(LobbyUtilsFactory.class.getClassLoader().getResource(mainImage)));
+		button.setRolloverIcon(new ImageIcon(LobbyUtilsFactory.class.getClassLoader().getResource(rollOverImage)));
 		button.setFocusPainted(false);
 		button.setFocusable(false);
 		button.setBorderPainted(false);

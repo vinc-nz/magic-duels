@@ -130,7 +130,7 @@ public class SigningTab extends MultiplayerMenuTabs {
 		super.removeAll();
 		super.setLayout(new GridBagLayout());
 		
-		this.top = new ImageIcon("src/Menu/data/multiplayer/new.gif").getImage();
+		this.top = new ImageIcon(SigningTab.class.getClassLoader().getResource("src/Menu/data/multiplayer/new.gif")).getImage();
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;

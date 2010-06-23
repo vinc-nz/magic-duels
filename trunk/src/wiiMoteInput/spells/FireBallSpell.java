@@ -24,10 +24,14 @@ public class FireBallSpell extends Spells {
 		this.timer.start();
 		
 		this.stop = false;
-				
+
+		System.out.println("DEVO PRENDERE X Y Z");
+		
 		int X = this.playingMote.getCurrentXvalue();
 		int Y = this.playingMote.getCurrentYvalue();
 		int Z = this.playingMote.getCurrentZvalue();
+		
+		System.out.println("PRIMA DEL WHILE: " + X + " "+ Y + " "+ Z);
 		
 		boolean ItIsSpell = false;
 		while( (!ItIsSpell && !this.stop) || (mediaX == 0 || mediaY == 0 || mediaZ == 0) )

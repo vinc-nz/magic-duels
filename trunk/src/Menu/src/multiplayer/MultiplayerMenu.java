@@ -12,6 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Menu.src.MainMenu;
+import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
 
 /**
  * The class represents the main panel of the multiplayer game
@@ -39,7 +40,7 @@ public class MultiplayerMenu extends JPanel {
 		
 		this.mainMenu = mainMenu;
 		
-		this.background = new ImageIcon("src/Menu/data/sfida.jpg").getImage();
+		this.background = new ImageIcon(MultiplayerMenu.class.getClassLoader().getResource("src/Menu/data/sfida.jpg")).getImage();
 		
 		this.logingTab = new LogingTab(this.mainMenu);
 		this.signingTab = new SigningTab(this.mainMenu);
