@@ -21,7 +21,7 @@ public class TopPanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		g.drawImage( new ImageIcon("src/Menu/data/multiplayer/welcome.gif").getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+		g.drawImage( new ImageIcon(TopPanel.class.getClassLoader().getResource("Menu/data/multiplayer/welcome.gif")).getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
 	}
 	
 }

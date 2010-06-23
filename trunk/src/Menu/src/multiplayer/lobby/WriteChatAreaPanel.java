@@ -67,7 +67,7 @@ public class WriteChatAreaPanel extends JPanel {
 			}
 		});
 
-		this.back = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/back1.gif", "src/Menu/data/multiplayer/back2.gif");
+		this.back = LobbyUtilsFactory.createAnimatedButton("Menu/data/multiplayer/back1.gif", "Menu/data/multiplayer/back2.gif");
 		this.back.addMouseListener(new MouseAdapter() {
 			
 			@Override

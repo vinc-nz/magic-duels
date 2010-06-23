@@ -68,7 +68,7 @@ public class JoinedGamePanel extends JPanel {
 			}			
 		}
 		
-		back = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/back1.gif", "src/Menu/data/multiplayer/back2.gif");
+		back = LobbyUtilsFactory.createAnimatedButton("Menu/data/multiplayer/back1.gif", "Menu/data/multiplayer/back2.gif");
 		back.addMouseListener(new MouseAdapter() {
 
 			@Override

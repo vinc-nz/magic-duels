@@ -12,7 +12,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Menu.src.MainMenu;
-import Menu.src.multiplayer.lobby.LobbyUtilsFactory;
 
 /**
  * The class represents the main panel of the multiplayer game
@@ -28,11 +27,9 @@ public class MultiplayerMenu extends JPanel {
 	
 	public LogingTab logingTab;
 	SigningTab signingTab;
-	DirectConnectionServerTab directConnectionServerTab;
 	
 	public static String LOGIN = "Login to the Lobby";
 	public static String NEWACCOUNT = "New Lobby Account";
-	public static String DIRECTCONNECTION = "Direct Connection";
 	
 	public MultiplayerMenu(final MainMenu mainMenu) {
 		
@@ -44,7 +41,6 @@ public class MultiplayerMenu extends JPanel {
 		
 		this.logingTab = new LogingTab(this.mainMenu);
 		this.signingTab = new SigningTab(this.mainMenu);
-		this.directConnectionServerTab = new DirectConnectionServerTab(this.mainMenu);
 		
 		this.tabbedPane = new MultiplayerMenuTabbedPane();
 		this.tabbedPane.addTab(MultiplayerMenu.LOGIN, this.logingTab);

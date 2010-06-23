@@ -129,7 +129,7 @@ public class GameListPanel extends JScrollPane {
 	@Override
 	public void paintComponent(Graphics g) {
 		
-		Image img = new ImageIcon("src/Menu/data/lala3.gif").getImage(); 
+		Image img = new ImageIcon(GameListPanel.class.getClassLoader().getResource("Menu/data/lala3.gif")).getImage(); 
 		
 		g.drawImage(img , super.getSize().width / 5, 0, img.getWidth(null), img.getHeight(null), null);
 	}

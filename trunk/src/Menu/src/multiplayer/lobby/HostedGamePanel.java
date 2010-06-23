@@ -29,7 +29,7 @@ public class HostedGamePanel extends JPanel {
 		
 		this.graphicLobby = graphicLobby;
 
-		this.startGame = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/start1.gif", "src/Menu/data/multiplayer/start2.gif");
+		this.startGame = LobbyUtilsFactory.createAnimatedButton("Menu/data/multiplayer/start1.gif", "Menu/data/multiplayer/start2.gif");
 		this.startGame.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -39,7 +39,7 @@ public class HostedGamePanel extends JPanel {
 				
 			});
 		
-		this.closeGame = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/back1.gif", "src/Menu/data/multiplayer/back2.gif");
+		this.closeGame = LobbyUtilsFactory.createAnimatedButton("Menu/data/multiplayer/back1.gif", "Menu/data/multiplayer/back2.gif");
 		this.closeGame.addMouseListener(new MouseAdapter() {
 			
 			@Override
