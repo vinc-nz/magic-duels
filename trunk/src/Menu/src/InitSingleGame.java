@@ -61,7 +61,7 @@ public class InitSingleGame extends JPanel {
 		this.playerMote = playerMote;
 		this.mainPanel = mainPanel;
 				
-		this.background = new ImageIcon("src/Menu/data/mainMenu2.jpg").getImage();
+		this.background = new ImageIcon(InitSingleGame.class.getClassLoader().getResource("Menu/data/mainMenu2.jpg")).getImage();
 		
 		// Get screen size informations
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

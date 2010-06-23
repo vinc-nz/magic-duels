@@ -93,17 +93,17 @@ public class MainMenu extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		panel = new MainPanel(
-				new ImageIcon("src/Menu/data/mainMenu2.jpg").getImage(),
-				new ImageIcon("src/Menu/data/imageNewGame.png").getImage(),
-				new ImageIcon("src/Menu/data/imageMultiplayer.png").getImage(),
-				new ImageIcon("src/Menu/data/imageOptions.png").getImage(),
-				new ImageIcon("src/Menu/data/imageCredits.png").getImage(),
-				new ImageIcon("src/Menu/data/imageExit.png").getImage(),
-				new ImageIcon("src/Menu/data/imageNewGameS.png").getImage(),
-				new ImageIcon("src/Menu/data/imageMultiplayerS.png").getImage(),
-				new ImageIcon("src/Menu/data/imageOptionsS.png").getImage(),
-				new ImageIcon("src/Menu/data/imageCreditsS.png").getImage(),
-				new ImageIcon("src/Menu/data/imageExitS.png").getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/mainMenu2.jpg")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageNewGame.png")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageMultiplayer.png")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageOptions.png")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageCredits.png")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageExit.png")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageNewGameS.png")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageMultiplayerS.png")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageOptionsS.png")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageCreditsS.png")).getImage(),
+				new ImageIcon(MainMenu.class.getClassLoader().getResource("Menu/data/imageExitS.png")).getImage(),
 				playMote, this);
 	    
 		switchTo( panel );

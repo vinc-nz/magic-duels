@@ -40,7 +40,7 @@ public class MultiplayerMenu extends JPanel {
 		
 		this.mainMenu = mainMenu;
 		
-		this.background = new ImageIcon(MultiplayerMenu.class.getClassLoader().getResource("src/Menu/data/sfida.jpg")).getImage();
+		this.background = new ImageIcon(MultiplayerMenu.class.getClassLoader().getResource("Menu/data/sfida.jpg")).getImage();
 		
 		this.logingTab = new LogingTab(this.mainMenu);
 		this.signingTab = new SigningTab(this.mainMenu);
