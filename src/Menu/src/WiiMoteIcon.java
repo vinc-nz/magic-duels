@@ -19,8 +19,8 @@ public class WiiMoteIcon extends Thread implements Icon {
 		
 		this.options = options;
 		
-		this.unConnectedMote = new ImageIcon("src/Menu/data/unConnectedMote.jpg").getImage();
-		this.connectedMote = new ImageIcon("src/Menu/data/connectedMote.jpg").getImage();
+		this.unConnectedMote = new ImageIcon(WiiMoteIcon.class.getClassLoader().getResource("Menu/data/unConnectedMote.jpg")).getImage();
+		this.connectedMote = new ImageIcon(WiiMoteIcon.class.getClassLoader().getResource("Menu/data/connectedMote.jpg")).getImage();
 		
 	}
 

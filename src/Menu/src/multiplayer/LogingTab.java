@@ -54,9 +54,9 @@ public class LogingTab extends MultiplayerMenuTabs {
 	{
 		super.removeAll();
 		
-		this.top = new ImageIcon("src/Menu/data/multiplayer/connect.gif").getImage();
+		this.top = new ImageIcon("Menu/data/multiplayer/connect.gif").getImage();
 		
-		this.connect = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/connect1.gif", "src/Menu/data/multiplayer/connect2.gif");
+		this.connect = LobbyUtilsFactory.createAnimatedButton("Menu/data/multiplayer/connect1.gif", "Menu/data/multiplayer/connect2.gif");
 		this.connect.addMouseListener(new MouseAdapter() {
 			
 			@Override

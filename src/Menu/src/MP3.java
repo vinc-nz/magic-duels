@@ -1,6 +1,7 @@
 package Menu.src;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 
 import javazoom.jl.player.Player;
@@ -25,7 +26,7 @@ public class MP3 {
     // play the MP3 file to the sound card
     public void play() {
         try {
-            FileInputStream fis     = new FileInputStream(filename);
+            FileInputStream fis     = new FileInputStream(new File(filename));
             BufferedInputStream bis = new BufferedInputStream(fis);
             player = new Player(bis);
         }

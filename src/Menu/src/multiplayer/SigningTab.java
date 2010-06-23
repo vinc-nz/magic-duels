@@ -45,7 +45,7 @@ public class SigningTab extends MultiplayerMenuTabs {
 		this.mail = new JTextField();
 		LobbyUtilsFactory.setLobbyTextFieldParameters(this.mail, "Email");
 		
-		this.iscrivi = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/new1.gif", "src/Menu/data/multiplayer/new2.gif");
+		this.iscrivi = LobbyUtilsFactory.createAnimatedButton("Menu/data/multiplayer/new1.gif", "Menu/data/multiplayer/new2.gif");
 		this.iscrivi.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -72,9 +72,9 @@ public class SigningTab extends MultiplayerMenuTabs {
 	{
 		super.removeAll();
 		
-		this.top = new ImageIcon("src/Menu/data/multiplayer/connect.gif").getImage();
+		this.top = new ImageIcon("Menu/data/multiplayer/connect.gif").getImage();
 		
-		this.connect = LobbyUtilsFactory.createAnimatedButton("src/Menu/data/multiplayer/connect1.gif", "src/Menu/data/multiplayer/connect2.gif");
+		this.connect = LobbyUtilsFactory.createAnimatedButton("Menu/data/multiplayer/connect1.gif", "Menu/data/multiplayer/connect2.gif");
 		this.connect.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -130,7 +130,7 @@ public class SigningTab extends MultiplayerMenuTabs {
 		super.removeAll();
 		super.setLayout(new GridBagLayout());
 		
-		this.top = new ImageIcon(SigningTab.class.getClassLoader().getResource("src/Menu/data/multiplayer/new.gif")).getImage();
+		this.top = new ImageIcon(SigningTab.class.getClassLoader().getResource("Menu/data/multiplayer/new.gif")).getImage();
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;

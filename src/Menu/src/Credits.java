@@ -42,10 +42,10 @@ public class Credits extends JPanel{
 		this.mainMenu = mainMenu;
 		this.mainPanel = mainPanel;
 		
-		background = new ImageIcon("src/Menu/data/mainMenu2.jpg").getImage();
-		luigi = new ImageIcon("src/Menu/data/luigi.png").getImage();
-		daniele = new ImageIcon("src/Menu/data/daniele.png").getImage();
-		vincenzo = new ImageIcon("src/Menu/data/vincenzo.png").getImage();
+		background = new ImageIcon(Credits.class.getClassLoader().getResource("Menu/data/mainMenu2.jpg")).getImage();
+		luigi = new ImageIcon(Credits.class.getClassLoader().getResource("Menu/data/luigi.png")).getImage();
+		daniele = new ImageIcon(Credits.class.getClassLoader().getResource("Menu/data/daniele.png")).getImage();
+		vincenzo = new ImageIcon(Credits.class.getClassLoader().getResource("Menu/data/vincenzo.png")).getImage();
 		
 		name = false;
 		cont = 0;

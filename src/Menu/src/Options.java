@@ -60,7 +60,7 @@ public class Options extends JPanel {
 		this.mainMenu = mainMenu;
 		this.mainPanel = mainPanel;
 				
-		this.background = new ImageIcon("src/Menu/data/mainMenu2.jpg").getImage();
+		this.background = new ImageIcon(Options.class.getClassLoader().getResource("Menu/data/mainMenu2.jpg")).getImage();
 		//this.startFlashing();
 		this.wiiMoteFlashing = false;
 		
