@@ -53,9 +53,11 @@ public abstract class AbstractProjectileSpell extends MovingObject implements Sp
 		if (other instanceof AbstractProjectileSpell && 
 				((AbstractProjectileSpell) other).owner == this.owner)
 			return false;
+		if (other instanceof Protection &&
+			((Protection) other).owner == this.owner)
+			return false;
 		if (other == this.owner)
 			return false;
 		return super.collides(other);
 	}
-
 }

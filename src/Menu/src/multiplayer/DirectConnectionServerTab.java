@@ -70,6 +70,4 @@ public class DirectConnectionServerTab extends MultiplayerMenuTabs {
 	@Override
 	public void checkPanel() {}
 
-	
-	
 }

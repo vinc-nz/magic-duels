@@ -3,7 +3,6 @@ package Menu.src.multiplayer.lobby;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 
 import lobby.LobbyHostedGame;
 import lobby.Messages;
@@ -58,7 +56,7 @@ public class HostedGamePanel extends JPanel {
 		panel.setOpaque(false);
 		
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.BOTH;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 5, 10);
 		c.gridx = 0;
 		c.gridy = 0;
