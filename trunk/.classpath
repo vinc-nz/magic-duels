@@ -4,7 +4,12 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jme"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/BlueCove"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/motej-extras"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/motej-library"/>
+	<classpathentry kind="lib" path="lib/bluecove-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/bluecove-gpl-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/motej-extras-0.9.jar"/>
+	<classpathentry kind="lib" path="lib/motej-library-0.9.jar"/>
+	<classpathentry kind="lib" path="lib/jl1.0.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-jdk14-1.6.0-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

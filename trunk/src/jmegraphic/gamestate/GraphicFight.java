@@ -17,6 +17,7 @@ import jmegraphic.spells.Protection;
 import utils.ExplosionFactory;
 
 import com.jme.scene.Spatial;
+import com.jme.system.DisplaySystem;
 import com.jme.util.GameTaskQueueManager;
 import com.jmex.game.state.BasicGameState;
 
@@ -152,13 +153,6 @@ public class GraphicFight extends BasicGameState {
 				this.objects.add(obj);
 			else if (!go.isInGame()) {
 				this.objects.remove(obj);
-				//in order to avoid a jme bug
-				if (go instanceof Protection) {
-					detach(arena);
-					arena = new Arena();
-					attach(arena);
-				}
-				//
 			}
 			else go.update(tpf);
 			
@@ -188,6 +182,15 @@ public class GraphicFight extends BasicGameState {
 
 		@Override
 		public GraphicObject remove(Object key) {
+			
+			//in order to avoid a concurrence bug
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			GraphicFight.this.detach(this.get(key));
 			return super.remove(key);
 		}

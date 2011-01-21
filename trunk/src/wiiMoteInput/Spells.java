@@ -84,19 +84,19 @@ abstract public class Spells extends Thread {
 		
 		if(FIREBALL_START.isAtStep(X, Y, Z))
 		{
-			System.out.println("FIREBALL");
+			//System.out.println("FIREBALL");
 			return new FireBallSpell();
 		}
 		else 
 			if(FIVEFIREBALLS_START.isAtStep(X, Y, Z))
 			{
-				System.out.println("FUNBALL");
+				//System.out.println("FUNBALL");
 				return new FanBalls();
 			}
 		else 
 			if(NEWSPELL_START.isAtStep(X, Y, Z))
 			{
-				System.out.println("NEWSPELL");
+				//System.out.println("NEWSPELL");
 				return new Protection();
 			}
 		return null;
